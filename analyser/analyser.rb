@@ -1,5 +1,6 @@
 require './screenshot'
 require './screens/race_screen'
+require './screens/race_result_screen'
 require './screens/loading_screen'
 
 class Analyser
@@ -49,7 +50,8 @@ class Analyser
   def screens
     [
       LoadingScreen,
-      RaceScreen
+      RaceScreen,
+      RaceResultScreen
     ]
   end
 end
