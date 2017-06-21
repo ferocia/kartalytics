@@ -1,21 +1,15 @@
-require 'rmagick'
+require './screenshot'
 require './screens/loading_screen'
-
-class RMagick
-  include Magick
-end
 
 class Analyser
   def self.analyse!(filename)
     new(filename).analyse!
   end
 
-  attr_reader :filename
   attr_reader :image
 
   def initialize(filename)
-    @filename = filename
-    @image    = prepare_image(filename)
+    @image = Screenshot.new(filename)
   end
 
   def analyse!
@@ -24,21 +18,13 @@ class Analyser
     end
 
     if current_screen
-      puts "Filename #{filename} is of type #{current_screen.class}"
+      puts "Filename #{image} is of type #{current_screen}"
       event = current_screen.extract_event(image)
 
       puts "Event #{event.inspect} extracted"
 
       return event
     end
-  end
-
-  def prepare_image(filename)
-    # Prepare file/normalise dimensions/format? Anything else?
-    image = Magick::Image.read(filename).first
-    image.resize_to_fit!(300)
-    image.write("tmp.jpg")
-    image
   end
 
   # Detect if main menu
