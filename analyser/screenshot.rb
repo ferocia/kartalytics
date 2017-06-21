@@ -25,6 +25,20 @@ class Screenshot
     @filename
   end
 
+  def splitscreen?
+    width  = original.columns
+    height = original.rows
+
+    # Should have a black line separating vertical (caters for 2 - 4 players)
+    # Other pixels should not be black
+
+    h, s, centre_brightness      = original.get_pixels((width / 2) - 1, 0, 1, 1).first.to_hsla
+    h, s, top_left_brightness    = original.get_pixels(0, 0, 1, 1).first.to_hsla
+    h, s, bottom_left_brightness = original.get_pixels(height - 1, 0, 1, 1).first.to_hsla
+
+    centre_brightness <= 20 && ( top_left_brightness > 20 || bottom_left_brightness > 20)
+  end
+
   def write_tmp
     @image.write('tmp.jpg')
   end

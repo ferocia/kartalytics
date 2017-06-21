@@ -1,16 +1,17 @@
 class RaceScreen
   # Strat:
-  #   Should have a black line separating vertical (caters for 2 - 4 players)
-  #   Other pixels should not be black
+  #   First quarter of pixels in centre line should be consistently black
   def self.matches_image?(screenshot)
-    width = screenshot.original.columns
-    height = screenshot.original.rows
+    if screenshot.splitscreen?
+      width  = screenshot.original.columns
+      height = screenshot.original.rows
 
-    h, s, centre_brightness = screenshot.original.get_pixels((width / 2) - 1, 0, 1, 1).first.to_hsla
-    h, s, top_left_brightness = screenshot.original.get_pixels(0, 0, 1, 1).first.to_hsla
-    h, s, bottom_left_brightness = screenshot.original.get_pixels(height - 1, 0, 1, 1).first.to_hsla
+      centre_col_brightness = screenshot.original.get_pixels((width / 2) - 1, 0, 1, height / 8).map{|pixel|
+        pixel.to_hsla[2]
+      }.max
 
-    centre_brightness <= 5 && ( top_left_brightness > 20 || bottom_left_brightness > 20)
+      centre_col_brightness <= 20
+    end
   end
 
   def self.extract_event(screenshot)
