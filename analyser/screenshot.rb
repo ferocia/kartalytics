@@ -5,17 +5,20 @@ class RMagick
 end
 
 class Screenshot
-  attr_reader :image
+  attr_reader :working
+  attr_reader :original
   attr_reader :filename
 
+  # A reasonable size to make subsequent adjustments
   WORKING_SIZE = 300
 
   def initialize(filename)
     @filename = filename
+    @original = Magick::Image.read(filename).first
     # This takes about ~60ms
-    @image = Magick::Image.read(filename).first.resize_to_fit!(300)
+    @working = @original.resize_to_fit(300)
     # If necessary, this guy completes in half the time:
-    # @image = Magick::Image.read(filename).first.resize!(300, 168, Magick::TriangleFilter)
+    # @working = @original.resize(300, 168, Magick::TriangleFilter)
   end
 
   def to_s
@@ -27,6 +30,6 @@ class Screenshot
   end
 
   def ten_px
-    @ten_px = image.resize_to_fit(10)
+    @ten_px = working.resize_to_fit(10)
   end
 end

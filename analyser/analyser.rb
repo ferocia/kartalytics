@@ -1,4 +1,5 @@
 require './screenshot'
+require './screens/race_screen'
 require './screens/loading_screen'
 
 class Analyser
@@ -39,7 +40,8 @@ class Analyser
   #   (attempt to gather positions/points for each player)
   def screens
     [
-      LoadingScreen
+      LoadingScreen,
+      RaceScreen
     ]
   end
 end
