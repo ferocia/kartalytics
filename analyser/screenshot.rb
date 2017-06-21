@@ -12,7 +12,10 @@ class Screenshot
 
   def initialize(filename)
     @filename = filename
+    # This takes about ~60ms
     @image = Magick::Image.read(filename).first.resize_to_fit!(300)
+    # If necessary, this guy completes in half the time:
+    # @image = Magick::Image.read(filename).first.resize!(300, 168, Magick::TriangleFilter)
   end
 
   def to_s
