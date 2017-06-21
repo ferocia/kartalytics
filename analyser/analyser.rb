@@ -18,6 +18,8 @@ class Analyser
       screen.matches_image?(image)
     end
 
+    sort_image(image, current_screen)
+
     if current_screen
       puts "Filename #{image} is of type #{current_screen}"
       event = current_screen.extract_event(image)
@@ -26,6 +28,12 @@ class Analyser
 
       return event
     end
+  end
+
+  def sort_image(image, current_screen)
+    directory = "./classified/" + (current_screen || "Unsorted").to_s
+    Dir.mkdir(directory) unless Dir.exists?(directory)
+    image.working.write("#{directory}/#{File.basename(image.filename)}")
   end
 
   # Detect if main menu
