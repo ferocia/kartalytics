@@ -50,10 +50,6 @@ module Kartalytics
 
     private
 
-    def bars
-
-    end
-
     def is?(expected)
       bars = %i(top_bar top_right_bar bottom_right_bar bottom_bar bottom_left_bar top_left_bar middle_horizontal
                 middle_verticle)
