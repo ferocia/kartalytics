@@ -29,14 +29,5 @@ describe Kartalytics::ScoreBlock do
         is_expected.to eql 19
       end
     end
-
-    context 'empty block' do
-      let(:image) { fixture 'images/score_block4.jpg' }
-
-      it 'returns correct value' do
-        pending
-        is_expected.to eql nil
-      end
-    end
   end
 end

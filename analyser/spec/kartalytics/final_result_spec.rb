@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Kartalytics::FinalResult do
-  let(:image) { fixture 'screens/final_result.jpg' }
+  let(:image) { fixture 'images/final_result.jpg' }
   let(:final_result) { described_class.new(image) }
 
   describe '#image' do
@@ -24,7 +24,7 @@ describe Kartalytics::FinalResult do
 
     it 'finds the correct scores in the image' do
       pending
-      is_expected.to eql [47, 47, 44, 27, 25, 25, 25, 23, 21, 21, 19, 19, 10]
+      is_expected.to eql [47, 47, 44, 27, 25, 25, 23, 21, 21, 19, 19, 10]
     end
   end
 end
