@@ -7,5 +7,9 @@ module Kartalytics
     def initialize(image_path)
       @image = Magick::Image.read(image_path)[0]
     end
+
+    def scores
+      []
+    end
   end
 end
