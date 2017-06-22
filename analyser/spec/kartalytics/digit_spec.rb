@@ -17,38 +17,44 @@ describe Kartalytics::Digit do
 
     context '0' do
       let(:image) { zero }
-
-      it 'returns correct value' do
-        pending
-        is_expected.to eql 0
-      end
+      it { is_expected.to eql 0 }
     end
 
     context '1' do
       let(:image) { one }
+      it { is_expected.to eql 1 }
+    end
 
-      it 'returns correct value' do
-        pending
-        is_expected.to eql 1
-      end
+    context '2' do
+      let(:image) { two }
+      it { is_expected.to eql 2 }
+    end
+
+    context '3' do
+      let(:image) { three }
+      it { is_expected.to eql 3 }
+    end
+
+
+    context '4' do
+      let(:image) { four }
+      it { is_expected.to eql 4 }
+    end
+
+
+    context '5' do
+      let(:image) { five }
+      it { is_expected.to eql 5 }
     end
 
     context '7' do
       let(:image) { seven }
-
-      it 'returns correct value' do
-        pending
-        is_expected.to eql 7
-      end
+      it { is_expected.to eql 7 }
     end
 
     context '9' do
       let(:image) { nine }
-
-      it 'returns correct value' do
-        pending
-        is_expected.to eql 9
-      end
+      it { pending; is_expected.to eql 9 }
     end
   end
 
@@ -136,7 +142,7 @@ describe Kartalytics::Digit do
 
     context 'nine' do
       let(:image) { nine }
-      it { pending; is_expected.to eql false }
+      it { is_expected.to eql false }
     end
   end
 

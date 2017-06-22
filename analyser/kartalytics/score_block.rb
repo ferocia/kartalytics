@@ -14,9 +14,8 @@ module Kartalytics
     def to_i
       digits = digit_positions.map do |x, y|
         digit_image = sub_image(x, y, Digit::WIDTH, Digit::HEIGHT)
-        Digit.new(digit_image).to_o
+        Digit.new(digit_image).to_i
       end
-
       digits.join.to_i
     end
 

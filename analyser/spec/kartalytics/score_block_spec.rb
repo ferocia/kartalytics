@@ -8,29 +8,17 @@ describe Kartalytics::ScoreBlock do
 
     context 'standard block' do
       let(:image) { fixture 'images/score_block1.jpg' }
-
-      it 'returns correct value' do
-        pending
-        is_expected.to eql 47
-      end
+      it { is_expected.to eql 47 }
     end
 
     context 'yellow block' do
       let(:image) { fixture 'images/score_block2.jpg' }
-
-      it 'returns correct value' do
-        pending
-        is_expected.to eql 19
-      end
+      it { is_expected.to eql 19 }
     end
 
     context 'blue block' do
       let(:image) { fixture 'images/score_block3.jpg' }
-
-      it 'returns correct value' do
-        pending
-        is_expected.to eql 10
-      end
+      it { is_expected.to eql 10 }
     end
 
     context 'red block' do

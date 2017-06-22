@@ -11,7 +11,8 @@ module Kartalytics
     end
 
     def to_i
-      # high_contrast_image.write("debug_hc_digit#{Time.now.to_f}.jpg")
+      numbers = { zero?: 0, one?: 1, two?: 2, three?: 3, four?: 4, five?: 5, seven?: 7, nine?: 9 }
+      numbers.each { |k, v| return v if send(k) }
       nil
     end
 
@@ -20,34 +21,48 @@ module Kartalytics
     end
 
     def one?
-      middle_verticle?
+      is? %i(middle_verticle)
     end
 
     def two?
-      top_bar? && top_right_bar? && middle_horizontal? && bottom_left_bar? && bottom_bar?
+      is? %i(top_bar top_right_bar middle_horizontal bottom_left_bar bottom_bar)
     end
 
     def three?
-      top_bar? && top_right_bar? && middle_horizontal? && bottom_right_bar? && bottom_bar? && !top_left_bar? && !bottom_left_bar?
+      is? %i(top_bar top_right_bar middle_horizontal bottom_right_bar bottom_bar)
     end
 
     def four?
-      top_left_bar? && middle_horizontal? && top_right_bar? && bottom_right_bar? && !bottom_left_bar?
+      is? %i(top_left_bar middle_horizontal top_right_bar bottom_right_bar)
     end
 
     def five?
-      top_bar? && top_left_bar? && middle_horizontal? && bottom_right_bar? && bottom_bar? && !top_right_bar? && !bottom_left_bar?
+      is? %i(top_bar top_left_bar middle_horizontal bottom_right_bar bottom_bar)
     end
 
     def seven?
-      top_bar? && !top_left_bar? && top_right_bar? && bottom_right_bar? && !bottom_bar?
+      is? %i(top_bar top_right_bar bottom_right_bar)
     end
 
     def nine?
-      top_bar? && top_left_bar? && top_right_bar? && middle_horizontal? && bottom_bar? && bottom_right_bar? && !bottom_right_bar?
+      is? %i(top_bar top_left_bar top_right_bar middle_horizontal bottom_right_bar bottom_bar)
     end
 
     private
+
+    def bars
+
+    end
+
+    def is?(expected)
+      bars = %i(top_bar top_right_bar bottom_right_bar bottom_bar bottom_left_bar top_left_bar middle_horizontal
+                middle_verticle)
+
+      bars.all? do |b|
+        result = send("#{b}?".to_sym)
+        expected.include?(b) ? result : !result
+      end
+    end
 
     def dominate_colour(img)
       img.scale(1, 1).pixel_color(0, 0)
