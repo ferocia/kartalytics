@@ -23,7 +23,8 @@ module Kartalytics
     end
 
     def one?
-      Phashion::Image.new('digits/1.jpg').duplicate?(phashion_image)
+      Phashion::Image.new('digits/1.jpg').duplicate?(phashion_image) ||
+      Phashion::Image.new('digits/1-alt.jpg').duplicate?(phashion_image)
     end
 
     def two?
@@ -54,7 +55,7 @@ module Kartalytics
 
     def phashion_image
       @phashion_image ||= begin
-        file_path = 'debug_digit.jpg'
+        file_path = '_tmp_delete_me.jpg'
         image.write(file_path)
         Phashion::Image.new(file_path)
       end

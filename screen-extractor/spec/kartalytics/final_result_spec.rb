@@ -22,9 +22,6 @@ describe Kartalytics::FinalResult do
   describe '#scores' do
     subject { final_result.scores }
 
-    it 'finds the correct scores in the image' do
-      pending
-      is_expected.to eql [47, 47, 44, 27, 25, 25, 23, 21, 21, 19, 19, 10]
-    end
+    it { is_expected.to eql [47, 47, 44, 27, 25, 25, 23, 21, 21, 19, 19, 10] }
   end
 end
