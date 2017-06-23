@@ -54,11 +54,11 @@ describe Kartalytics::Digit do
 
     context '9' do
       let(:image) { nine }
-      it { pending; is_expected.to eql 9 }
+      it { is_expected.to eql 9 }
     end
   end
 
-  describe '#zero?', focus: true do
+  describe '#zero?' do
     subject { digit.zero? }
 
     context 'zero' do
@@ -102,7 +102,7 @@ describe Kartalytics::Digit do
     end
   end
 
-  describe '#one?', focus: true do
+  describe '#one?' do
     subject { digit.one? }
 
     context 'zero' do
@@ -146,7 +146,7 @@ describe Kartalytics::Digit do
     end
   end
 
-  describe '#two?', focus: true do
+  describe '#two?' do
     subject { digit.two? }
 
     context 'zero' do
@@ -190,7 +190,7 @@ describe Kartalytics::Digit do
     end
   end
 
-  describe '#three?', focus: true do
+  describe '#three?' do
     subject { digit.three? }
 
     context 'zero' do
@@ -234,7 +234,7 @@ describe Kartalytics::Digit do
     end
   end
 
-  describe '#four?', focus: true do
+  describe '#four?' do
     subject { digit.four? }
 
     context 'zero' do
@@ -278,7 +278,7 @@ describe Kartalytics::Digit do
     end
   end
 
-  describe '#five?', focus: true do
+  describe '#five?' do
     subject { digit.five? }
 
     context 'zero' do
@@ -322,7 +322,7 @@ describe Kartalytics::Digit do
     end
   end
 
-  describe '#seven?', focus: true do
+  describe '#seven?' do
     subject { digit.seven? }
 
     context 'zero' do
@@ -366,7 +366,7 @@ describe Kartalytics::Digit do
     end
   end
 
-  describe '#nine?', focus: true do
+  describe '#nine?' do
     subject { digit.nine? }
 
     context 'zero' do
@@ -406,7 +406,7 @@ describe Kartalytics::Digit do
 
     context 'nine' do
       let(:image) { nine }
-      it { pending; is_expected.to eql true }
+      it { is_expected.to eql true }
     end
   end
 end

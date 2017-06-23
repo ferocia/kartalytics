@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.3)
+    phashion (1.2.0)
     rmagick (2.16.0)
     rspec (3.6.0)
       rspec-core (~> 3.6.0)
@@ -21,6 +22,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  phashion
   rmagick
   rspec
 
