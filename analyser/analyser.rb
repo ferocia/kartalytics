@@ -1,6 +1,7 @@
 require './screenshot'
 require './screens/race_screen'
 require './screens/race_result_screen'
+require './screens/match_result_screen'
 require './screens/loading_screen'
 
 class Analyser
@@ -51,7 +52,8 @@ class Analyser
     [
       LoadingScreen,
       RaceScreen,
-      RaceResultScreen
+      RaceResultScreen,
+      MatchResultScreen
     ]
   end
 end
