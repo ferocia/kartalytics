@@ -18,7 +18,7 @@ class RaceResultScreen
           mostly_blue?(pixel)
         end.count
 
-        pixels_that_look_like_rank_moves > 10
+        pixels_that_look_like_rank_moves < 10
       end
     end
   end
@@ -58,7 +58,12 @@ class RaceResultScreen
     end
 
     results.each do |player, possible_positions|
-      results[player] = {position: possible_positions.select{ |position, likelihood| likelihood > 5 }.keys.first }
+      position = possible_positions.select{ |position, likelihood| likelihood > 5 }.keys.first
+      if position
+        results[player] = {position: position}
+      else
+        results.delete(player)
+      end
     end
     results
   end
@@ -82,6 +87,11 @@ class RaceResultScreen
     # Red
     if (hue < 10 || hue > 350) && sat > 180 && lum > 150
       return :player_three
+    end
+
+    # Green
+    if (hue > 85 || hue < 100) && sat > 170 && lum > 140
+      return :player_four
     end
   end
 

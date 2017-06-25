@@ -7,11 +7,25 @@ describe RaceResultScreen do
     subject { described_class.get_player_positions(image) }
 
     it 'should parse the player positions' do
-
       is_expected.to eq({
         player_one: {position: 3},
         player_two: {position: 4},
         player_three: {position: 2}
+      })
+    end
+  end
+
+  describe ".extract_event" do
+    let(:screenshot) { Screenshot.new(fixture('four-player-race-result.jpg')) }
+
+    subject { described_class.extract_event(screenshot)[:data] }
+
+    it 'should extract all player positions correctly' do
+      is_expected.to eq({
+        player_one: {position: 11},
+        player_three: {position: 12},
+        player_two: {position: 5},
+        player_four: {position: 1}
       })
     end
   end
