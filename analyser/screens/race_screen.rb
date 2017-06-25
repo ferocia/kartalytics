@@ -15,41 +15,40 @@ class RaceScreen
   end
 
   def self.extract_event(screenshot)
+    positions = extract_postions(screenshot.original)
 
-    # quadrants = [
-    #   screenshot.working.dup.crop(0,0,150,84)
-    # ]
-    # extract_postions!()
-    extract_postions(screenshot.original)
     {
-      event_type: 'race_screen'
+      event_type: 'race_screen',
+      data: positions
     }
   end
 
   STARTING_CROPS = {
     player_one:   { x: 57, y: 239 },
     player_two:   { x: 1167, y: 239 },
-    player_three: { x: 57, y: 598 },
-    # player_four:  { x: 1167, y: 598 }
+    player_three: { x: 57, y: 599 },
+    player_four:  { x: 1167, y: 599 }
   }
 
   REFERENCE_IMAGES = [
-    {pos: 1,  image: Phashion::Image.new("reference_images/race/pos1.png")},
-    {pos: 2,  image: Phashion::Image.new("reference_images/race/pos2.png")},
-    {pos: 3,  image: Phashion::Image.new("reference_images/race/pos3.png")},
-    {pos: 4,  image: Phashion::Image.new("reference_images/race/pos4.png")},
-    {pos: 5,  image: Phashion::Image.new("reference_images/race/pos5.png")},
-    {pos: 6,  image: Phashion::Image.new("reference_images/race/pos6.png")},
-    {pos: 7,  image: Phashion::Image.new("reference_images/race/pos7.png")},
-    {pos: 8,  image: Phashion::Image.new("reference_images/race/pos8.png")},
-    {pos: 9,  image: Phashion::Image.new("reference_images/race/pos9.png")},
-    {pos: 10, image: Phashion::Image.new("reference_images/race/pos10.png")},
-    {pos: 11, image: Phashion::Image.new("reference_images/race/pos11.png")},
-    {pos: 12, image: Phashion::Image.new("reference_images/race/pos12.png")},
-  ]
+    {pos: 1,  images: ["pos1.png", "pos1-alt.png"]},
+    {pos: 2,  images: ["pos2.png"]},
+    {pos: 3,  images: ["pos3.png"]},
+    {pos: 4,  images: ["pos4.png", "pos4-alt.png"]},
+    {pos: 5,  images: ["pos5.png"]},
+    {pos: 6,  images: ["pos6.png", "pos6-alt.png"]},
+    {pos: 7,  images: ["pos7.png","pos7-alt.png"]},
+    {pos: 8,  images: ["pos8.png"]},
+    {pos: 9,  images: ["pos9.png", "pos9-alt.png"]},
+    {pos: 10, images: ["pos10.png", "pos10-alt.png"]},
+    {pos: 11, images: ["pos11.png", "pos11-alt.png"]},
+    {pos: 12, images: ["pos12.png"]},
+  ].each do |ref|
+    ref[:images] = ref[:images].map{|file| Phashion::Image.new("reference_images/race/#{file}") }
+  end
 
   def self.extract_postions(image)
-
+    result = {}
     STARTING_CROPS.each do |player, crop_xy|
       img = image.dup.crop(crop_xy[:x], crop_xy[:y], 36, 54).quantize(256, Magick::GRAYColorspace)
 
@@ -60,18 +59,22 @@ class RaceScreen
       end
 
       pos = REFERENCE_IMAGES.min_by do |reference|
-        phashion_image.distance_from(reference[:image])
+        min_distance(phashion_image, reference)
       end
 
-      img.quantize(256, Magick::GRAYColorspace).write("tmp-#{pos[:pos]}-distance-#{phashion_image.distance_from(pos[:image])}-#{player}-#{rand(256)}.png")
+      # For debugging:
+      # img.write("tmp-#{pos[:pos]}-distance-#{min_distance(phashion_image, pos)}-#{player}-#{rand(256)}.png")
+
+      if min_distance(phashion_image, pos) < 16
+        result[player] = {position: pos[:pos] }
+      end
     end
+    result
+  end
 
-    # Mask offset p1/
-    # X 41px
-    # Y 236px
-
-    # p3
-    # X 41px
-
+  def self.min_distance(image, reference)
+    reference[:images].map do |ref_image|
+      image.distance_from(ref_image)
+    end.min
   end
 end
