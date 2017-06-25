@@ -1,3 +1,4 @@
+require 'phashion'
 require './screenshot'
 require './screens/race_screen'
 require './screens/race_result_screen'
