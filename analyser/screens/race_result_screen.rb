@@ -12,26 +12,88 @@ class RaceResultScreen
 
       if centre_col_brightness > 20
         # Take orangy/greeny/blue pixels from leaderboard moves
-        pixels_that_look_like_rank_moves = screenshot.working.dup.get_pixels(75, 14, 1, 145).select do |pixel|
+        pixels_that_look_like_rank_moves = screenshot.working.get_pixels(75, 14, 1, 145).select do |pixel|
           mostly_red?(pixel) ||
           mostly_green?(pixel) ||
           mostly_blue?(pixel)
         end.count
 
-        pixels_that_look_like_rank_moves > 10
+        pixels_that_look_like_rank_moves < 10
       end
     end
   end
 
   def self.extract_event(screenshot)
+    # Get a 1px strip of blank scoreboard so we can analyse the colors for player positions
+    scoreboard = screenshot.working.get_pixels(209, 11, 1, 146)
 
+    # There's two things we need to work out
+    #  - Where is the player
+    #  - what position did the player come
+    player_postions = get_player_positions(scoreboard)
 
     {
+      data: player_postions,
       event_type: 'race_result_screen'
     }
   end
 
+  def self.get_player_positions(scoreboard)
+    results = { }
+
+    # We've got about 144px of scoreboard (146 actually)
+    # Which means on average about 12px per player row
+    # Simply sum the offset where we get a pixel of player
+    # colour and the position with the great qty of pixels
+    # is their position
+    scoreboard.each_with_index do |pixel, offset|
+      player = player_pixel_color(pixel)
+
+      if player
+        results[player] ||= {}
+        estimated_position = (offset / 12) + 1
+        results[player][estimated_position] ||= 0
+        results[player][estimated_position] += 1
+      end
+    end
+
+    results.each do |player, possible_positions|
+      position = possible_positions.select{ |position, likelihood| likelihood > 5 }.keys.first
+      if position
+        results[player] = {position: position}
+      else
+        results.delete(player)
+      end
+    end
+    results
+  end
+
   private
+
+  def self.player_pixel_color(pixel)
+    hue, sat, lum, alpha = pixel.to_hsla
+
+    # Good should be around ~[56.00000000000002, 240.4285714285714, 167.5, 1.0]
+    # Yellow
+    if hue > 50 && hue < 65 && lum > 120 && sat > 200
+      return :player_one
+    end
+
+    # Blue
+    if hue > 170 && hue < 190 && lum > 130 && sat > 190
+      return :player_two
+    end
+
+    # Red
+    if (hue < 10 || hue > 350) && sat > 180 && lum > 150
+      return :player_three
+    end
+
+    # Green
+    if (hue > 85 || hue < 100) && sat > 170 && lum > 140
+      return :player_four
+    end
+  end
 
   def self.mostly_red?(pixel)
     pixel.red > 40000 && pixel.green < 20000 && pixel.blue < 20000
