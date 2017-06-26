@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Kartalytics::ScoreBlock do
+describe Kartalytics::Fragment::ScoreBlock do
   let(:score_block) { described_class.new(image) }
 
   describe '#to_i' do

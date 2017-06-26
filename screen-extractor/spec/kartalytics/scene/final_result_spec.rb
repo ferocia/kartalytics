@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Kartalytics::FinalResult do
+describe Kartalytics::Scene::FinalResult do
   let(:image) { fixture 'images/final_result.jpg' }
   let(:final_result) { described_class.new(image) }
 

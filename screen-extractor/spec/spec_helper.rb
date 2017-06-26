@@ -1,7 +1,6 @@
 require 'bundler/setup'
 
-require_relative '../kartalytics/final_result.rb'
-require_relative '../kartalytics/score_block.rb'
+require_relative '../kartalytics/kartalytics.rb'
 
 RSpec.configure do |config|
   config.color = true

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Kartalytics::Digit do
+describe Kartalytics::Fragment::Digit do
   let(:digit) { described_class.new(image) }
 
   let(:zero) { fixture 'images/digit0.jpg' }
