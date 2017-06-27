@@ -1,4 +1,5 @@
 require_relative '../image_base'
+require_relative '../fragment/score_board_character'
 
 module Kartalytics
   module Scene
@@ -8,19 +9,28 @@ module Kartalytics
         validate_image_dimensions(1280, 720)
       end
 
-      # private
+      def characters
+        @characters ||= begin
+          character_positions.map do |x, y|
+            score_image = sub_image(x, y, Fragment::ScoreBoardCharacter::WIDTH, Fragment::ScoreBoardCharacter::HEIGHT)
+            Fragment::ScoreBoardCharacter.new(score_image).to_sym
+          end
+        end
+      end
 
-      # def score_y_positions
-      #   0.upto(11).map { |i| 62 + (52 * i) }
-      # end
-      #
-      # def score_x_positions
-      #   Array.new(score_y_positions.size, 927)
-      # end
-      #
-      # def score_positions
-      #   score_x_positions.zip(score_y_positions)
-      # end
+      private
+
+      def character_y_positions
+        0.upto(11).map { |i| 62 + (52 * i) }
+      end
+
+      def character_x_positions
+        Array.new(character_y_positions.size, 430)
+      end
+
+      def character_positions
+        character_x_positions.zip(character_y_positions)
+      end
     end
   end
 end

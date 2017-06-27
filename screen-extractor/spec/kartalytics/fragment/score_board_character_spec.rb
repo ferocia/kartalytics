@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Kartalytics::Scene::FinalResult do
+describe Kartalytics::Fragment::ScoreBoardCharacter do
   let(:image) { fixture 'images/final_result.jpg' }
   let(:final_result_scene) { described_class.new(image) }
 
