@@ -18,4 +18,12 @@ describe Kartalytics::Scene::FinalResult do
       expect(subject.rows).to eql 720
     end
   end
+
+  describe '#characters' do
+    subject { final_result_scene.characters }
+    it do
+      is_expected.to eql %i[baby_luigi lakitu tanooki_mario inkling_girl dry_bowser baby_rosalina
+                            donkey_kong rosalina mario black_yoshi white_yoshi light_blue_yoshi]
+    end
+  end
 end

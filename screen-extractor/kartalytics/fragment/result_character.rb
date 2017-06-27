@@ -3,7 +3,7 @@ require 'phashion'
 
 module Kartalytics
   module Fragment
-    class ScoreBoardCharacter < ImageBase
+    class FinalResultCharacter < ImageBase
       WIDTH = 24
       HEIGHT = 24
 
@@ -25,7 +25,7 @@ module Kartalytics
       end
 
       def is?(character)
-        Phashion::Image.new("characters/#{character}.jpg").duplicate?(phashion_image, threshold: 8)
+        Phashion::Image.new("phashion/result_characters/#{character}.jpg").duplicate?(phashion_image, threshold: 8)
       end
 
       def phashion_image

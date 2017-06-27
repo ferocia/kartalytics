@@ -1,5 +1,5 @@
 require_relative '../image_base'
-require_relative '../fragment/score_board_character'
+require_relative '../fragment/result_character'
 
 module Kartalytics
   module Scene
@@ -12,8 +12,8 @@ module Kartalytics
       def characters
         @characters ||= begin
           character_positions.map do |x, y|
-            score_image = sub_image(x, y, Fragment::ScoreBoardCharacter::WIDTH, Fragment::ScoreBoardCharacter::HEIGHT)
-            Fragment::ScoreBoardCharacter.new(score_image).to_sym
+            score_image = sub_image(x, y, Fragment::ResultCharacter::WIDTH, Fragment::ResultCharacter::HEIGHT)
+            Fragment::ResultCharacter.new(score_image).to_sym
           end
         end
       end
