@@ -18,10 +18,4 @@ describe Kartalytics::Scene::FinalResult do
       expect(subject.rows).to eql 720
     end
   end
-
-  describe '#scores' do
-    subject { final_result.scores }
-
-    it { is_expected.to eql [47, 47, 44, 27, 25, 25, 23, 21, 21, 19, 19, 10] }
-  end
 end
