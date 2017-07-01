@@ -4,6 +4,7 @@ require './screens/race_screen'
 require './screens/race_result_screen'
 require './screens/match_result_screen'
 require './screens/loading_screen'
+require './screens/intro_screen'
 
 class Analyser
   def self.analyse!(filename)
@@ -58,7 +59,8 @@ class Analyser
       LoadingScreen,
       RaceScreen,
       RaceResultScreen,
-      MatchResultScreen
+      MatchResultScreen,
+      IntroScreen
     ]
   end
 end
