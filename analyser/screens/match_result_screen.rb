@@ -1,13 +1,16 @@
 class MatchResultScreen
   # Strat:
-  #   Top left and bottom right should be red
-  def self.matches_image?(screenshot)
-    top_left_pixel = screenshot.working.dup.crop(0,0,7,7).resize(1,1).get_pixels(0,0,1,1).first
-    bottom_right_pixel = screenshot.working.dup.crop(292,161,7,7).resize(1,1).get_pixels(0,0,1,1).first
+  #   Compare with reference
+  REFERENCE = Phashion::Image.new("reference_images/match_result/reference.jpg")
 
-    (top_left_pixel.red > 40000 && bottom_right_pixel.red > 40000) &&
-      (top_left_pixel.green < 300 && bottom_right_pixel.green < 300) &&
-      (top_left_pixel.blue < 300 && bottom_right_pixel.blue < 300)
+  def self.matches_image?(screenshot)
+
+    img = screenshot.original.dup.crop(141, 63, 72, 56).black_threshold(50000, 50000, 50000)
+    file_path = '_tmp_delete_me.jpg'
+    img.write(file_path)
+    img = Phashion::Image.new(file_path)
+
+    img.distance_from(REFERENCE) < 10
   end
 
   def self.extract_event(screenshot)

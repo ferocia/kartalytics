@@ -10,17 +10,20 @@ class RaceScreen
         pixel.to_hsla[2]
       }.max
 
-      centre_col_brightness <= 20
+      centre_col_brightness <= 50
     end
   end
 
   def self.extract_event(screenshot)
     positions = extract_postions(screenshot.original)
 
-    {
-      event_type: 'race_screen',
-      data: positions
-    }
+    # No point sending event if no data
+    unless positions.empty?
+      {
+        event_type: 'race_screen',
+        data: positions
+      }
+    end
   end
 
   STARTING_CROPS = {

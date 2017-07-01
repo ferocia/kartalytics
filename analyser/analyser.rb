@@ -4,6 +4,7 @@ require './screens/race_screen'
 require './screens/race_result_screen'
 require './screens/match_result_screen'
 require './screens/loading_screen'
+require './screens/intro_screen'
 
 class Analyser
   def self.analyse!(filename)
@@ -28,6 +29,10 @@ class Analyser
       event = current_screen.extract_event(image)
 
       puts "Event #{event.inspect} extracted"
+
+      if event
+        event.merge!(timestamp: image.timestamp)
+      end
 
       return event
     end
@@ -54,7 +59,8 @@ class Analyser
       LoadingScreen,
       RaceScreen,
       RaceResultScreen,
-      MatchResultScreen
+      MatchResultScreen,
+      IntroScreen
     ]
   end
 end
