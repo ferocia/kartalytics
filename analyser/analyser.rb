@@ -1,5 +1,6 @@
 require 'phashion'
 require './screenshot'
+require './screens/fast_ignore'
 require './screens/race_screen'
 require './screens/race_result_screen'
 require './screens/match_result_screen'
@@ -56,9 +57,10 @@ class Analyser
   #   (attempt to gather positions/points for each player)
   def screens
     [
-      LoadingScreen,
+      FastIgnore,
       RaceScreen,
       RaceResultScreen,
+      LoadingScreen,
       MatchResultScreen,
       IntroScreen
     ]
