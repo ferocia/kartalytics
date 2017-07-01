@@ -17,10 +17,13 @@ class RaceScreen
   def self.extract_event(screenshot)
     positions = extract_postions(screenshot.original)
 
-    {
-      event_type: 'race_screen',
-      data: positions
-    }
+    # No point sending event if no data
+    unless positions.empty?
+      {
+        event_type: 'race_screen',
+        data: positions
+      }
+    end
   end
 
   STARTING_CROPS = {
