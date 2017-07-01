@@ -10,7 +10,7 @@ class RaceScreen
         pixel.to_hsla[2]
       }.max
 
-      centre_col_brightness <= 20
+      centre_col_brightness <= 50
     end
   end
 

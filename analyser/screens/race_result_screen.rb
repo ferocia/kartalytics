@@ -10,7 +10,7 @@ class RaceResultScreen
         pixel.to_hsla[2]
       }.max
 
-      if centre_col_brightness > 20
+      if centre_col_brightness > 50
         # Take orangy/greeny/blue pixels from leaderboard moves
         pixels_that_look_like_rank_moves = screenshot.working.get_pixels(75, 14, 1, 145).select do |pixel|
           mostly_red?(pixel) ||
@@ -25,6 +25,7 @@ class RaceResultScreen
 
   def self.extract_event(screenshot)
     # Get a 1px strip of blank scoreboard so we can analyse the colors for player positions
+
     scoreboard = screenshot.working.get_pixels(209, 11, 1, 146)
 
     # There's two things we need to work out
@@ -47,7 +48,10 @@ class RaceResultScreen
     # colour and the position with the great qty of pixels
     # is their position
     scoreboard.each_with_index do |pixel, offset|
+      # Debug:
+      # puts "#{(offset / 12)+1} #{pixel.to_hsla.inspect}"
       player = player_pixel_color(pixel)
+
 
       if player
         results[player] ||= {}
@@ -85,12 +89,12 @@ class RaceResultScreen
     end
 
     # Red
-    if (hue < 10 || hue > 350) && sat > 180 && lum > 150
+    if (hue < 10 || hue > 340) && sat > 170 && lum > 150
       return :player_three
     end
 
     # Green
-    if (hue > 85 || hue < 100) && sat > 170 && lum > 140
+    if (hue > 85 && hue < 110) && sat > 170 && lum > 140
       return :player_four
     end
   end
