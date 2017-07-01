@@ -63,8 +63,13 @@ class IntroScreen
     course[:image] = Phashion::Image.new("reference_images/intro/#{course[:file]}.jpg")
   end
 
+  REFERENCE = Phashion::Image.new("reference_images/intro/intro_reference.jpg")
+
   def self.matches_image?(screenshot)
-    true
+    image = screenshot.original.dup.crop(111, 589, 44, 37).write("tmp.jpg")
+    image = Phashion::Image.new("tmp.jpg")
+
+    image.distance_from(REFERENCE) < 10
   end
 
   def self.extract_event(screenshot)
@@ -76,13 +81,16 @@ class IntroScreen
       image.distance_from(course[:image])
     end
 
-    screenshot.original.write("#{likely_course[:file]}-#{image.distance_from(likely_course[:image])}-#{rand(256)}.jpg")
+    # Debug
+    # screenshot.original.write("#{likely_course[:file]}-#{image.distance_from(likely_course[:image])}-#{rand(256)}.jpg")
 
-    {
-      event: 'intro_screen',
-      data: {
-        course_name: likely_course[:name]
+    if image.distance_from(likely_course[:image]) < 10
+      {
+        event: 'intro_screen',
+        data: {
+          course_name: likely_course[:name]
+        }
       }
-    }
+    end
   end
 end
