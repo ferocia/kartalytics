@@ -26,6 +26,10 @@ class Screenshot
     @filename
   end
 
+  def timestamp
+    File.ctime(@filename).iso8601(3)
+  end
+
   def splitscreen?
     width  = original.columns
     height = original.rows

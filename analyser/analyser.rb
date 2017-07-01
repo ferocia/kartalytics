@@ -29,6 +29,10 @@ class Analyser
 
       puts "Event #{event.inspect} extracted"
 
+      if event
+        event.merge!(timestamp: image.timestamp)
+      end
+
       return event
     end
   end
