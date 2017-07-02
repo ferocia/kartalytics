@@ -16,10 +16,6 @@ class Screenshot
   def initialize(filename)
     @filename = filename
     @original = Magick::Image.read(filename).first
-    # This takes about ~60ms
-    @working = @original.resize_to_fit(WORKING_WIDTH)
-    # If necessary, this guy completes in half the time:
-    # @working = @original.resize(300, 168, Magick::TriangleFilter)
   end
 
   def to_s
@@ -28,6 +24,15 @@ class Screenshot
 
   def timestamp
     File.ctime(@filename).iso8601(3)
+  end
+
+  def working
+    # This takes about ~60ms
+
+    # If necessary, this guy completes in half the time:
+    # @working = @original.resize(300, 168, Magick::TriangleFilter)
+
+    @working ||= @original.dup.resize_to_fit(WORKING_WIDTH)
   end
 
   def splitscreen?

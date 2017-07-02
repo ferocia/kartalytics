@@ -28,7 +28,7 @@ class Analyser
       is_screen
     end
 
-    sort_image(image, current_screen)
+    # sort_image(image, current_screen)
 
     if current_screen
       start = Time.now
