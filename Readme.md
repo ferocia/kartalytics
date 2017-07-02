@@ -27,7 +27,7 @@ STEP 1:
 sudo iptables -t raw -A PREROUTING -p udp -m length --length 28 -j DROP
 
 STEP 2:
-ffmpeg -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&overrun_nonfatal=1&fifo_size=50000000" -vf fps=2 -qscale:v 5 best%04d.jpg
+ffmpeg -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&overrun_nonfatal=1&fifo_size=50000000" -vf fps=2 -qscale:v 5 out%04d.jpg
 
 
 
