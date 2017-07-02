@@ -57,13 +57,17 @@ class RaceScreen
   def self.extract_postions(image)
     result = {}
     STARTING_CROPS.each do |player, crop_xy|
-      img = image.dup.crop(crop_xy[:x], crop_xy[:y], 36, 54).quantize(256, Magick::GRAYColorspace, Magick::NoDitherMethod)
+      crop = image.dup.crop!(crop_xy[:x], crop_xy[:y], 36, 54)
+      img = crop.quantize(256, Magick::GRAYColorspace, Magick::NoDitherMethod)
+      crop.destroy!
 
       phashion_image ||= begin
         file_path = '_tmp_delete_me.jpg'
         img.write(file_path)
+        img.destroy!
         Phashion::Image.new(file_path)
       end
+
 
       pos = REFERENCE_IMAGES.min_by do |reference|
         min_distance(phashion_image, reference)

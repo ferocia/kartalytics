@@ -26,13 +26,18 @@ class Screenshot
     File.ctime(@filename).iso8601(3)
   end
 
+  def destroy!
+    @original.destroy!
+    @working.destroy! if defined?(@working)
+  end
+
   def working
     # This takes about ~60ms
 
     # If necessary, this guy completes in half the time:
     # @working = @original.resize(300, 168, Magick::TriangleFilter)
 
-    @working ||= @original.dup.resize_to_fit(WORKING_WIDTH)
+    @working ||= @original.dup.resize_to_fit!(WORKING_WIDTH)
   end
 
   def splitscreen?
@@ -49,9 +54,5 @@ class Screenshot
 
     @is_splitscreen = centre_brightness <= 20 && ( top_left_brightness > 20 || bottom_left_brightness > 20)
     @is_splitscreen
-  end
-
-  def write_tmp
-    @image.write('tmp.jpg')
   end
 end

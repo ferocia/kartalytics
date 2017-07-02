@@ -20,6 +20,7 @@ class Analyser
   end
 
   def analyse!
+    puts "Heap sorted length: #{GC.stat[:heap_allocated_pages]}"
     current_screen = screens.find do |screen|
       start = Time.now
       is_screen = screen.matches_image?(image)
@@ -41,6 +42,8 @@ class Analyser
       puts "Processed #{image} (#{(Time.now - start).round(4)}) #{current_screen.name} => #{event.inspect} "
       return event
     end
+  ensure
+    @image.destroy!
   end
 
   def sort_image(image, current_screen)
