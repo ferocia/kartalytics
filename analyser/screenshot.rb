@@ -31,6 +31,7 @@ class Screenshot
   end
 
   def splitscreen?
+    return @is_splitscreen if defined?(@is_splitscreen)
     width  = original.columns
     height = original.rows
 
@@ -41,14 +42,11 @@ class Screenshot
     h, s, top_left_brightness    = original.get_pixels(0, 0, 1, 1).first.to_hsla
     h, s, bottom_left_brightness = original.get_pixels(height - 1, 0, 1, 1).first.to_hsla
 
-    centre_brightness <= 20 && ( top_left_brightness > 20 || bottom_left_brightness > 20)
+    @is_splitscreen = centre_brightness <= 20 && ( top_left_brightness > 20 || bottom_left_brightness > 20)
+    @is_splitscreen
   end
 
   def write_tmp
     @image.write('tmp.jpg')
-  end
-
-  def ten_px
-    @ten_px = working.resize_to_fit(10)
   end
 end
