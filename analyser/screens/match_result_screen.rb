@@ -4,7 +4,7 @@ class MatchResultScreen
   REFERENCE = Phashion::Image.new("reference_images/match_result/reference.jpg")
 
   def self.matches_image?(screenshot)
-    crop = screenshot.original.dup.crop!(141, 63, 72, 56)
+    crop = screenshot.original.dup.crop!(37, 28, 99, 26)
     img = crop.black_threshold(50000, 50000, 50000)
 
     file_path = '_tmp_delete_me.jpg'
