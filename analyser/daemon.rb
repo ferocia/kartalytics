@@ -3,10 +3,10 @@ require "uri"
 require 'active_support/all'
 require './analyser'
 
-glob = "dump/out*300.jpg"
+glob = "dump/out*.jpg"
 
 league_id = 'LcqfxfuOjc2CypJr908iOhI2'
-kartistics_url = 'http://localhost:3000/api/kartalytics/ingest'
+kartistics_url = 'http://192.168.0.7:3000/api/kartalytics/ingest'
 
 uri = URI.parse(kartistics_url)
 
@@ -17,7 +17,7 @@ loop do
     event = Analyser.analyse!(filename)
 
     puts "#{File.basename(filename)} => #{event.inspect}"
-    File.rename(filename, filename.to_s.sub('processed', 'out'))
+    File.rename(filename, filename.to_s.sub('out', 'processed'))
 
     events.push event
   end
