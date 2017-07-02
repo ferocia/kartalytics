@@ -1,4 +1,5 @@
 require 'phashion'
+require 'time'
 require './screenshot'
 require './screens/fast_ignore'
 require './screens/race_screen'
@@ -22,7 +23,7 @@ class Analyser
     current_screen = screens.find do |screen|
       start = Time.now
       is_screen = screen.matches_image?(image)
-      puts "Analysing for screen #{screen.name.to_s }took: #{Time.now - start}"
+      # puts "Analysing for screen #{screen.name.to_s} took: #{(Time.now - start).round(4)}"
 
       is_screen
     end
@@ -30,15 +31,14 @@ class Analyser
     sort_image(image, current_screen)
 
     if current_screen
-      puts "Filename #{image} is of type #{current_screen}"
+      start = Time.now
       event = current_screen.extract_event(image)
-
-      puts "Event #{event.inspect} extracted"
 
       if event
         event.merge!(timestamp: image.timestamp)
       end
 
+      puts "Processed #{image} (#{(Time.now - start).round(4)}) #{current_screen.name} => #{event.inspect} "
       return event
     end
   end
