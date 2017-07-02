@@ -13,7 +13,9 @@ uri = URI.parse(kartistics_url)
 loop do
 
   events = []
-  Dir.glob(glob).each do |filename|
+  Dir.glob(glob).sort_by {|file|
+    File.ctime(f)
+  }.each do |filename|
     event = Analyser.analyse!(filename)
 
     puts "#{File.basename(filename)} => #{event.inspect}"
