@@ -20,7 +20,8 @@ class Analyser
   end
 
   def analyse!
-    puts "Heap sorted length: #{GC.stat[:heap_allocated_pages]}"
+    # Debug for detecting memory leaks
+    # puts "Heap sorted length: #{GC.stat[:heap_allocated_pages]}"
     current_screen = screens.find do |screen|
       start = Time.now
       is_screen = screen.matches_image?(image)
