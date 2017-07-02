@@ -6,11 +6,15 @@ class RaceScreen
       width  = screenshot.original.columns
       height = screenshot.original.rows
 
-      centre_col_brightness = screenshot.original.get_pixels((width / 2) - 1, 0, 1, height / 8).map{|pixel|
+      centre_col_top_brightness = screenshot.original.get_pixels((width / 2) - 1, 0, 1, height / 8).map{|pixel|
         pixel.to_hsla[2]
       }.max
 
-      centre_col_brightness <= 50
+      centre_col_bot_brightness = screenshot.original.get_pixels((width / 2) - 1, (7.0 / 8) * height, 1, (height / 8) - 1).map{|pixel|
+        pixel.to_hsla[2]
+      }.max
+
+      centre_col_top_brightness <= 50 && centre_col_bot_brightness <= 50
     end
   end
 
