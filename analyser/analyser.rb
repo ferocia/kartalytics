@@ -20,7 +20,11 @@ class Analyser
 
   def analyse!
     current_screen = screens.find do |screen|
-      screen.matches_image?(image)
+      start = Time.now
+      is_screen = screen.matches_image?(image)
+      puts "Analysing for screen #{screen.name.to_s }took: #{Time.now - start}"
+
+      is_screen
     end
 
     sort_image(image, current_screen)

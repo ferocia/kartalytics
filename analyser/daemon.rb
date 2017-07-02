@@ -14,11 +14,12 @@ loop do
 
   events = []
   Dir.glob(glob).sort_by {|file|
-    File.ctime(f)
+    File.ctime(file)
   }.each do |filename|
+    start = Time.now
     event = Analyser.analyse!(filename)
 
-    puts "#{File.basename(filename)} => #{event.inspect}"
+    puts "#{File.basename(filename)} => #{event.inspect} - Time taken: #{Time.now - start}"
     File.rename(filename, filename.to_s.sub('out', 'processed'))
 
     events.push event
