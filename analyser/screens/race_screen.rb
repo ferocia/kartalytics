@@ -6,11 +6,15 @@ class RaceScreen
       width  = screenshot.original.columns
       height = screenshot.original.rows
 
-      centre_col_brightness = screenshot.original.get_pixels((width / 2) - 1, 0, 1, height / 8).map{|pixel|
+      centre_col_top_brightness = screenshot.original.get_pixels((width / 2) - 1, 0, 1, height / 8).map{|pixel|
         pixel.to_hsla[2]
       }.max
 
-      centre_col_brightness <= 50
+      centre_col_bot_brightness = screenshot.original.get_pixels((width / 2) - 1, (7.0 / 8) * height, 1, (height / 8) - 1).map{|pixel|
+        pixel.to_hsla[2]
+      }.max
+
+      centre_col_top_brightness <= 50 && centre_col_bot_brightness <= 50
     end
   end
 
@@ -53,13 +57,17 @@ class RaceScreen
   def self.extract_postions(image)
     result = {}
     STARTING_CROPS.each do |player, crop_xy|
-      img = image.dup.crop(crop_xy[:x], crop_xy[:y], 36, 54).quantize(256, Magick::GRAYColorspace)
+      crop = image.dup.crop!(crop_xy[:x], crop_xy[:y], 36, 54)
+      img = crop.quantize(256, Magick::GRAYColorspace, Magick::NoDitherMethod)
+      crop.destroy!
 
       phashion_image ||= begin
         file_path = '_tmp_delete_me.jpg'
         img.write(file_path)
+        img.destroy!
         Phashion::Image.new(file_path)
       end
+
 
       pos = REFERENCE_IMAGES.min_by do |reference|
         min_distance(phashion_image, reference)

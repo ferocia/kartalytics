@@ -1,4 +1,5 @@
 require 'phashion'
+require 'time'
 require './screenshot'
 require './screens/fast_ignore'
 require './screens/race_screen'
@@ -19,24 +20,31 @@ class Analyser
   end
 
   def analyse!
+    # Debug for detecting memory leaks
+    # puts "Heap sorted length: #{GC.stat[:heap_allocated_pages]}"
     current_screen = screens.find do |screen|
-      screen.matches_image?(image)
+      start = Time.now
+      is_screen = screen.matches_image?(image)
+      # puts "Analysing for screen #{screen.name.to_s} took: #{(Time.now - start).round(4)}"
+
+      is_screen
     end
 
-    sort_image(image, current_screen)
+    # sort_image(image, current_screen)
 
     if current_screen
-      puts "Filename #{image} is of type #{current_screen}"
+      start = Time.now
       event = current_screen.extract_event(image)
-
-      puts "Event #{event.inspect} extracted"
 
       if event
         event.merge!(timestamp: image.timestamp)
       end
 
+      puts "Processed #{image} (#{(Time.now - start).round(4)}) #{current_screen.name} => #{event.inspect} "
       return event
     end
+  ensure
+    @image.destroy!
   end
 
   def sort_image(image, current_screen)
