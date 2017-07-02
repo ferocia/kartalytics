@@ -57,7 +57,7 @@ class RaceScreen
   def self.extract_postions(image)
     result = {}
     STARTING_CROPS.each do |player, crop_xy|
-      img = image.dup.crop(crop_xy[:x], crop_xy[:y], 36, 54).quantize(256, Magick::GRAYColorspace)
+      img = image.dup.crop(crop_xy[:x], crop_xy[:y], 36, 54).quantize(256, Magick::GRAYColorspace, Magick::NoDitherMethod)
 
       phashion_image ||= begin
         file_path = '_tmp_delete_me.jpg'
