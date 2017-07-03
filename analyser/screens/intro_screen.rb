@@ -94,7 +94,7 @@ class IntroScreen
 
     if phash.distance_from(likely_course[:image]) < 10
       {
-        event: 'intro_screen',
+        event_type: 'intro_screen',
         data: {
           course_name: likely_course[:name]
         }
