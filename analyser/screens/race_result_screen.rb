@@ -31,12 +31,25 @@ class RaceResultScreen
     # There's two things we need to work out
     #  - Where is the player
     #  - what position did the player come
-    player_postions = get_player_positions(scoreboard)
+    player_positions = get_player_positions(scoreboard)
+
+    data = add_points_information(player_positions)
 
     {
-      data: player_postions,
+      data: data,
       event_type: 'race_result_screen'
     }
+  end
+
+  POINTS_AWARDED = [15, 12, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+
+  def self.add_points_information(player_positions)
+    player_positions.keys.each do |player|
+      player_positions[player] = player_positions[player].merge(
+        points: POINTS_AWARDED[player_positions[player][:position] - 1]
+      )
+    end
+    player_positions
   end
 
   def self.get_player_positions(scoreboard)
