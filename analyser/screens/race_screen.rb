@@ -22,20 +22,32 @@ class RaceScreen
     positions = extract_postions(screenshot.original)
 
     # No point sending event if no data
+    data = add_is_finished_status(screenshot.original, positions)
+
     unless positions.empty?
       {
         event_type: 'race_screen',
-        data: positions
+        data: data
       }
     end
   end
 
-  STARTING_CROPS = {
+  POSITION_CROP_XY = {
     player_one:   { x: 57, y: 239 },
     player_two:   { x: 1167, y: 239 },
     player_three: { x: 57, y: 599 },
     player_four:  { x: 1167, y: 599 }
   }
+
+
+  FINISH_CROP_XY = {
+    player_one:   { x: 152, y: 120 },
+    player_two:   { x: 793, y: 120 },
+    player_three: { x: 152, y: 481 },
+    player_four:  { x: 793, y: 481 }
+  }
+
+  FINISH_REFERENCE = Phashion::Image.new("reference_images/race/finished.jpg")
 
   REFERENCE_IMAGES = [
     {pos: 1,  images: ["pos1.png", "pos1-alt.png"]},
@@ -49,14 +61,33 @@ class RaceScreen
     {pos: 9,  images: ["pos9.png", "pos9-alt.png"]},
     {pos: 10, images: ["pos10.png", "pos10-alt.png"]},
     {pos: 11, images: ["pos11.png", "pos11-alt.png"]},
-    {pos: 12, images: ["pos12.png"]},
+    {pos: 12, images: ["pos12.png", 'pos12-alt.jpg']},
   ].each do |ref|
     ref[:images] = ref[:images].map{|file| Phashion::Image.new("reference_images/race/#{file}") }
   end
 
+
+  def self.add_is_finished_status(image, positions)
+    FINISH_CROP_XY.keys.each do |player, position|
+      crop = image.dup.crop!(FINISH_CROP_XY[player][:x], FINISH_CROP_XY[player][:y], 59, 68)
+      img = crop.black_threshold(62000, 62000, 62000)
+      crop.destroy!
+
+      img.write("tmp.jpg")
+      img.destroy!
+      phash = Phashion::Image.new('tmp.jpg')
+
+      if phash.distance_from(FINISH_REFERENCE) < 20
+        positions[player] ||= {}
+        positions[player][:status] = 'finish'
+      end
+    end
+    positions
+  end
+
   def self.extract_postions(image)
     result = {}
-    STARTING_CROPS.each do |player, crop_xy|
+    POSITION_CROP_XY.each do |player, crop_xy|
       crop = image.dup.crop!(crop_xy[:x], crop_xy[:y], 36, 54)
       img = crop.quantize(256, Magick::GRAYColorspace, Magick::NoDitherMethod)
       crop.destroy!
