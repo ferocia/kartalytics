@@ -22,7 +22,7 @@ loop do
     event = Analyser.analyse!(filename)
 
     puts "#{File.basename(filename)} => #{event.inspect} - Time taken: #{Time.now - start}"
-    File.rename(filename, filename.to_s.sub('out', 'processed'))
+    File.unlink(filename)
 
     if event
       events.push event
