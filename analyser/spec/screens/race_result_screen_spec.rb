@@ -22,10 +22,10 @@ describe RaceResultScreen do
 
     it 'should extract all player positions correctly' do
       is_expected.to eq({
-        player_one: {position: 11},
-        player_three: {position: 12},
-        player_two: {position: 5},
-        player_four: {position: 1}
+        player_one: {position: 11, points: 2},
+        player_three: {position: 12, points: 1},
+        player_two: {position: 5, points: 8},
+        player_four: {position: 1, points: 15}
       })
     end
   end
