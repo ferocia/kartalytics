@@ -35,10 +35,12 @@ class RaceResultScreen
 
     data = add_points_information(player_positions)
 
-    {
-      data: data,
-      event_type: 'race_result_screen'
-    }
+    unless data.empty?
+      {
+        data: data,
+        event_type: 'race_result_screen'
+      }
+    end
   end
 
   POINTS_AWARDED = [15, 12, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
