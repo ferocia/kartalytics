@@ -15,18 +15,22 @@ Logger = ActiveSupport::Logger.new('analyser.log')
 loop do
   events = []
 
-  Dir.glob(glob).sort_by {|file|
-    File.ctime(file)
-  }.each do |filename|
-    start = Time.now
-    event = Analyser.analyse!(filename)
+  begin
+    Dir.glob(glob).sort_by {|file|
+      File.ctime(file)
+    }.each do |filename|
+      start = Time.now
+      event = Analyser.analyse!(filename)
 
-    puts "#{File.basename(filename)} => #{event.inspect} - Time taken: #{Time.now - start}"
-    File.unlink(filename)
+      puts "#{File.basename(filename)} => #{event.inspect} - Time taken: #{Time.now - start}"
+      File.unlink(filename)
 
-    if event
-      events.push event
+      if event
+        events.push event
+      end
     end
+  rescue Magick::ImageMagickError => e
+    puts "RMagick error #{e}"
   end
 
   if events.any?
