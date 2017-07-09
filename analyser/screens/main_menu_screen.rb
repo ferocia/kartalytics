@@ -21,7 +21,7 @@ class MainMenuScreen
 
   def self.extract_event(screenshot)
     {
-      event_type: 'main_menu'
+      event_type: 'main_menu_screen'
     }
   end
 end
