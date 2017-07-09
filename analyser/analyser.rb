@@ -2,6 +2,7 @@ require 'phashion'
 require 'time'
 require './screenshot'
 require './screens/fast_ignore'
+require './screens/main_menu_screen'
 require './screens/race_screen'
 require './screens/race_result_screen'
 require './screens/match_result_screen'
@@ -66,6 +67,7 @@ class Analyser
   def screens
     [
       FastIgnore,
+      MainMenuScreen,
       RaceScreen,
       RaceResultScreen,
       LoadingScreen,
