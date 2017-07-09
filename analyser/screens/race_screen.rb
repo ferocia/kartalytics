@@ -77,7 +77,7 @@ class RaceScreen
       img.destroy!
       phash = Phashion::Image.new('tmp.jpg')
 
-      if phash.distance_from(FINISH_REFERENCE) < 20
+      if phash.distance_from(FINISH_REFERENCE) < 16
         positions[player] ||= {}
         positions[player][:status] = 'finish'
       end
