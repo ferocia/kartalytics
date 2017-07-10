@@ -21,14 +21,62 @@ https://trac.ffmpeg.org/wiki/Create%20a%20thumbnail%20image%20every%20X%20second
 
 http://engineer2you.blogspot.com.au/2016/10/rasbperry-pi-ffmpeg-install-and-stream.html
 
+https://stackoverflow.com/questions/35338478/buffering-while-converting-stream-to-frames-with-ffmpeg
+
+https://www.raspberrypi.org/forums/viewtopic.php?f=70&t=152499
+
 ### How to run:
+
+http://ffmpeg.gusari.org/viewtopic.php?f=12&t=624
+
+sysctl -w net.core.rmem_max=26214400
+
+ffmpeg -i udp://239.255.42.42:5004?localaddr=169.254.244.97 -c copy -map 0 -f tee "[f=mpegts]udp://239.255.42.42:5004?localaddr=169.254.244.97|[f=mpegts]pipe:" | ffmpeg -f mpegts -skip_frame nokey -i pipe: -vsync 0 out%d.png
+
+
+ffmpeg -i  -c copy -map 0 -f tee "[f=mpegts]udp://239.255.42.42:5004?localaddr=169.254.244.97|[f=mpegts]pipe:" | ffmpeg -f mpegts -skip_frame nokey -i pipe: -vf select='not(mod(n,5))' -vsync 0 out%d.png
+
 
 STEP 1:
 sudo iptables -t raw -A PREROUTING -p udp -m length --length 28 -j DROP
 
-STEP 2:
-ffmpeg -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&overrun_nonfatal=1&fifo_size=50000000" -vf fps=2 -qscale:v 5 out%04d.jpg
+https://stackoverflow.com/questions/42612315/ffmpeg-extract-a-fram-from-a-live-stream-once-every-5-seconds
 
+STEP 2:
+All of these cause crappy pictures after a while
+ffmpeg -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=50000000" -vf fps=2 -qscale:v 5 out%04d.jpg
+
+ffmpeg -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=50000000"  -r 2 -f image2 'out%04d.jpg'
+
+ffmpeg -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=500000"  -r 2 -f image2 'out%04d.jpg'
+
+To test:
+
+avconv -skip_frame nokey -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=500000" -vf fps=2 -qscale:v 5 out%04d.jpg
+
+avconv -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=500000" -r 2 -s WxH -f image2 foo-%03d.jpeg
+
+ffmpeg -skip_frame nokey -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=500000" -c:v h264 -vf fps=2 -qscale:v 5 out%04d.jpg
+
+
+Currently testing:
+
+ffmpeg -skip_frame nokey -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=500000" -vf fps=2 -qscale:v 5 out%04d.jpg
+
+APPEARS GOOD!!
+
+ffmpeg -skip_frame nokey -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=500000" -vf fps=2 -qscale:v 5 out%04d.jpg
+
+### Raspberry pi config
+
+Improvements to raspberry pi performance:
+  - Disable GUI
+  - Ramdisk for tmp image writes
+  - https://www.linux-toys.com/?p=1153
+
+mount -t tmpfs -o size=1m tmpfs [MOUNTPOINT]
+
+http://www.jamescoyle.net/how-to/943-create-a-ram-disk-in-linux
 
 
 
