@@ -34,7 +34,6 @@ loop do
 
   if events.any?
     payload = {
-      league_id: league_id,
       events: events
     }
 
