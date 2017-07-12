@@ -1,5 +1,6 @@
 require "net/http"
 require "uri"
+require 'retriable'
 require 'active_support/all'
 require './analyser'
 
@@ -7,6 +8,7 @@ glob = "dump/out*.jpg"
 
 raise("You must set a POST_URL env variable - this is where kartalytics will send its data") if ENV['POST_URL'].blank?
 
+keep_files = !!ENV['KEEP_FILES']
 uri = URI.parse(ENV['POST_URL'])
 
 Logger = ActiveSupport::Logger.new('analyser.log')
@@ -22,7 +24,13 @@ loop do
       event = Analyser.analyse!(filename)
 
       puts "#{File.basename(filename)} => #{event.inspect} - Time taken: #{Time.now - start}"
-      File.unlink(filename)
+
+      if keep_files
+        new_name = filename.to_s.sub('out', 'processed')
+        File.rename(filename, new_name)
+      else
+        File.unlink(filename)
+      end
 
       if event
         events.push event
@@ -43,8 +51,10 @@ loop do
 
     puts request.body
 
-    response = Net::HTTP.start(uri.host, uri.port) do |http|
-      http.request request
+    Retriable.retriable on: [Timeout::Error, Errno::ECONNRESET] do
+      response = Net::HTTP.start(uri.host, uri.port) do |http|
+        http.request request
+      end
     end
 
     puts "Sending #{events.length} event(s). Response #{response.body}"
