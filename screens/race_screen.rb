@@ -41,10 +41,10 @@ class RaceScreen
 
 
   FINISH_CROP_XY = {
-    player_one:   { x: 152, y: 120 },
-    player_two:   { x: 793, y: 120 },
-    player_three: { x: 152, y: 481 },
-    player_four:  { x: 793, y: 481 }
+    player_one:   { x: 159, y: 127 },
+    player_two:   { x: 799, y: 127 },
+    player_three: { x: 159, y: 487 },
+    player_four:  { x: 799, y: 487 }
   }
 
   FINISH_REFERENCE = Phashion::Image.new("reference_images/race/finished.jpg")
@@ -69,15 +69,13 @@ class RaceScreen
 
   def self.add_is_finished_status(image, positions)
     FINISH_CROP_XY.keys.each do |player, position|
-      crop = image.dup.crop!(FINISH_CROP_XY[player][:x], FINISH_CROP_XY[player][:y], 59, 68)
-      img = crop.black_threshold(62000, 62000, 62000)
-      crop.destroy!
+      img = image.dup.crop!(FINISH_CROP_XY[player][:x], FINISH_CROP_XY[player][:y], 38, 38)
 
       img.write("tmp.jpg")
       img.destroy!
       phash = Phashion::Image.new('tmp.jpg')
 
-      if phash.distance_from(FINISH_REFERENCE) < 16
+      if phash.distance_from(FINISH_REFERENCE) < 10
         positions[player] ||= {}
         positions[player][:status] = 'finish'
       end
