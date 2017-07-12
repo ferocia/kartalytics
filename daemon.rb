@@ -50,6 +50,7 @@ loop do
     request.body = payload.to_json
 
     puts request.body
+    response = nil
 
     Retriable.retriable on: [Timeout::Error, Errno::ECONNRESET] do
       response = Net::HTTP.start(uri.host, uri.port) do |http|
