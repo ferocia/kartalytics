@@ -5,10 +5,9 @@ require './analyser'
 
 glob = "dump/out*.jpg"
 
-league_id = 'LcqfxfuOjc2CypJr908iOhI2'
-kartistics_url = 'http://192.168.0.7:3000/api/kartalytics/ingest'
+raise("You must set a POST_URL env variable - this is where kartalytics will send its data") if ENV['POST_URL'].blank?
 
-uri = URI.parse(kartistics_url)
+uri = URI.parse(ENV['POST_URL'])
 
 Logger = ActiveSupport::Logger.new('analyser.log')
 
