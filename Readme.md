@@ -13,6 +13,10 @@ It is comprised of 3 main parts:
 - [Analyser](#analyser)
 - [Brain](#brain)
 
+### Scope
+
+Kartalytics is designed to handle only 3 and 4 player VS matches at 150cc (what we play competitively).
+
 ## Recorder
 
 Its function is to capture the input stream of Mario Kart and save it out as sequence of snapshots. To do this we'll use the following hardware:
