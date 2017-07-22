@@ -1,6 +1,7 @@
 require 'phashion'
 require 'time'
 require './screenshot'
+require './screens/screen'
 require './screens/fast_ignore'
 require './screens/main_menu_screen'
 require './screens/race_screen'

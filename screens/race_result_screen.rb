@@ -1,4 +1,4 @@
-class RaceResultScreen
+class RaceResultScreen < Screen
   # Strat:
   #   Should be splitscreen but not first quarter black
   def self.matches_image?(screenshot)

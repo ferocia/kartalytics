@@ -1,4 +1,4 @@
-class RaceScreen
+class RaceScreen < Screen
   # Strat:
   #   First quarter of pixels in centre line should be consistently black
   def self.matches_image?(screenshot)
@@ -71,9 +71,7 @@ class RaceScreen
     FINISH_CROP_XY.keys.each do |player, position|
       img = image.dup.crop!(FINISH_CROP_XY[player][:x], FINISH_CROP_XY[player][:y], 38, 38)
 
-      img.write("tmp.jpg")
-      img.destroy!
-      phash = Phashion::Image.new('tmp.jpg')
+      phash = convert_to_phash(img)
 
       if phash.distance_from(FINISH_REFERENCE) < 10
         positions[player] ||= {}
@@ -90,13 +88,7 @@ class RaceScreen
       img = crop.quantize(256, Magick::GRAYColorspace, Magick::NoDitherMethod)
       crop.destroy!
 
-      phashion_image ||= begin
-        file_path = '_tmp_delete_me.jpg'
-        img.write(file_path)
-        img.destroy!
-        Phashion::Image.new(file_path)
-      end
-
+      phashion_image = convert_to_phash(img)
 
       pos = REFERENCE_IMAGES.min_by do |reference|
         min_distance(phashion_image, reference)

@@ -30,7 +30,7 @@ To setup the recorder:
 
   1. Install ffmpeg
   2. Thanks to [Danman](https://blog.danman.eu/new-version-of-lenkeng-hdmi-over-ip-extender-lkv373a/) you need to block 0 byte UDP packets that the encoder spits out - use this command: `sudo iptables -t raw -A PREROUTING -p udp -m length --length 28 -j DROP`
-  3. `> cd dump && ffmpeg -skip_frame nokey -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=500000" -vf fps=2 -qscale:v 5 out%04d.jpg`
+  3. `> cd dump && ffmpeg -skip_frame nokey -i "udp://239.255.42.42:5004?localaddr=169.254.244.97&buffer_size=128000&overrun_nonfatal=1&fifo_size=500000" -vf fps=5 -qscale:v 5 out%04d.jpg`
 
 You might need to change the IP addresses - my RaspberryPi v3 can maintain a 2fps (500ms) sample rate - faster computer you could increase the `fps=` sample more images.
 

@@ -11,7 +11,7 @@ raise("You must set a POST_URL env variable - this is where kartalytics will sen
 keep_files = !!ENV['KEEP_FILES']
 uri = URI.parse(ENV['POST_URL'])
 
-Logger = ActiveSupport::Logger.new('analyser.log')
+KartLog = ActiveSupport::Logger.new('analyser.log')
 
 loop do
   events = []
@@ -20,10 +20,12 @@ loop do
     Dir.glob(glob).sort_by {|file|
       File.ctime(file)
     }.each do |filename|
+      event = nil
+
       start = Time.now
       event = Analyser.analyse!(filename)
 
-      puts "#{File.basename(filename)} => #{event.inspect} - Time taken: #{Time.now - start}"
+      KartLog.info "#{File.basename(filename)} => #{event.inspect} - Time taken: #{Time.now - start}"
 
       if keep_files
         new_name = filename.to_s.sub('out', 'processed')
@@ -32,12 +34,11 @@ loop do
         File.unlink(filename)
       end
 
-      if event
-        events.push event
-      end
+
+      events.push(event) if event
     end
   rescue Magick::ImageMagickError => e
-    puts "RMagick error #{e}"
+    KartLog.error "RMagick error #{e}"
   end
 
   if events.any?
@@ -49,7 +50,7 @@ loop do
     request.content_type = "application/json"
     request.body = payload.to_json
 
-    puts request.body
+    KartLog.info request.body
     response = nil
 
     Retriable.retriable on: [Timeout::Error, Errno::ECONNRESET] do
@@ -58,8 +59,8 @@ loop do
       end
     end
 
-    puts "Sending #{events.length} event(s). Response #{response.body}"
+    KartLog.info "Sending #{events.length} event(s). Response #{response.body}"
   end
-  sleep(0.2)
+  sleep(0.1)
 end
 

@@ -1,4 +1,4 @@
-class IntroScreen
+class IntroScreen < Screen
   COURSES = [
     {file: 'sunshine_airport', name: 'Sunshine Airport'},
     {file: 'dolphin_shoals', name: 'Dolphin Shoals'},
@@ -66,24 +66,19 @@ class IntroScreen
   REFERENCE = Phashion::Image.new("reference_images/intro/intro_reference.jpg")
 
   def self.matches_image?(screenshot)
-    image = screenshot.original.dup.crop!(111, 589, 44, 37).write("tmp.jpg")
-    phash = Phashion::Image.new("tmp.jpg")
+    image = screenshot.original.dup.crop!(111, 589, 44, 37)
+
+    phash = convert_to_phash(image)
 
     phash.distance_from(REFERENCE) < 10
-  ensure
-    image.destroy!
   end
 
   def self.extract_event(screenshot)
     crop = screenshot.original.dup.crop!(258, 620, 350, 36)
     image = crop.black_threshold(50000, 50000, 50000)
-
-    image.write('tmp.jpg')
-
     crop.destroy!
-    image.destroy!
 
-    phash = Phashion::Image.new("tmp.jpg")
+    phash = convert_to_phash(image)
 
     likely_course = COURSES.min_by do |course|
       phash.distance_from(course[:image])
