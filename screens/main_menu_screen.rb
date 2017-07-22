@@ -1,4 +1,4 @@
-class MainMenuScreen
+class MainMenuScreen < Screen
   # Strat:
   #   Compare with reference
   REFERENCE = Phashion::Image.new("reference_images/main_menu.jpg")
@@ -7,14 +7,9 @@ class MainMenuScreen
     crop = screenshot.original.dup.crop!(220, 467, 122, 24)
     img = crop.white_threshold(35000, 35000, 35000)
 
-    file_path = 'tmp.jpg'
-
-    img.write(file_path)
-
-    img.destroy!
     crop.destroy!
 
-    phash = Phashion::Image.new(file_path)
+    phash = convert_to_phash(img)
 
     phash.distance_from(REFERENCE) < 10
   end

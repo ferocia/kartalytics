@@ -1,4 +1,4 @@
-class LoadingScreen
+class LoadingScreen < Screen
   # Strat:
   #   Shrink the image right down
   #   Quantize to reduce color space
