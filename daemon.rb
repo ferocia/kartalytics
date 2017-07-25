@@ -16,29 +16,29 @@ KartLog = ActiveSupport::Logger.new('analyser.log')
 loop do
   events = []
 
-  begin
-    Dir.glob(glob).sort_by {|file|
-      File.ctime(file)
-    }.each do |filename|
-      event = nil
+  Dir.glob(glob).sort_by {|file|
+    File.ctime(file)
+  }.each do |filename|
+    event = nil
 
-      start = Time.now
+    start = Time.now
+
+    begin
       event = Analyser.analyse!(filename)
 
       KartLog.info "#{File.basename(filename)} => #{event.inspect} - Time taken: #{Time.now - start}"
-
-      if keep_files
-        new_name = filename.to_s.sub('out', 'processed')
-        File.rename(filename, new_name)
-      else
-        File.unlink(filename)
-      end
-
-
-      events.push(event) if event
+    rescue Magick::ImageMagickError => e
+      KartLog.error "RMagick error #{e}"
     end
-  rescue Magick::ImageMagickError => e
-    KartLog.error "RMagick error #{e}"
+
+    if keep_files
+      new_name = filename.to_s.sub('out', 'processed')
+      File.rename(filename, new_name)
+    else
+      File.unlink(filename)
+    end
+
+    events.push(event) if event
   end
 
   if events.any?
