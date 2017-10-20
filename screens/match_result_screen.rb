@@ -1,16 +1,11 @@
 class MatchResultScreen < Screen
   # Strat:
   #   Compare with reference
-  REFERENCE = Phashion::Image.new("reference_images/match_result/reference.jpg")
+  REFERENCE_150 = Phashion::Image.new("reference_images/match_result/150.jpg")
+  REFERENCE_200 = Phashion::Image.new("reference_images/match_result/200.jpg")
 
   def self.matches_image?(screenshot)
-    crop = screenshot.original.dup.crop!(37, 28, 99, 26)
-    img = crop.black_threshold(50000, 50000, 50000)
-
-    crop.destroy!
-
-    phash = convert_to_phash(img)
-    phash.distance_from(REFERENCE) < 10
+    race_speed(screenshot) != nil
   end
 
   def self.extract_event(screenshot)
@@ -20,7 +15,7 @@ class MatchResultScreen < Screen
 
     unless player_positions.empty?
       {
-        data: player_positions,
+        data: player_positions.merge(speed: race_speed(screenshot)),
         event_type: 'match_result_screen'
       }
     end
@@ -57,6 +52,21 @@ class MatchResultScreen < Screen
   end
 
   private
+
+  def self.race_speed(screenshot)
+    crop = screenshot.original.dup.crop!(37, 28, 99, 26)
+    img = crop.black_threshold(50000, 50000, 50000)
+
+    crop.destroy!
+
+    phash = convert_to_phash(img)
+
+    if phash.distance_from(REFERENCE_150) < 10
+      '150cc'
+    elsif phash.distance_from(REFERENCE_200) < 10
+      '200cc'
+    end
+  end
 
   def self.player_pixel_color(pixel)
     hue, sat, lum, alpha = pixel.to_hsla
