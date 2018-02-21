@@ -23,7 +23,7 @@ class RaceScreen < Screen
 
     # No point sending event if no data
     data = add_is_finished_status(screenshot.original, positions)
-
+    data = player_items(screenshot.original, data)
     unless positions.empty?
       {
         event_type: 'race_screen',
@@ -109,4 +109,153 @@ class RaceScreen < Screen
       image.distance_from(ref_image)
     end.min
   end
+
+  # Item detection
+
+  LOWER_Y_OFFSET = 360
+
+  SMALL_ITEM = [34, 34]
+  LARGE_ITEM = [61, 61]
+
+  LEFT_SMALL_X = 49
+  UPPER_SMALL_Y = 32
+
+  LEFT_LARGE_X = 89
+  UPPER_LARGE_Y = 52
+
+  LOWER_SMALL_Y = UPPER_SMALL_Y + LOWER_Y_OFFSET
+  LOWER_LARGE_Y = UPPER_LARGE_Y + LOWER_Y_OFFSET
+
+  RIGHT_SMALL_X = 1197
+  RIGHT_LARGE_X = 1130
+
+
+  P1_SMALL = [LEFT_SMALL_X, UPPER_SMALL_Y, *SMALL_ITEM]
+  P1_LARGE = [LEFT_LARGE_X, UPPER_LARGE_Y, *LARGE_ITEM]
+
+  P2_SMALL = [RIGHT_SMALL_X, UPPER_SMALL_Y, *SMALL_ITEM]
+  P2_LARGE = [RIGHT_LARGE_X, UPPER_LARGE_Y, *LARGE_ITEM]
+
+  P3_SMALL = [LEFT_SMALL_X, LOWER_SMALL_Y, *SMALL_ITEM]
+  P3_LARGE = [LEFT_LARGE_X, LOWER_LARGE_Y, *LARGE_ITEM]
+
+  P4_SMALL = [RIGHT_SMALL_X, LOWER_SMALL_Y, *SMALL_ITEM]
+  P4_LARGE = [RIGHT_LARGE_X, LOWER_LARGE_Y, *LARGE_ITEM]
+
+  ITEM_LOCATIONS = {
+    # p1_small: P1_SMALL,
+    player_one: P1_LARGE,
+
+    # p2_small: P2_SMALL,
+    player_two: P2_LARGE,
+
+    # p3_small: P3_SMALL,
+    player_three: P3_LARGE,
+
+    # p4_small: P4_SMALL,
+    player_four: P4_LARGE,
+  }
+
+  ITEM_DETECTION_COORDS = {
+    player_one: [[64,   32], [118,  47]],
+    player_two: [[1214, 32], [1160, 47]],
+    player_three: [[65, 392], [118, 407]],
+    player_four: [[1214, 392], [1160, 407]],
+  }
+
+  def self.is_similar_colour?(px1, px2)
+    hd_thr = 20
+    s_thr = 120
+    h1, s1, l1, _ = px1.to_hsla
+    h2, s2, l2, _ = px2.to_hsla
+
+    hd = (h1 - h2).abs
+    sd = (s1 - s2).abs
+    if hd < hd_thr || hd > (360 - hd_thr) # account for 360 edge
+      if s1 > 120 && s2 > 120
+        return true
+      end
+    end
+    false
+  end
+
+  def self.get_corner_pixels(img, x, y, w, h)
+    tl = [x, y]
+    tr = [x + w, y]
+    bl = [x + w, y]
+    br = [x + w, y + h]
+
+    [tl, tr, bl, br].map do |(x, y)|
+      img.pixel_color(x, y)
+    end
+  end
+
+  ITEM_THRESHOLDS = {
+    'golden-mushroom' => 16,
+    'star' => 16,
+    'banana' => 15,
+    'banana-double' => 15,
+    'banana-triple' => 15,
+    'coin' => 15,
+    'mushroom-double' => 14,
+    'pirhana-plant' => 14,
+    'fire-flower' => 15,
+    'bullet' => 14,
+    'green-shell' => 14,
+  }
+  ITEM_THRESHOLDS.default = 13 # max
+
+  ITEM_REFERENCES = Hash[
+    Dir['reference_images/items/*.jpg'].map do |f|
+      [File.basename(f, '.jpg'), Phashion::Image.new(f)]
+    end.sort_by { |(n, _)| ITEM_THRESHOLDS[n] }
+  ]
+
+  def self.identify_item(phash_img)
+    ITEM_REFERENCES.each do |name_variant, ref_img|
+      dist = ref_img.distance_from(phash_img)
+      name, variant = name_variant.split('_', 2)
+      if dist < ITEM_THRESHOLDS[name]
+        return name
+      end
+    end
+    nil
+  end
+
+  def self.player_items(img, data)
+    data = data.clone
+    ITEM_DETECTION_COORDS.each do |player, detect_coords|
+      pixels = detect_coords.map { |(x, y)| img.pixel_color(x, y).to_hsla }
+
+      # Check 1: look for the whitest point of the highlight on the item circles
+      if !pixels.all? { |(h, s, l, a)| l > 180 && s < 150 }
+        next
+      end
+
+      # Check 2: make sure at least 3 the corner pixels are similar and over saturation of 50
+
+      coords = ITEM_LOCATIONS[player]
+      pixels = get_corner_pixels(img, *coords)
+      first, *others = pixels
+      count = others.count { |px| is_similar_colour?(first, px) }
+      if count >= 2 && pixels.all? { |px| px.to_hsla[1] > 50 }
+
+        # crop in so we have less background noise to deal with
+        crop_delta = if coords.last == 34 # small
+          [10, 10, -20, -20]
+        else
+          [15, 15, -30, -30]
+        end
+
+        inset_coords = coords.zip(crop_delta).map { |a, b| a + b}
+
+        maybe_item_phash = convert_to_phash(img.crop(*inset_coords))
+
+        data[player] ||= {}
+        data[player][:item] = identify_item(maybe_item_phash)
+      end
+    end
+    data
+  end
+
 end
