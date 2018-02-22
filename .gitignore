@@ -1,3 +1,4 @@
 dump/*.jpg
 analyser.log
 tmp.jpg
+.DS_Store
