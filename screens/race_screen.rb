@@ -191,19 +191,16 @@ class RaceScreen < Screen
   end
 
   ITEM_THRESHOLDS = {
-    'golden-mushroom' => 16,
-    'star' => 16,
-    'banana' => 15,
-    'banana-double' => 15,
-    'banana-triple' => 15,
-    'coin' => 15,
+    'banana' => 14,
     'mushroom-double' => 14,
     'pirhana-plant' => 14,
-    'fire-flower' => 15,
     'bullet' => 14,
+    'mushroom-triple' => 14,
     'green-shell' => 14,
+    'coin' => 15,
+    'crazy-eight' => 16,
   }
-  ITEM_THRESHOLDS.default = 13 # max
+  ITEM_THRESHOLDS.default = 12 # max
 
   ITEM_REFERENCES = Hash[
     Dir['reference_images/items/*.jpg'].map do |f|
@@ -241,15 +238,11 @@ class RaceScreen < Screen
       if count >= 2 && pixels.all? { |px| px.to_hsla[1] > 50 }
 
         # crop in so we have less background noise to deal with
-        crop_delta = if coords.last == 34 # small
-          [10, 10, -20, -20]
-        else
-          [15, 15, -30, -30]
-        end
+        crop_delta = [10, 10, -20, -20]
 
         inset_coords = coords.zip(crop_delta).map { |a, b| a + b}
 
-        maybe_item_phash = convert_to_phash(img.crop(*inset_coords))
+        maybe_item_phash = convert_to_phash(img.crop(*inset_coords).level(0.60 * Magick::QuantumRange, 0.75 * Magick::QuantumRange))
 
         data[player] ||= {}
         data[player][:item] = identify_item(maybe_item_phash)

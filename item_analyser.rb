@@ -1,26 +1,22 @@
 require './analyser'
 
 thresholds = {
-  'golden-mushroom' => 16,
-  'star' => 16,
-  'banana' => 15,
-  'banana-double' => 15,
-  'banana-triple' => 15,
+  'banana' => 14,
   'coin' => 15,
   'mushroom-double' => 14,
   'pirhana-plant' => 14,
-  'fire-flower' => 15,
   'bullet' => 14,
+  'mushroom-triple' => 14,
   'green-shell' => 14,
+  'crazy-eight' => 16,
 }
-thresholds.default = 13 # max
+thresholds.default = 12 # max
 
 items = Hash[
   Dir['reference_images/items/*.jpg'].map do |f|
     [File.basename(f, '.jpg'), Phashion::Image.new(f)]
   end.sort_by { |(n, _)| thresholds[n] }
 ]
-
 
 Dir['items/*.jpg'].each do |f|
   found = false
@@ -31,6 +27,7 @@ Dir['items/*.jpg'].each do |f|
       p [f, name, variant, dist]
       FileUtils.mkdir_p("classified_items/#{name}/")
       FileUtils.copy(f, "classified_items/#{name}/#{variant}_#{dist}_#{File.basename(f)}")
+      FileUtils.copy(f, "classified_items/unknown/#{File.basename(f, '.jpg')}_#{name}.jpg")
       found = true
       break
     end

@@ -33,16 +33,16 @@ P4_SMALL = [RIGHT_SMALL_X, LOWER_SMALL_Y, *SMALL_ITEM]
 P4_LARGE = [RIGHT_LARGE_X, LOWER_LARGE_Y, *LARGE_ITEM]
 
 ITEM_LOCATIONS = {
-  p1_small: P1_SMALL,
+  # p1_small: P1_SMALL,
   p1_large: P1_LARGE,
 
-  p2_small: P2_SMALL,
+  # p2_small: P2_SMALL,
   p2_large: P2_LARGE,
 
-  p3_small: P3_SMALL,
+  # p3_small: P3_SMALL,
   p3_large: P3_LARGE,
 
-  p4_small: P4_SMALL,
+  # p4_small: P4_SMALL,
   p4_large: P4_LARGE,
 }
 
@@ -87,7 +87,9 @@ def is_similar_colour?(px1, px2)
   false
 end
 
-Dir.glob('./training-data-2/race3*.jpg').each_with_index do |screen, index|
+recently_seen = []
+
+Dir.glob('./training-data-2/race*.jpg').each_with_index do |screen, index|
   img = Magick::Image.read(screen).first
 
   ITEM_LOCATIONS.each do |k, l|
@@ -106,7 +108,6 @@ Dir.glob('./training-data-2/race3*.jpg').each_with_index do |screen, index|
     pixels = get_corner_pixels(img, *l)
     first, *others = pixels
     count = others.count { |px| is_similar_colour?(first, px) }
-    puts "#{path}\t#{k}"
 
     if count >= 2 && pixels.all? { |px| px.to_hsla[1] > 50 }
       crop_delta = if l.last == 34
@@ -114,10 +115,27 @@ Dir.glob('./training-data-2/race3*.jpg').each_with_index do |screen, index|
         [10, 10, -20, -20]
       else
         [15, 15, -30, -30]
-        # [20, 10, -40, -20]
+        [10, 10, -20, -20]
       end
-      cropped = img.crop(*(l.zip(crop_delta).map { |a, b| a + b}))
-      cropped.write(path)
+      cropped = img.crop(*(l.zip(crop_delta).map { |a, b| a + b})).level(0.60 * Magick::QuantumRange, 0.75 * Magick::QuantumRange)
+
+      cropped.write("dump/tmp.jpg")
+      phash = Phashion::Image.new('dump/tmp.jpg')
+
+      puts "#{path}\t#{k}"
+
+      dist = 0
+      if (existing_path, _ = recently_seen.find { |(_, hash)| (dist = hash.distance_from(phash)) <= 13 })
+        # path, _ = existing_path.split('.', 2)
+        # cropped.write("#{path}_#{File.basename(screen, '.jpg')}_#{dist}.jpg")
+        cropped.write(path)
+      else
+        recently_seen.unshift([path, phash])
+        while recently_seen.length > 500
+          recently_seen.pop
+        end
+        cropped.write(path)
+      end
       cropped.destroy!
 
       # cropped = img.crop(*l)
