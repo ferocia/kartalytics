@@ -221,16 +221,8 @@ class RaceScreen < Screen
 
   def self.player_items(img, data)
     data = data.clone
+
     ITEM_DETECTION_COORDS.each do |player, detect_coords|
-      pixels = detect_coords.map { |(x, y)| img.pixel_color(x, y).to_hsla }
-
-      # Check 1: look for the whitest point of the highlight on the item circles
-      if !pixels.all? { |(h, s, l, a)| l > 180 && s < 150 }
-        next
-      end
-
-      # Check 2: make sure at least 3 the corner pixels are similar and over saturation of 50
-
       coords = ITEM_LOCATIONS[player]
       pixels = get_corner_pixels(img, *coords)
       first, *others = pixels
@@ -244,8 +236,11 @@ class RaceScreen < Screen
 
         maybe_item_phash = convert_to_phash(img.crop(*inset_coords).level(0.60 * Magick::QuantumRange, 0.75 * Magick::QuantumRange))
 
-        data[player] ||= {}
-        data[player][:item] = identify_item(maybe_item_phash)
+        item = identify_item(maybe_item_phash)
+        if item
+          data[player] ||= {}
+          data[player][:item] = item
+        end
       end
     end
     data
