@@ -61,6 +61,6 @@ loop do
 
     KartLog.info "Sending #{events.length} event(s). Response #{response.body}"
   end
-  sleep(0.1)
+  sleep(0.02)
 end
 
