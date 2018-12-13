@@ -17,7 +17,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    retriable (3.0.2)
     rmagick (2.16.0)
     rspec (3.6.0)
       rspec-core (~> 3.6.0)
@@ -44,9 +43,8 @@ DEPENDENCIES
   activesupport
   phashion
   pry
-  retriable
   rmagick
   rspec
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

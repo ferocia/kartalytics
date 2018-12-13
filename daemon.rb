@@ -1,6 +1,5 @@
 require "net/http"
 require "uri"
-require 'retriable'
 require 'active_support/all'
 require './analyser'
 
@@ -53,13 +52,14 @@ loop do
     KartLog.info request.body
     response = nil
 
-    Retriable.retriable on: [Timeout::Error, Errno::ECONNRESET] do
+    begin
       response = Net::HTTP.start(uri.host, uri.port) do |http|
         http.request request
       end
+      KartLog.info "Sending #{events.length} event(s). Response #{response.body}"
+    rescue => e
+      KartLog.error "Exception sending request: #{e}"
     end
-
-    KartLog.info "Sending #{events.length} event(s). Response #{response.body}"
   end
   sleep(0.02)
 end
