@@ -9,7 +9,7 @@ gem 'jbuilder'
 gem 'newrelic_rpm'
 gem 'pg'
 
-gem 'rails'
+gem 'rails', '5.1.6.2'
 gem 'unicorn'
 
 gem 'googlecharts'

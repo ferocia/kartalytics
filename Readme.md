@@ -17,7 +17,7 @@ It is comprised of 3 main parts:
 
 ### Scope
 
-Kartalytics is designed to handle only 3 and 4 player VS matches at 150cc (what we play competitively).
+Kartalytics is designed to handle only 3 and 4 player VS matches at 200cc (what we play competitively).
 
 ## Recorder
 
