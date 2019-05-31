@@ -73,14 +73,17 @@ Notice that the `match_result_screen` gets possibly incomplete data - animations
 ### Running
 
 ```
+> cd analyser
 > bundle
 > POST_URL=http://your-brain-location/new_events ruby daemon.rb
 ```
 
 For debugging purposes you can also set `KEEP_FILES=true` - this will instuct the daemon not to remove processed files.
 
-## Brain (not included)
+## Brain
 
 The brain is responsible for consuming the event stream and reconstituting those into a concept of Games/Players/Results etc.  As an example, the brain sees a series of race underway events then a "Main Menu" event, it should assume the game has been abandoned.  Likewise if it sees a series of Race Underway events then a Race Finish then a View Results it should assume a game has been completed.
 
-Hopefully I can open source this shortly.
+### Running
+
+Check the [Readme](./brain/README.md)
