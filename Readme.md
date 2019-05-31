@@ -7,6 +7,8 @@
 
 Kartalytics is a project to in real time analyse Mario Kart 8 Deluxe matches as they're being played and then take action on that analysis.
 
+![kartalytics](https://raw.githubusercontent.com/Ferocia/kartalytics/master/screenshots/kartistics.png)
+
 It is comprised of 3 main parts:
 
 - [Recorder](#recorder)
