@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Welcome to kartistics</title>
+    <meta http-equiv="refresh" content="5">
+  </head>
+  <body>
+    <div class="wrapper main">
+      <% if KartalyticsMatch.current_match %>
+          <%= link_to 'Current match in progress', kartalytics_match_path(KartalyticsMatch.current_match), class: "in_progress" %>
+      <% end %>
+
+      <h1>Recent matches</h1>
+
+      <ul>
+        <% @matches.each do |match| %>
+          <li><%= link_to match.name, kartalytics_match_path(match) %> - <%= match.created_at.strftime("%d/%m/%Y") %></li>
+        <% end %>
+      </ul>
+
+      <% if !params[:show_all] %>
+        <%= link_to "See all matches", root_path(show_all: true) %>
+      <% end %>
+    </div>
+  </body>
+</html>

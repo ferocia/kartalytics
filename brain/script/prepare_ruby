@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+if [ -z "$PREPARE_RUBY_SCRIPT_RUN" ]; then
+  . ./script/initialise_bash
+
+  echo "--- initialising ruby manager"
+  if [ `which rbenv` ]; then
+    PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+  fi
+
+  EXPECTED_RUBY_VERSION=$(cat .ruby-version)
+  if [[ ! `rbenv versions | grep "$EXPECTED_RUBY_VERSION"` ]]; then
+    echo "--- Updating ruby-build"
+    pushd /opt/boxen/ruby-build
+      git pull
+    popd
+    echo "--- Installing Ruby version: $EXPECTED_RUBY_VERSION"
+    rbenv install $EXPECTED_RUBY_VERSION
+  fi
+
+  if [[ `bundle --version &>/dev/null; echo $?` == "127" ]]; then
+    echo "--- Installing Bundler for Ruby $EXPECTED_RUBY_VERSION"
+    gem install bundler
+  fi
+
+  echo "--- preparing ruby environment"
+
+  BUNDLE_OPTIONS='--binstubs'
+  if [ -z "$CI" ]; then
+    BUNDLE_OPTIONS="$BUNDLE_OPTIONS --quiet"
+  fi
+
+  bundle $BUNDLE_OPTIONS
+
+  export PREPARE_RUBY_SCRIPT_RUN=true
+fi

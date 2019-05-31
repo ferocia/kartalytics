@@ -1,0 +1,38 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+ruby '2.4.5'
+
+gem 'grape'
+gem 'grape-entity'
+gem 'jbuilder'
+gem 'newrelic_rpm'
+gem 'pg'
+
+gem 'rails'
+gem 'unicorn'
+
+gem 'googlecharts'
+
+gem 'sdoc', group: :doc
+gem 'terminal-table'
+gem 'therubyracer'
+gem 'trueskill'
+gem 'uglifier'
+gem 'sass'
+
+gem 'webpacker'
+gem 'dotenv-rails'
+
+gem 'web-console', group: :development
+
+group :development, :test do
+  gem 'awesome_print'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'pry'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'spring'
+  gem 'timecop'
+end

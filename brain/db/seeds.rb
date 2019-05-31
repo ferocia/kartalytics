@@ -1,0 +1,18 @@
+# frozen_string_literal: true
+
+::Player.create!(name: 'chris')
+::Player.create!(name: 'gt')
+::Player.create!(name: 'tom')
+::Player.create!(name: 'sam')
+::Player.create!(name: 'langers')
+::Player.create!(name: 'raj')
+::Player.create!(name: 'tgon')
+::Player.create!(name: 'andy')
+::Player.create!(name: 'anson')
+::Player.create!(name: 'levi')
+::Player.create!(name: 'juzzy')
+::Player.create!(name: 'tarragon')
+::Player.create!(name: 'mike')
+::Player.create!(name: 'ev')
+::Player.create!(name: 'jared')
+::Player.create!(name: 'josh')

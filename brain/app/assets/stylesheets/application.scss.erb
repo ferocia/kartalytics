@@ -1,0 +1,407 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+html, body {
+  font-family: 'Helvetica';
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  a, a:visited, a:hover, a:active {
+    color: inherit;
+  }
+}
+
+.wrapper {
+  display: flex;
+  .top_level {
+    display: none;
+    width: 20%;
+    border-right: 1px rgba(0,0,0,.1) solid;
+    height: 100vh;
+    overflow-y: scroll;
+
+    padding: 0;
+  }
+  .second_level {
+    width: 20%;
+    padding-right: 30px;
+    height: 100vh;
+    overflow-y: scroll;
+    padding: 0 20px;
+    float: left;
+    box-sizing: border-box;
+  }
+  .third_level {
+    width: 80%;
+    height: 100vh;
+    overflow-y: scroll;
+    padding: 0 20px;
+    float: left;
+    box-sizing: border-box;
+  }
+}
+
+.match-in_progress .second_level {
+  display: none !important;
+}
+
+.match-in_progress .third_level {
+  width: 100%;
+}
+
+.matches_list {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  li {
+    display: block;
+    width: 100%;
+    &.current-match {
+      a {
+
+        font-weight: bold;
+        color: black;
+      }
+    }
+    a {
+      display: block;
+      padding: 15px 20px;
+      box-shadow: 0px 1px rgba(0,0,0,.05);
+      text-decoration: none;
+      color: rgba(0,0,0,.3);
+
+      &:hover {
+        background: rgba(0,0,0,.03);
+      }
+    }
+  }
+}
+.last_column {
+
+}
+
+.race_wrapper {
+  margin-bottom: 3em;
+  h2 {
+    display: inline-block;
+    .map_name {
+      position: relative;
+      display: inline-block;
+      font-weight: normal;
+      color: rgba(#fff, .6);
+      border-bottom: 1px dotted rgba(#fff, .1);
+      cursor: pointer;
+      &:hover {
+        color: rgba(#fff, .8);
+        > .course_image_container {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+
+.course_image_container {
+  position: absolute;
+  top: 50px;
+  left: -10px;
+  display: none;
+  margin-right: 20px;
+  border-radius: 3px;
+  width: 300px;
+  height: 169px;
+  z-index: 1;
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    background: rgba(0,0,0,.7);
+    transform: rotate(45deg);
+    left: 43%; top: -5%;
+    box-shadow: 0px 1px 20px rgba(0,0,0,.3);
+  }
+  .course_image {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 169px;
+    background-size: cover;
+    z-index: 2;
+  // border: 2px rgba(0,0,0,.2) solid;
+    border-radius: 4px;
+    box-shadow: 0px 1px 20px rgba(0,0,0,.3);
+  }
+}
+
+.race__chart {
+    width:450px !important;
+    height:240px !important;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  border: none;
+}
+
+table, th, td {
+  padding: 4px 10px;
+  valign: middle;
+
+}
+
+tr:nth-child(2n) td {
+  // background-color: #f2f2f2;
+}
+
+p.date {
+  margin: -15px 0 15px;
+  color: rgba(#fff, .3);
+  font-size: 14px;
+}
+
+
+.main {
+  display: block !important;
+  padding: 2em;
+
+  margin: 0 auto;
+  .in_progress {
+    display: inline-block;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px 10px 40px;
+    background-image: image-url('yoshi.gif');
+    background-repeat: no-repeat;
+    background-size: 10%;
+    background-position: 10px 50%;
+    text-decoration: none;
+
+    animation-direction: alternate;
+        animation-iteration-count: infinite;
+  background-color: #141414;
+    animation-name: pulse;
+    animation-duration: 1.5s;
+    transition: all .1s;
+    &:hover {
+      background-color: #323232;
+    }
+  }
+}
+@keyframes pulse {
+    0% {
+      // green
+      box-shadow: 0px 0px 15px 2px rgba(#98d543, 1);
+
+    }
+    25% {
+      // blue
+
+      box-shadow: 0px 0px 15px 2px rgba(#3d8be9, 1);
+    }
+    75% {
+      // orange
+      box-shadow: 0px 0px 15px 2px rgba(#f1b950, 1);
+
+    }
+    100% {
+      // red
+
+      box-shadow: 0px 0px 15px 2px rgba(#3d8be9, 1);
+
+    }
+}
+
+.overall_result {
+  width: 100%;
+  border: 0;
+  color: rgba(0,0,0,.7);
+  .player {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    border-radius: 3px;
+    height: 40px;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    background-color: rgba(0,0,0,.05);
+
+    &.player_one {
+      background: linear-gradient(#fddf44, #f1b627);
+    }
+    &.player_two {
+      background: linear-gradient(#3feafb, #0dcbef);
+    }
+    &.player_three {
+      background: linear-gradient(#f07581, #e14958);
+    }
+    &.player_four {
+      background: linear-gradient(#82f65b, #50df2a);
+    }
+
+  }
+  .crown {
+    position: absolute;
+    top: -11px;
+    left: 57px;
+    color: white;
+    transform: scale(1.4) scaleY(.8);
+  }
+  .poo {
+    display: none;
+    color: white;
+    transform: scale(1);
+  }
+  .player_name {
+
+      position: absolute;
+    left: 95px;
+    font-weight: bold;
+
+    text-align: left;
+  }
+  .player_avatar {
+    position: absolute;
+    bottom: -0px;
+    left: 40px;
+    height: 40px;
+    width: 50px;
+    background-size: cover;
+    background-position-x: 50%;
+  }
+  .player_score {
+    text-align: right;
+      width: 60px;
+      font-size: 16px;
+      color: rgba(0,0,0,.4);
+  }
+  .player_position {
+    font-size: 16px;
+    font-weight: bold;
+
+  }
+}
+
+.axisY {
+  line {
+    stroke: rgba(0,0,0,.2);
+  }
+  path {
+    stroke: rgba(0,0,0,.2);
+    fill-opacity: 0;
+  }
+  text {
+    fill: rgba(0,0,0,.2);
+    font-size: 12px;
+    font-weight: bold;
+  }
+}
+.chart_wrapper {
+  position: relative;
+  $spacing: 41.5px;
+  .placings {
+    width: 100px;
+    position: absolute;
+    left: 650px;
+    top: -2px;
+    list-style: none;
+    li {
+      position: absolute;
+      font-size: 14px;
+      font-weight: bold;
+        white-space : nowrap; /* stop course time spilling */
+        overflow : hidden;
+      &.a1 {
+        top: 0*$spacing;
+        .course_time {
+         display: inline;
+        }
+      }
+      &.a2 { top: 1*$spacing }
+      &.a3 { top: 2*$spacing }
+      &.a4 { top: 3*$spacing }
+      &.a5 { top: 4*$spacing }
+      &.a6 { top: 5*$spacing }
+      &.a7 { top: 6*$spacing }
+      &.a8 { top: 7*$spacing }
+      &.a9 { top: 8*$spacing }
+      &.a10 { top: 9*$spacing }
+      &.a11 { top: 10*$spacing }
+      &.a12 { top: 11*$spacing }
+    }
+  }
+
+  .course_time {
+    font-weight: normal;
+    font-size: 12px;
+
+  }
+
+}
+
+.player_items {
+  position: relative;
+    .player_row {
+      display: flex;
+      padding: 4px 0;
+      border-bottom: 1px rgba(0,0,0,.05) solid;
+      &:last-child{ border-bottom: none;}
+      ul {
+        display: flex;
+        width: 100%;
+        list-style: none;
+        margin: 0; padding: 0;
+        padding-left: 40px;
+        li {
+          display: block;
+          height: 20px;
+          width: 20px;
+          margin: 6px 3px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+
+        }
+      }
+    }
+  .player_avatar {
+    position: absolute;
+    display: block;
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-position-x: 50%;
+
+    overflow: hidden;
+    border-radius: 100%;
+  }
+}
+
+svg {
+  .player-name {
+    font-weight: bold;
+  }
+
+  .player-time {
+    font-size: 12px;
+  }
+}

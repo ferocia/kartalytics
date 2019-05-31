@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+echo "--- [script:ci]"
+
+. ./script/initialise_bash
+
+. ./script/spec

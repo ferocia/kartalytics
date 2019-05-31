@@ -1,0 +1,44 @@
+<script type="text/javascript">
+  var itemMapping = {
+    <% Dir[Rails.root.join("app", "assets", "images", "items", "*.png").to_s].each do |item| %>
+      '<%= File.basename(item, '.png') %>': '<%= asset_url("items/#{File.basename(item)}") %>',
+    <% end %>
+  }
+</script>
+
+<div class="match-<%= @match.status %>">
+  <div class="second_level">
+    <h1>Match <%= @match.id %></h1>
+    <p class="date"><%= @match.created_at.strftime("%d/%m/%Y") %></p>
+
+
+    <% if @match.player_one_score %>
+      <div class="overall_result">
+        <% [:player_one, :player_two, :player_three, :player_four].sort{|a,b|
+          @match.public_send("#{a}_position").to_i <=> @match.public_send("#{b}_position").to_i
+        }.each_with_index do |player, index| %>
+          <div class="player <%= player %>">
+              <span class="player_position"><%= @match.public_send("#{player}_position").ordinalize %></span>
+                <span class="player_avatar" style="background-image: url(<%= image_path("players/#{@match.public_send("#{player}_name").downcase}.png") %>)">
+
+
+
+                </span>
+                <span class="player_name"><span class="poo"><%= '💩' if index == 3 %></span> <%= @match.public_send("#{player}_name") %></span>
+                <span class="crown"><%= '👑' if index == 0 %></span>
+
+
+                <span class="player_score"><%= @match.public_send("#{player}_score") %> pts</span>
+          </div>
+
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="third_level">
+    <% @match.races.order('started_at DESC').each_with_index do |race, index| %>
+      <%= render partial: 'race', object: race, locals: {index: index} %>
+    <% end %>
+  </div>
+</div>

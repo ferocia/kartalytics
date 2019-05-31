@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+echo "--- [script:spec]"
+. ./script/prepare_ruby
+
+echo "--- Resetting database"
+bin/rake db:reset
+
+echo "--- Run specs"
+bin/rake spec
+
+echo "--- Clearing assets"
+bin/rake "assets:clean"

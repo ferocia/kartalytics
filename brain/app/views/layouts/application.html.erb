@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaguebot</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= csrf_meta_tags %>
+  <%= javascript_include_tag 'application' %>
+  <%= yield :head %>
+</head>
+<body>
+
+  <div class="wrapper">
+    <%= yield %>
+  </div>
+</body>
+</html>
