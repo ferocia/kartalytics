@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :player do
   end
 
   factory :kartalytics_match do
-
   end
 
   factory :kartalytics_race do
@@ -15,7 +14,7 @@ FactoryGirl.define do
   end
 
   factory :kartalytics_course do
-    name "Grumble Volcano"
+    name { "Grumble Volcano" }
   end
 
   factory :kartalytics_race_snapshot do
