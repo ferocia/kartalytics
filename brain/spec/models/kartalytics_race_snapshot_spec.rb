@@ -3,14 +3,14 @@ require 'rails_helper'
 describe KartalyticsRaceSnapshot, type: :model do
 
   describe ".series_for" do
-    let!(:race) { FactoryGirl.create :kartalytics_race }
+    let!(:race) { FactoryBot.create :kartalytics_race }
 
     let!(:snapshots) {
       [
-        FactoryGirl.create(:kartalytics_race_snapshot, race: race, timestamp: 4.seconds.ago),
-        FactoryGirl.create(:kartalytics_race_snapshot, race: race, timestamp: 3.seconds.ago, player_two_position: 2, player_two_item: "green-shell"),
-        FactoryGirl.create(:kartalytics_race_snapshot, race: race, timestamp: 2.seconds.ago, player_two_position: 2, player_two_item: "green-shell"),
-        FactoryGirl.create(:kartalytics_race_snapshot, race: race, timestamp: 1.seconds.ago, player_three_item: "green-shell", player_three_position: 3)
+        FactoryBot.create(:kartalytics_race_snapshot, race: race, timestamp: 4.seconds.ago),
+        FactoryBot.create(:kartalytics_race_snapshot, race: race, timestamp: 3.seconds.ago, player_two_position: 2, player_two_item: "green-shell"),
+        FactoryBot.create(:kartalytics_race_snapshot, race: race, timestamp: 2.seconds.ago, player_two_position: 2, player_two_item: "green-shell"),
+        FactoryBot.create(:kartalytics_race_snapshot, race: race, timestamp: 1.seconds.ago, player_three_item: "green-shell", player_three_position: 3)
       ]
     }
 

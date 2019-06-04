@@ -53,14 +53,14 @@ RSpec.configure do |config|
   config.before(:suite) do
     Player.delete_all
     Match.delete_all
-    FactoryGirl.create(:player, name: 'chris')
-    FactoryGirl.create(:player, name: 'gt')
-    FactoryGirl.create(:player, name: 'langers')
-    FactoryGirl.create(:player, name: 'tom')
-    FactoryGirl.create(:player, name: 'raj')
-    FactoryGirl.create(:player, name: 'mike')
-    FactoryGirl.create(:player, name: 'jared')
-    FactoryGirl.create(:player, name: 'josh')
+    FactoryBot.create(:player, name: 'chris')
+    FactoryBot.create(:player, name: 'gt')
+    FactoryBot.create(:player, name: 'langers')
+    FactoryBot.create(:player, name: 'tom')
+    FactoryBot.create(:player, name: 'raj')
+    FactoryBot.create(:player, name: 'mike')
+    FactoryBot.create(:player, name: 'jared')
+    FactoryBot.create(:player, name: 'josh')
 
     ::Match.create_for!('123', %w[chris gt tom raj])
     ::Match.create_for!('123', %w[chris tom gt raj])

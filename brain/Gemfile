@@ -28,7 +28,7 @@ gem 'web-console', group: :development
 
 group :development, :test do
   gem 'awesome_print'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry'
   gem 'rspec-rails'
