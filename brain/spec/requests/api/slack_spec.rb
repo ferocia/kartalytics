@@ -137,7 +137,7 @@ describe 'Slack API', type: :request do
           expect(json['text'].strip).to eq(<<~SLACK.strip)
                       ```
             +------+-------+-------+--------+-------+--------+--------+
-            |           Leaderboard since about 3 years ago           |
+            |           Leaderboard since over 3 years ago            |
             +------+-------+-------+--------+-------+--------+--------+
             | Rank | Name  | Score | Change | Place | Streak | Played |
             +------+-------+-------+--------+-------+--------+--------+
