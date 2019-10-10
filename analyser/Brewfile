@@ -1,0 +1,2 @@
+brew "imagemagick@6"
+brew "ffmpeg"
