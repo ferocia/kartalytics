@@ -16,7 +16,7 @@ class IntroScreen < Screen
     {file: 'shy_guy_falls', name: 'Shy Guy Falls'},
 
     {file: 'cloudtop_cruise', name: 'Cloudtop Cruise'},
-    {file: 'bone-dry_dunes', name: 'Bone-Dry Dunes'},
+    {file: 'bone_dry_dunes', name: 'Bone Dry Dunes'},
     {file: 'bowsers_castle', name: 'Bowser\'s Castle'},
     {file: 'rainbow_road', name: 'Rainbow Road'},
 
@@ -32,7 +32,7 @@ class IntroScreen < Screen
 
     {file: 'wario_stadium', name: 'Wario Stadium (DS)'},
     {file: 'sherbet_land', name: 'Sherbet Land (GameCube)'},
-    {file: 'music_park', name: 'Music Park (3DS)'},
+    {file: 'melody_motorway', name: 'Melody Motorway (3DS)'},
     {file: 'yoshi_valley', name: 'Yoshi Valley (N64)'},
 
     {file: 'tick_tock_clock', name: 'Tick-Tock Clock (DS)'},
@@ -55,7 +55,7 @@ class IntroScreen < Screen
     {file: 'wild_woods', name: 'Wild Woods'},
     {file: 'animal_crossing', name: 'Animal Crossing'},
 
-    {file: 'neo_bowser_city', name: 'Neo Bowser City (3DS)'},
+    {file: 'koopa_city', name: 'Koopa City (3DS)'},
     {file: 'ribbon_road', name: 'Ribbon Road (GBA)'},
     {file: 'super_bell_subway', name: 'Super Bell Subway'},
     {file: 'big_blue', name: 'Big Blue'}
