@@ -36,6 +36,8 @@ To setup the recorder:
 
 You might need to change the IP addresses - my RaspberryPi v3 can maintain a 2fps (500ms) sample rate - faster computer you could increase the `fps=` sample more images.
 
+Note: Make sure the settings on your switch have the same expected "TV Output" in settings - the most important being 100% on "Adjust Screen Size" otherwise the analyser will be unable to process the images.
+
 ## Analyser
 
 Its function is to take the raw snapshot images and analyse them to determine what is happening in the image.  It is stateless and it simply populate an event stream with events such as:
