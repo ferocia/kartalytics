@@ -30,5 +30,18 @@ describe IntroScreen do
         }
       })
     end
+
+    context 'when a rainbow road n64' do
+      let(:screenshot) { Screenshot.new(fixture('intro-screen-rainbow-n64.jpg')) }
+
+      it 'should extract the correct course name' do
+        is_expected.to eq({
+          event_type: 'intro_screen',
+          data: {
+            course_name: 'Rainbow Road (N64)'
+          }
+        })
+      end
+    end
   end
 end
