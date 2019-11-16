@@ -24,7 +24,7 @@ def analyse(qr_codes)
   }
 end
 
-def post(players)
+def submit(players)
   payload =
   {
     events: [
@@ -49,16 +49,14 @@ def post(players)
     ]
   }
 
-  uri = URI.parse('http://192.168.1.80:3000/api/kartalytics/injest')
-  header = {'Content-Type': 'text/json'}
+  uri = URI.parse('http://192.168.1.80:3000/api/kartalytics/ingest')
+  header = {'Content-Type': 'application/json'}
 
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new(uri.request_uri, header)
   request.body = payload.to_json
 
-  response = http.request(request)
-
-  puts payload.to_json
+  http.request(request)
 end
 
 loop do
@@ -82,7 +80,11 @@ loop do
 
   puts
   if players
-    post(players)
+    puts "player_one:   #{players[:player_one]}"
+    puts "player_two:   #{players[:player_two]}"
+    puts "player_three: #{players[:player_three]}"
+    puts "player_four:  #{players[:player_four]}"
+    submit(players)
   else
     puts '...'
   end
