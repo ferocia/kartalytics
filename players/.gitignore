@@ -1,3 +1,4 @@
-tmp/
+tmp/*
+!tmp/.keep
 output/
 Brewfile.lock.json
