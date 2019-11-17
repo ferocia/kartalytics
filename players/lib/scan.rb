@@ -5,7 +5,7 @@ require 'json'
 require 'uri'
 require 'net/http'
 
-raise('You must set a POST_URL env variable') if ENV['POST_URL'].blank?
+raise('You must set a POST_URL env variable') if ENV['POST_URL'].nil?
 
 def analyse(qr_codes)
   return nil unless qr_codes.length == 4
