@@ -2,7 +2,7 @@
 
 Install required native dependencies and Ruby gems.
 ```sh
-brew install imagesnap zbar
+brew bundle
 bundle install
 ```
 
