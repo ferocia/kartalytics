@@ -56,10 +56,16 @@ def submit(players)
   request = Net::HTTP::Post.new(uri.request_uri, header)
   request.body = payload.to_json
 
-  http.request(request)
+  response = http.request(request)
+
+  unless response.code == '200'
+    puts response.message
+    puts response.body
+  end
 end
 
 loop do
+  puts '---'
   filename = 'tmp/snapshot.jpg'
   system ("rm -f #{filename}")
   system("imagesnap -q -w 1 -d 'C922 Pro Stream Webcam' #{filename}")
@@ -78,7 +84,6 @@ loop do
 
   players = analyse(qr_codes)
 
-  puts
   if players
     puts "player_one:   #{players[:player_one]}"
     puts "player_two:   #{players[:player_two]}"
@@ -86,6 +91,10 @@ loop do
     puts "player_four:  #{players[:player_four]}"
     submit(players)
   else
-    puts '...'
+    puts 'No players found.'
   end
+rescue StandardError => e
+  puts e.message
+ensure
+  sleep 1
 end
