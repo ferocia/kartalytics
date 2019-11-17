@@ -5,6 +5,8 @@ require 'json'
 require 'uri'
 require 'net/http'
 
+raise('You must set a POST_URL env variable') if ENV['POST_URL'].blank?
+
 def analyse(qr_codes)
   return nil unless qr_codes.length == 4
 
@@ -49,7 +51,7 @@ def submit(players)
       ]
     }
 
-  uri = URI.parse('http://192.168.1.80:3000/api/kartalytics/ingest')
+  uri = URI.parse(ENV['POST_URL'])
   header = {'Content-Type': 'application/json'}
 
   http = Net::HTTP.new(uri.host, uri.port)
