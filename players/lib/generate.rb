@@ -43,7 +43,6 @@ names = [
   'wernah',
   'xavier',
 ]
-names = (1...101)
 
 names.each do |name|
   qr = RQRCode::QRCode.new(name.to_s)
