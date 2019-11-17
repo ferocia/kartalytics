@@ -26,28 +26,28 @@ end
 
 def submit(players)
   payload =
-  {
-    events: [
-      {
-        event_type: 'players_present',
-        data: {
-          player_one: {
-            name: players[:player_one]
+    {
+      events: [
+        {
+          event_type: 'players_present',
+          data: {
+            player_one: {
+              name: players[:player_one]
+            },
+            player_two: {
+              name: players[:player_two]
+            },
+            player_three: {
+              name: players[:player_three]
+            },
+            player_four: {
+              name: players[:player_four]
+            },
           },
-          player_two: {
-            name: players[:player_two]
-          },
-          player_three: {
-            name: players[:player_three]
-          },
-          player_four: {
-            name: players[:player_four]
-          },
-        },
-        timestamp: Time.now.iso8601(3)
-      }
-    ]
-  }
+          timestamp: Time.now.iso8601(3)
+        }
+      ]
+    }
 
   uri = URI.parse('http://192.168.1.80:3000/api/kartalytics/ingest')
   header = {'Content-Type': 'application/json'}
