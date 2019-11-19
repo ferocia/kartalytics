@@ -98,5 +98,5 @@ loop do
 rescue StandardError => e
   puts e.message
 ensure
-  sleep 1
+  sleep 5
 end
