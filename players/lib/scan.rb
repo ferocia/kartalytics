@@ -10,8 +10,8 @@ raise('You must set a POST_URL env variable') if ENV['POST_URL'].nil?
 def analyse(qr_codes)
   return nil unless qr_codes.length == 4
 
-  by_x = qr_codes.sort_by { |q| q[:x] }.reverse
-  by_y = qr_codes.sort_by { |q| q[:y] }.reverse
+  by_x = qr_codes.sort_by { |q| q[:x] }
+  by_y = qr_codes.sort_by { |q| q[:y] }
 
   top_row = by_y[0..1].to_set
   bottom_row = by_y[2..].to_set
