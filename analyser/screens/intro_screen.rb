@@ -1,66 +1,68 @@
 class IntroScreen < Screen
   COURSES = [
-    {file: 'sunshine_airport', name: 'Sunshine Airport'},
-    {file: 'dolphin_shoals', name: 'Dolphin Shoals'},
-    {file: 'electrodrome', name: 'Electrodrome'},
-    {file: 'mount_wario', name: 'Mount Wario'},
+    {file: 'sunshine_airport', name: 'Sunshine Airport', glob: ""},
+    {file: 'dolphin_shoals', name: 'Dolphin Shoals', glob: ""},
+    {file: 'electrodrome', name: 'Electrodrome', glob: ""},
+    {file: 'mount_wario', name: 'Mount Wario', glob: ""},
 
-    {file: 'moo_moo_meadows', name: 'Moo Moo Meadows (Wii)'},
-    {file: 'mario_circuit_gba', name: 'Mario Circuit (GBA)'},
-    {file: 'cheep_cheep_beach', name: 'Cheep Cheep Beach (DS)'},
-    {file: 'toads_turnpike', name: 'Toad\'s Turnpike (N64)'},
+    {file: 'moo_moo_meadows', name: 'Moo Moo Meadows (Wii)', glob: ""},
+    {file: 'mario_circuit_gba', name: 'Mario Circuit (GBA)', glob: ""},
+    {file: 'cheep_cheep_beach', name: 'Cheep Cheep Beach (DS)', glob: ""},
+    {file: 'toads_turnpike', name: 'Toad\'s Turnpike (N64)', glob: ""},
 
-    {file: 'mario_circuit', name: 'Mario Circuit'},
-    {file: 'toad_harbor', name: 'Toad Harbor'},
-    {file: 'twisted_mansion', name: 'Twisted Mansion'},
-    {file: 'shy_guy_falls', name: 'Shy Guy Falls'},
+    {file: 'mario_circuit', name: 'Mario Circuit', glob: ""},
+    {file: 'toad_harbor', name: 'Toad Harbor', glob: ""},
+    {file: 'twisted_mansion', name: 'Twisted Mansion', glob: ""},
+    {file: 'shy_guy_falls', name: 'Shy Guy Falls', glob: ""},
 
-    {file: 'cloudtop_cruise', name: 'Cloudtop Cruise'},
-    {file: 'bone_dry_dunes', name: 'Bone Dry Dunes'},
-    {file: 'bowsers_castle', name: 'Bowser\'s Castle'},
-    {file: 'rainbow_road', name: 'Rainbow Road'},
+    {file: 'cloudtop_cruise', name: 'Cloudtop Cruise', glob: ""},
+    {file: 'bone_dry_dunes', name: 'Bone Dry Dunes', glob: ""},
+    {file: 'bowsers_castle', name: 'Bowser\'s Castle', glob: ""},
+    {file: 'rainbow_road', name: 'Rainbow Road', glob: ""},
 
-    {file: 'mario_kart_stadium', name: 'Mario Kart Stadium'},
-    {file: 'water_park', name: 'Water Park'},
-    {file: 'sweet_sweet_canyon', name: 'Sweet Sweet Canyon'},
-    {file: 'thwomp_ruins', name: 'Thwomp Ruins'},
+    {file: 'mario_kart_stadium', name: 'Mario Kart Stadium', glob: ""},
+    {file: 'water_park', name: 'Water Park', glob: ""},
+    {file: 'sweet_sweet_canyon', name: 'Sweet Sweet Canyon', glob: ""},
+    {file: 'thwomp_ruins', name: 'Thwomp Ruins', glob: ""},
 
-    {file: 'dry_dry_desert', name: 'Dry Dry Desert (GameCube)'},
-    {file: 'donut_plains_3', name: 'Donut Plains 3 (SNES)'},
-    {file: 'royal_raceway', name: 'Royal Raceway (N64)'},
-    {file: 'dk_jungle', name: 'DK Jungle (3DS)'},
+    {file: 'dry_dry_desert', name: 'Dry Dry Desert (GameCube)', glob: ""},
+    {file: 'donut_plains_3', name: 'Donut Plains 3 (SNES)', glob: ""},
+    {file: 'royal_raceway', name: 'Royal Raceway (N64)', glob: ""},
+    {file: 'dk_jungle', name: 'DK Jungle (3DS)', glob: ""},
 
-    {file: 'wario_stadium', name: 'Wario Stadium (DS)'},
-    {file: 'sherbet_land', name: 'Sherbet Land (GameCube)'},
-    {file: 'melody_motorway', name: 'Melody Motorway (3DS)'},
-    {file: 'yoshi_valley', name: 'Yoshi Valley (N64)'},
+    {file: 'wario_stadium', name: 'Wario Stadium (DS)', glob: ""},
+    {file: 'sherbet_land', name: 'Sherbet Land (GameCube)', glob: ""},
+    {file: 'melody_motorway', name: 'Melody Motorway (3DS)', glob: ""},
+    {file: 'yoshi_valley', name: 'Yoshi Valley (N64)', glob: ""},
 
-    {file: 'tick_tock_clock', name: 'Tick-Tock Clock (DS)'},
-    {file: 'piranha_plant_slide', name: 'Piranha Plant Slide (3DS)'},
-    {file: 'grumble_volcano', name: 'Grumble Volcano (Wii)'},
-    {file: 'rainbow_road_n64', name: 'Rainbow Road (N64)'},
+    {file: 'tick_tock_clock', name: 'Tick-Tock Clock (DS)', glob: ""},
+    {file: 'piranha_plant_slide', name: 'Piranha Plant Slide (3DS)', glob: ""},
+    {file: 'grumble_volcano', name: 'Grumble Volcano (Wii)', glob: ""},
+    {file: 'rainbow_road_n64', name: 'Rainbow Road (N64)', glob: "*"},
 
-    {file: 'yoshi_circuit', name: 'Yoshi Circuit (GameCube)'},
-    {file: 'excitebike_arena', name: 'Excitebike Arena'},
-    {file: 'dragon_driftway', name: 'Dragon Driftway'},
-    {file: 'mute_city', name: 'Mute City'},
+    {file: 'yoshi_circuit', name: 'Yoshi Circuit (GameCube)', glob: ""},
+    {file: 'excitebike_arena', name: 'Excitebike Arena', glob: ""},
+    {file: 'dragon_driftway', name: 'Dragon Driftway', glob: ""},
+    {file: 'mute_city', name: 'Mute City', glob: ""},
 
-    {file: 'warios_gold_mine', name: 'Wario’s Gold Mine (Wii)'},
-    {file: 'rainbow_road_snes', name: 'Rainbow Road (SNES)'},
-    {file: 'ice_ice_outpost', name: 'Ice Ice Outpost'},
-    {file: 'hyrule_circuit', name: 'Hyrule Circult'},
+    {file: 'warios_gold_mine', name: 'Wario’s Gold Mine (Wii)', glob: ""},
+    {file: 'rainbow_road_snes', name: 'Rainbow Road (SNES)', glob: ""},
+    {file: 'ice_ice_outpost', name: 'Ice Ice Outpost', glob: ""},
+    {file: 'hyrule_circuit', name: 'Hyrule Circult', glob: ""},
 
-    {file: 'baby_park', name: 'Baby Park (GameCube)'},
-    {file: 'cheese_land', name: 'Cheese Land (GBA)'},
-    {file: 'wild_woods', name: 'Wild Woods'},
-    {file: 'animal_crossing', name: 'Animal Crossing'},
+    {file: 'baby_park', name: 'Baby Park (GameCube)', glob: ""},
+    {file: 'cheese_land', name: 'Cheese Land (GBA)', glob: ""},
+    {file: 'wild_woods', name: 'Wild Woods', glob: ""},
+    {file: 'animal_crossing', name: 'Animal Crossing', glob: ""},
 
-    {file: 'koopa_city', name: 'Koopa City (3DS)'},
-    {file: 'ribbon_road', name: 'Ribbon Road (GBA)'},
-    {file: 'super_bell_subway', name: 'Super Bell Subway'},
-    {file: 'big_blue', name: 'Big Blue'}
+    {file: 'koopa_city', name: 'Koopa City (3DS)', glob: ""},
+    {file: 'ribbon_road', name: 'Ribbon Road (GBA)', glob: ""},
+    {file: 'super_bell_subway', name: 'Super Bell Subway', glob: ""},
+    {file: 'big_blue', name: 'Big Blue', glob: ""}
   ].each do |course|
-    course[:image] = Phashion::Image.new("reference_images/intro/#{course[:file]}.jpg")
+    course[:images] = Dir.glob("reference_images/intro/#{course[:file]}#{course[:glob]}.jpg").map{|f|
+      Phashion::Image.new(f)
+    }
   end
 
   REFERENCE = Phashion::Image.new("reference_images/intro/intro_reference.jpg")
@@ -80,14 +82,14 @@ class IntroScreen < Screen
 
     phash = convert_to_phash(image)
 
-    likely_course = COURSES.min_by do |course|
-      phash.distance_from(course[:image])
-    end
+    likely_course = COURSES.min_by{|c|
+      c[:images].map{|i| phash.distance_from(i) }.min
+    }
 
     # Debug
     # screenshot.original.write("#{likely_course[:file]}-#{image.distance_from(likely_course[:image])}-#{rand(256)}.jpg")
 
-    if phash.distance_from(likely_course[:image]) < 10
+    if phash.distance_from(likely_course[:images].first) < 10
       {
         event_type: 'intro_screen',
         data: {

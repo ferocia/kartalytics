@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>kart licenses</title>
+    <style>
+      .wrapper {
+        column-count: 4
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <% names.each do |name| %>
+        <div class="player">
+          <p><%= name %></p>
+          <img src="<%= name %>.svg" style="width: 120px">
+        </div>
+        <br>
+      <% end %>
+    </div>
+  </body>
+</html>
