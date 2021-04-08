@@ -52,13 +52,14 @@ def submit(players)
     }
 
   uri = URI.parse(ENV['POST_URL'])
-  header = {'Content-Type': 'application/json'}
 
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new(uri.request_uri, header)
+  request = Net::HTTP::Post.new(uri.path)
+  request.content_type = 'application/json'
   request.body = payload.to_json
 
-  response = http.request(request)
+  response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+    http.request request
+  end
 
   unless response.code == '200'
     puts response.message
