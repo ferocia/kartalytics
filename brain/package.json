@@ -8,5 +8,8 @@
   },
   "devDependencies": {
     "webpack-dev-server": ">=3.1.11"
+  },
+  "resolutions": {
+    "postcss": "^7.0.36"
   }
 }
