@@ -8,7 +8,7 @@ require 'net/http'
 raise('You must set a POST_URL env variable') if ENV['POST_URL'].nil?
 
 def analyse(qr_codes)
-  return nil unless qr_codes.length == 4
+  return unless [3, 4].include?(qr_codes.length)
 
   by_x = qr_codes.sort_by { |q| q[:x] }
   by_y = qr_codes.sort_by { |q| q[:y] }
@@ -18,12 +18,16 @@ def analyse(qr_codes)
   left_column = by_x[0..1].to_set
   right_column = by_x[2..].to_set
 
-  {
+  players = {
     player_one: (top_row & left_column).to_a.first&.fetch(:data),
     player_two: (top_row & right_column).to_a.first&.fetch(:data),
     player_three: (bottom_row & left_column).to_a.first&.fetch(:data),
     player_four: (bottom_row & right_column).to_a.first&.fetch(:data),
   }
+
+  return if qr_codes.length == 3 && players[:player_four].present?
+
+  players
 end
 
 def submit(players)
