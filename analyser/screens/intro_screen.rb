@@ -58,7 +58,17 @@ class IntroScreen < Screen
     {file: 'koopa_city', name: 'Koopa City (3DS)', glob: ""},
     {file: 'ribbon_road', name: 'Ribbon Road (GBA)', glob: ""},
     {file: 'super_bell_subway', name: 'Super Bell Subway', glob: ""},
-    {file: 'big_blue', name: 'Big Blue', glob: ""}
+    {file: 'big_blue', name: 'Big Blue', glob: ""},
+
+    {file: 'paris_promenade_tour', name: 'Paris Promenade (Tour)', glob: ""},
+    {file: 'toad_circuit_3ds', name: 'Toad Circuit (3DS)', glob: ""},
+    {file: 'choco_mountain_n64', name: 'Choco Mountain (N64)', glob: ""},
+    {file: 'coconut_mall_wii', name: 'Coconut Mall (Wii)', glob: ""},
+
+    {file: 'tokyo_blur_tour', name: 'Tokyo Blur (Tour)', glob: ""},
+    {file: 'shroom_ridge_ds', name: 'Shroom Ridge (DS)', glob: ""},
+    {file: 'sky_garden_gba', name: 'Sky Garden (GBA)', glob: ""},
+    {file: 'ninja_hideaway', name: 'Ninja Hideaway', glob: ""},
   ].each do |course|
     course[:images] = Dir.glob("reference_images/intro/#{course[:file]}#{course[:glob]}.jpg").map{|f|
       Phashion::Image.new(f)
@@ -66,6 +76,13 @@ class IntroScreen < Screen
   end
 
   REFERENCE = Phashion::Image.new("reference_images/intro/intro_reference.jpg")
+
+  def self.prepare_image(screenshot)
+    crop = screenshot.original.dup.crop!(258, 620, 350, 36)
+    image = crop.black_threshold(50000, 50000, 50000)
+    crop.destroy!
+    image
+  end
 
   def self.matches_image?(screenshot)
     image = screenshot.original.dup.crop!(111, 589, 44, 37)
@@ -76,9 +93,7 @@ class IntroScreen < Screen
   end
 
   def self.extract_event(screenshot)
-    crop = screenshot.original.dup.crop!(258, 620, 350, 36)
-    image = crop.black_threshold(50000, 50000, 50000)
-    crop.destroy!
+    image = prepare_image(screenshot)
 
     phash = convert_to_phash(image)
 
