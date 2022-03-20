@@ -43,5 +43,18 @@ describe IntroScreen do
         })
       end
     end
+
+    context 'when the course name cannot be detected' do
+      let(:screenshot) { Screenshot.new(fixture('intro-screen-pre-text.jpg')) }
+
+      it 'returns an Unknown Course event' do
+        is_expected.to eq({
+          event_type: 'intro_screen',
+          data: {
+            course_name: 'Unknown Course',
+          }
+        })
+      end
+    end
   end
 end

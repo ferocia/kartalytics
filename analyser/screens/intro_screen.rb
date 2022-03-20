@@ -111,6 +111,13 @@ class IntroScreen < Screen
           course_name: likely_course[:name]
         }
       }
+    else
+      {
+        event_type: 'intro_screen',
+        data: {
+          course_name: 'Unknown Course',
+        }
+      }
     end
   end
 end
