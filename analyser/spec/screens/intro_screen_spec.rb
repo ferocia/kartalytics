@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'base64'
 
 describe IntroScreen do
   describe "matches_image?" do
@@ -21,12 +22,14 @@ describe IntroScreen do
     subject { described_class.extract_event(screenshot) }
 
     let(:screenshot) { Screenshot.new(fixture('intro-screen.jpg')) }
+    let(:image_base64) { Base64.strict_encode64(described_class.prepare_image(screenshot).to_blob) }
 
     it 'should extract the course name' do
       is_expected.to eq({
         event_type: 'intro_screen',
         data: {
-          course_name: 'Yoshi Valley (N64)'
+          course_name: 'Yoshi Valley (N64)',
+          image_base64: image_base64,
         }
       })
     end
@@ -38,7 +41,8 @@ describe IntroScreen do
         is_expected.to eq({
           event_type: 'intro_screen',
           data: {
-            course_name: 'Rainbow Road (N64)'
+            course_name: 'Rainbow Road (N64)',
+            image_base64: image_base64,
           }
         })
       end
@@ -52,6 +56,7 @@ describe IntroScreen do
           event_type: 'intro_screen',
           data: {
             course_name: 'Unknown Course',
+            image_base64: image_base64,
           }
         })
       end

@@ -1,3 +1,5 @@
+require 'base64'
+
 class IntroScreen < Screen
   COURSES = [
     {file: 'sunshine_airport', name: 'Sunshine Airport', glob: ""},
@@ -94,7 +96,7 @@ class IntroScreen < Screen
 
   def self.extract_event(screenshot)
     image = prepare_image(screenshot)
-
+    image_base64 = Base64.strict_encode64(image.to_blob)
     phash = convert_to_phash(image)
 
     likely_course = COURSES.min_by{|c|
@@ -108,7 +110,8 @@ class IntroScreen < Screen
       {
         event_type: 'intro_screen',
         data: {
-          course_name: likely_course[:name]
+          course_name: likely_course[:name],
+          image_base64: image_base64,
         }
       }
     else
@@ -116,6 +119,7 @@ class IntroScreen < Screen
         event_type: 'intro_screen',
         data: {
           course_name: 'Unknown Course',
+          image_base64: image_base64,
         }
       }
     end
