@@ -82,6 +82,14 @@ Notice that the `match_result_screen` gets possibly incomplete data - animations
 
 For debugging purposes you can also set `KEEP_FILES=true` - this will instuct the daemon not to remove processed files.
 
+### Generating reference images for new courses
+
+Nintendo is releasing 48 new tracks across 6 drops. Every time new tracks are released, new intro references must be generated.
+
+The first step is to get the intro screen for each new course. The easiest way to do this is to set `KEEP_FILES=true`, restart the daemon, then play the new cups. Once you're done, pull the nicest intro image from `dump/*` for each course (where the text is present), `parameterize.underscore` the filename, and commit to `brain/app/assets/images/courses/*`.
+
+Next, copy the new intro images into `analyser/intro/*`, then run `ruby intro_extractor.rb` from the `analyser` dir. This will generate the reference images for course detection and put them in `analyser/reference_images/intro/*`. Finally, add the new courses to `analyser/screens/intro_screen.rb`. The brain will automatically create new courses in the DB based on this data.
+
 ## Brain
 
 The brain is responsible for consuming the event stream and reconstituting those into a concept of Games/Players/Results etc.  As an example, the brain sees a series of race underway events then a "Main Menu" event, it should assume the game has been abandoned.  Likewise if it sees a series of Race Underway events then a Race Finish then a View Results it should assume a game has been completed.
