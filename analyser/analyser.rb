@@ -8,6 +8,7 @@ require './screens/race_screen'
 require './screens/race_result_screen'
 require './screens/match_result_screen'
 require './screens/loading_screen'
+require './screens/select_character_screen'
 require './screens/intro_screen'
 
 class Analyser
@@ -73,6 +74,7 @@ class Analyser
       RaceResultScreen,
       LoadingScreen,
       MatchResultScreen,
+      SelectCharacterScreen,
       IntroScreen
     ]
   end
