@@ -82,6 +82,22 @@ Notice that the `match_result_screen` gets possibly incomplete data - animations
 
 For debugging purposes you can also set `KEEP_FILES=true` - this will instuct the daemon not to remove processed files.
 
+### phashion
+
+You may experience issues when bundling / installing the phashion gem. Thanks to [ElliotCui over on Stack Overflow](https://stackoverflow.com/a/66494254) for figuring out a solution.
+
+1. Add the following to your `.zshrc` / `.bashrc` (& don't forget to `source ~/.zshrc` afterwards!)
+
+```sh
+export CPLUS_INCLUDE_PATH="$(brew --prefix)/include"
+```
+
+2. Install `phashion` with `libjpeg` & `libpng` in `LIBRARY_PATH`:
+
+```sh
+LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/libjpeg/lib:/opt/homebrew/opt/libpng/lib gem install phashion -v '1.2.0'
+```
+
 ### Generating reference images for new courses
 
 Nintendo is releasing 48 new tracks across 6 drops. Every time new tracks are released, new intro references must be generated.
