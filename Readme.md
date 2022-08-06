@@ -82,6 +82,22 @@ Notice that the `match_result_screen` gets possibly incomplete data - animations
 
 For debugging purposes you can also set `KEEP_FILES=true` - this will instuct the daemon not to remove processed files.
 
+Due to limitations of the phasion API, analysis requires a lot of
+writing/reading temporary files to disk. Using a ramdisk as a temporary
+directory may improve performance by 10% or more!
+
+To measure the difference in isolation:
+
+```
+ruby bench/identification.rb
+
+# linux
+sudo mkdir /mnt/tmp
+sudo mount -t tmpfs -o size=2m tmpfs /mnt/tmp
+
+TMPDIR=/mnt/tmp ruby bench/identification.rb
+```
+
 ### phashion
 
 You may experience issues when bundling / installing the phashion gem. Thanks to [ElliotCui over on Stack Overflow](https://stackoverflow.com/a/66494254) for figuring out a solution.

@@ -6,3 +6,8 @@ gem 'phashion'
 gem 'activesupport'
 
 gem 'rspec'
+
+group :benchmark do
+  gem 'enumerable-statistics'
+  gem 'ruby-prof'
+end
