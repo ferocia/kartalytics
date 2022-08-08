@@ -71,6 +71,16 @@ class IntroScreen < Screen
     {file: 'shroom_ridge_ds', name: 'Shroom Ridge (DS)', glob: ""},
     {file: 'sky_garden_gba', name: 'Sky Garden (GBA)', glob: ""},
     {file: 'ninja_hideaway', name: 'Ninja Hideaway', glob: ""},
+
+    {file: 'new_york_minute_tour', name: 'New York Minute (Tour)', glob: ""},
+    {file: 'mario_circuit_3_snes', name: 'Mario Circuit 3 (SNES)', glob: ""},
+    {file: 'kalimari_desert_n64', name: 'Kalimari Desert (N64)', glob: ""},
+    {file: 'waluigi_pinball_ds', name: 'Waluigi Pinball (DS)', glob: ""},
+
+    {file: 'sydney_sprint_tour', name: 'Sydney Sprint (Tour)', glob: ""},
+    {file: 'snow_land_gba', name: 'Snow Land (GBA)', glob: ""},
+    {file: 'mushroom_gorge_wii', name: 'Mushroom Gorge (Wii)', glob: ""},
+    {file: 'sky_high_sundae', name: 'Sky-High Sundae', glob: ""},
   ].each do |course|
     course[:images] = Dir.glob("reference_images/intro/#{course[:file]}#{course[:glob]}.jpg").map{|f|
       Phashion::Image.new(f)
