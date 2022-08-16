@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+echo "Running FFmpeg..."
+cd analyser/dump
+
+# LENKENG LKV373A
+# ffmpeg -i "udp://239.255.42.42:5004?localaddr=192.168.1.1&buffer_size=128000&overrun_nonfatal=1&fifo_size=500000" -vf fps=3 -qscale:v 5 out%04d.jpg
+
+# https://www.naut.ca/blog/2020/07/09/cheap-hdmi-capture-card-review/
+# RGB range on Switch must be set to Limited range
+# Adjust Screen Size on Switch must be set to 100%
+# input framerate must be set to 5 on Monterey
+ffmpeg \
+  -nostdin \
+  -loglevel error \
+  -skip_frame nokey \
+  -f avfoundation \
+  -r 10 \
+  -video_size 1920x1080 \
+  -pix_fmt nv12 \
+  -color_range 1 \
+  -i "$CAPTURE_CARD_NAME" \
+  -vf scale=-1:720 \
+  -r 5 \
+  -qscale:v 5 \
+  out%04d.jpg
