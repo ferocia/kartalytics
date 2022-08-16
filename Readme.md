@@ -33,7 +33,7 @@ cp .env.example .env
 
 Its function is to capture the input stream of Mario Kart and save it out as sequence of snapshots. To do this we'll use the following hardware:
   - HDMI splitter
-  - HDMI to ethernet converter ([LKV373A](http://www.ebay.com.au/itm/LKV373A-V3-0-HDMI-Extender-100-120M-HDMI-Extender-Over-Cat5-Cat6-TCP-IP-based-/162287794299))
+  - HDMI capture card or Lenkeng LKV373A V3.0 HDMI to ethernet converter
   - Raspberry Pi (but any 'nix) would be fine.
 
 ### Running
