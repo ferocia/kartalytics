@@ -38,7 +38,21 @@ Its function is to capture the input stream of Mario Kart and save it out as seq
 
 ### Running
 
-To setup the recorder:
+#### HDMI Capture Card
+
+These devices can be found for quite cheap, so this is now the recommended way of capturing screenshots from the Switch. You'll find a script for this in `script/ffmpeg`, but you'll likely need to tweak the settings for your specific capture card.
+
+In our case, we capture at 1080p and downscale to 720p with FFmpeg, because capturing at 720p results in _worse_ performance. We also need to set the RGB range on the Switch to limited to avoid clipping.
+
+More information about these cards can be found on [Yoon's Blog](https://www.naut.ca/blog/2020/07/09/cheap-hdmi-capture-card-review/).
+
+```sh
+cd analyser/dump && ffmpeg -skip_frame nokey -f avfoundation -r 10 -video_size 1920x1080 -pix_fmt nv12 -color_range 1 -i "USB Video" -vf scale=-1:720 -r 5 -qscale:v 5 out%04d.jpg
+```
+
+#### Lenkeng LKV373A V3.0
+
+The Lenkeng LKV373A V3.0 is the original way capture images from the Switch. The V3.0 has been superseded by V4.0, which doesn't work as well for this application. However, if you happen to get your hands on one, here's how to set it up:
 
   1. Install ffmpeg
   2. Thanks to [Danman](https://blog.danman.eu/new-version-of-lenkeng-hdmi-over-ip-extender-lkv373a/) you need to block 0 byte UDP packets that the encoder spits out - use this command: `sudo iptables -t raw -A PREROUTING -p udp -m length --length 28 -j DROP`
