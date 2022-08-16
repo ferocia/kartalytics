@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+brew bundle
+
+pushd analyser
+  ./script/bootstrap.sh
+popd
+
+pushd brain
+  ./script/bootstrap
+popd
+
+pushd players
+  ./script/bootstrap
+popd

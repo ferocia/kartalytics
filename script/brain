@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [[ "$POST_URL" =~ "localhost" ]]; then
+  echo "Running brain..."
+  cd brain
+
+  bin/rails s
+else
+  echo "Remote POST_URL detected, skipping brain"
+fi

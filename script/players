@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+echo "Running players scan..."
+cd players
+
+ruby lib/scan.rb

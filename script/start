@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# echo "Preparing Kartalytics..."
+# ./script/bootstrap
+
+rm -f .overmind.sock
+overmind start -c ffmpeg,brain

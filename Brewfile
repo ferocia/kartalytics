@@ -1,0 +1,2 @@
+brew "overmind"
+brew "tmux"

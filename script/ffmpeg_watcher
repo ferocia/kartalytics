@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+echo "Monitoring analyser log..."
+
+LOG_PATH="analyser/analyser.log"
+
+# if the capture card is disconnected, ffmpeg simply hangs. to autorecover from
+# this event, we watch the analyser log and restart ffmpeg if it hasn't
+# processed an image in the last 5 seconds.
+
+while : ; do
+  sleep 5
+
+  TIME="$(date +%s)"
+  MTIME="$(date -r "$LOG_PATH" +%s)"
+
+  if (( "$TIME" - "$MTIME" > 10 )); then
+    echo "FFmpeg appears to have hung. Restarting..."
+    overmind restart ffmpeg
+  fi
+done

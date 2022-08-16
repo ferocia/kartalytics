@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+echo "--- [script:bootstrap]"
+
+brew bundle
+bundle
