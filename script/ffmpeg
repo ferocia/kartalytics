@@ -12,7 +12,7 @@ cd analyser/dump
 # input framerate must be set to 5 on Monterey
 ffmpeg \
   -nostdin \
-  -loglevel error \
+  -loglevel warning \
   -skip_frame nokey \
   -f avfoundation \
   -r 10 \
