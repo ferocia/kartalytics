@@ -10,6 +10,7 @@ require './screens/match_result_screen'
 require './screens/loading_screen'
 require './screens/select_character_screen'
 require './screens/intro_screen'
+require './screens/unknown_screen'
 
 class Analyser
   def self.analyse!(filename)
@@ -75,7 +76,8 @@ class Analyser
       LoadingScreen,
       MatchResultScreen,
       SelectCharacterScreen,
-      IntroScreen
+      IntroScreen,
+      UnknownScreen,
     ]
   end
 end
