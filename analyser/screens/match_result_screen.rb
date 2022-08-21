@@ -83,7 +83,7 @@ class MatchResultScreen < Screen
     end
 
     # Red
-    if (hue < 10 || hue > 340) && sat > 170 && lum > 150
+    if (hue < 10 || hue > 340) && sat > 160 && lum > 150
       return :player_three
     end
 
