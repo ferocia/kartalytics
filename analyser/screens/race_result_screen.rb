@@ -99,12 +99,12 @@ class RaceResultScreen < Screen
     end
 
     # Blue
-    if hue > 170 && hue < 190 && lum > 130 && sat > 190
+    if hue > 170 && hue < 190 && lum > 130 && sat > 180
       return :player_two
     end
 
     # Red
-    if (hue < 10 || hue > 340) && sat > 160 && lum > 150
+    if (hue < 10 || hue > 340) && sat > 150 && lum > 150
       return :player_three
     end
 

@@ -1,0 +1,37 @@
+name: analyser
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - analyser/**
+      - .github/workflows/analyser.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - analyser/**
+      - .github/workflows/analyser.yml
+
+jobs:
+  test:
+    name: ruby tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      RAILS_ENV: test
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set up ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: analyser
+
+      - name: run tests
+        run: bundle exec rspec
+        working-directory: analyser
