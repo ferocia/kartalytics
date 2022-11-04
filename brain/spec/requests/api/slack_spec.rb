@@ -20,18 +20,13 @@ describe 'Slack API', type: :request do
         post '/api/slack', params: { token: 'ABC', text: 'kart leaderboard' }
       end
       specify do
-        expect(response).to be_success
+        expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['text'].strip).to eq(<<~SLACK.strip)
                   ```
-          +------+-------+-------+--------+-------+--------+--------+
-          |           Leaderboard since about 1 month ago           |
-          +------+-------+-------+--------+-------+--------+--------+
-          | Rank | Name  | Score | Change | Place | Streak | Played |
-          +------+-------+-------+--------+-------+--------+--------+
-          | 1    | jared | 1393  | +227   | 1     | 3      | 3      |
-          | 2    | josh  | -57   | +23    | 2     |        | 3      |
-          +------+-------+-------+--------+-------+--------+--------+
+          #|  Name   |Score| ∆  |🎮
+          1|jared (3)| 1393|+227| 3
+          2|josh     |  -57| +23| 3
           ```
         SLACK
       end
@@ -44,22 +39,19 @@ describe 'Slack API', type: :request do
         post '/api/slack', params: { token: '123', text: 'kart leaderboard_trueskills' }
       end
       specify do
-        expect(response).to be_success
+        expect(response).to be_successful
         json = JSON.parse(response.body)
 
         expect(json['text'].strip).to eq(<<~SLACK.strip)
                   ```
-          +------+----------+-------+--------+-------+--------+--------+
-          |            Leaderboard since about 1 month ago             |
-          +------+----------+-------+--------+-------+--------+--------+
-          | Rank | Name     | Score | Change | Place | Streak | Played |
-          +------+----------+-------+--------+-------+--------+--------+
-          | 1    | chris 🔥 | 2473  | +287   | 1     | 4      | 4      |
-          | 2    | tom      | 1369  | +107   | 3     |        | 4      |
-          | 3    | mike     | 1263  | +1263  | 2     |        | 1      |
-          | 4    | raj      | 896   |        |       |        | 3      |
-          | 5    | gt       | 799   | -55    | 4     |        | 4      |
-          +------+----------+-------+--------+-------+--------+--------+
+          #|    Name    |Score|  ∆  |🎮
+           -------- A League --------
+          1|chris 🔥 (4)| 2473| +287| 4
+          2|tom         | 1369| +107| 4
+          3|mike        | 1263|+1263| 1
+          4|raj         |  896|     | 3
+           -------- B League --------
+          5|gt          |  799|  -55| 4
           ```
         SLACK
       end
@@ -70,11 +62,11 @@ describe 'Slack API', type: :request do
         post '/api/slack', params: { token: '123', text: 'kart leaderboard_elo' }
       end
       specify do
-        expect(response).to be_success
+        expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['text'].strip).to eq(<<~SLACK.strip)
                   ```
-          +------+----------+-------+--------+--------+--------+---------+--------+
+          +-----------------------------------------------------------------------+
           |                  Leaderboard since about 1 month ago                  |
           +------+----------+-------+--------+--------+--------+---------+--------+
           | Rank | Name     | Score | Change | Played | Streak | Raw ELO | Change |
@@ -100,21 +92,18 @@ describe 'Slack API', type: :request do
         # Match: chris,tom,gt,raj
         # Match: chris,raj,tom,gt
         # Match: chris,mike,tom,gt
-        expect(response).to be_success
+        expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['text'].strip).to eq(<<~SLACK.strip)
                   ```
-          +------+----------+-------+--------+-------+--------+--------+
-          |            Leaderboard since about 1 month ago             |
-          +------+----------+-------+--------+-------+--------+--------+
-          | Rank | Name     | Score | Change | Place | Streak | Played |
-          +------+----------+-------+--------+-------+--------+--------+
-          | 1    | chris 🔥 | 2473  | +287   | 1     | 4      | 4      |
-          | 2    | tom      | 1369  | +107   | 3     |        | 4      |
-          | 3    | mike     | 1263  | +1263  | 2     |        | 1      |
-          | 4    | raj      | 896   |        |       |        | 3      |
-          | 5    | gt       | 799   | -55    | 4     |        | 4      |
-          +------+----------+-------+--------+-------+--------+--------+
+          #|    Name    |Score|  ∆  |🎮
+           -------- A League --------
+          1|chris 🔥 (4)| 2473| +287| 4
+          2|tom         | 1369| +107| 4
+          3|mike        | 1263|+1263| 1
+          4|raj         |  896|     | 3
+           -------- B League --------
+          5|gt          |  799|  -55| 4
           ```
           SLACK
       end
@@ -130,22 +119,17 @@ describe 'Slack API', type: :request do
         end
 
         specify do
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(Match.count).to eq(@original_count - 1)
 
           json = JSON.parse(response.body)
           expect(json['text'].strip).to eq(<<~SLACK.strip)
                       ```
-            +------+-------+-------+--------+-------+--------+--------+
-            |           Leaderboard since over 3 years ago            |
-            +------+-------+-------+--------+-------+--------+--------+
-            | Rank | Name  | Score | Change | Place | Streak | Played |
-            +------+-------+-------+--------+-------+--------+--------+
-            | 1    | chris | 2187  | +231   | 1     | 3      | 3      |
-            | 2    | tom   | 1262  | +38    | 3     |        | 3      |
-            | 3    | raj   | 896   | +1111  | 2     |        | 3      |
-            | 4    | gt    | 853   | -176   | 4     |        | 3      |
-            +------+-------+-------+--------+-------+--------+--------+
+            #|  Name   |Score|  ∆  |🎮
+            1|chris (3)| 2187| +231| 3
+            2|tom      | 1262|  +38| 3
+            3|raj      |  896|+1111| 3
+            4|gt       |  853| -176| 3
             ```
           SLACK
         end
@@ -158,11 +142,11 @@ describe 'Slack API', type: :request do
           post '/api/slack', params: { token: '123', text: 'kart inspect tom' }
         end
         specify do
-          expect(response).to be_success
+          expect(response).to be_successful
           json = JSON.parse(response.body)
           expect(json['text'].strip).to eq(<<~SLACK.strip)
                       ```
-            +----------+------+--------+------+
+            +---------------------------------+
             |            tom vs...            |
             +----------+------+--------+------+
             | Opponent | Wins | Losses | Mojo |
@@ -176,21 +160,46 @@ describe 'Slack API', type: :request do
           SLACK
         end
       end
+
+      context 'with a slack mention' do
+        before do
+          post '/api/slack', params: { token: '123', text: 'kart inspect <@UT0M666>' }
+        end
+        specify do
+          expect(response).to be_successful
+          json = JSON.parse(response.body)
+          expect(json['text'].strip).to eq(<<~SLACK.strip)
+                      ```
+            +---------------------------------+
+            |            tom vs...            |
+            +----------+------+--------+------+
+            | Opponent | Wins | Losses | Mojo |
+            +----------+------+--------+------+
+            | chris    | 0    | 4      | -4   |
+            | mike     | 0    | 1      | -1   |
+            | raj      | 2    | 1      | 1    |
+            | gt       | 3    | 1      | 2    |
+            +----------+------+--------+------+
+            ```
+          SLACK
+        end
+      end
+
       context 'with no data' do
         before do
           post '/api/slack', params: { token: '123', text: 'kart inspect jared' }
         end
         specify do
-          expect(response).to be_success
+          expect(response).to be_successful
           json = JSON.parse(response.body)
           expect(json['text'].strip).to eq(<<~SLACK.strip)
                       ```
-            +----------+------+--------+------+
+            +---------------------------------+
             |           jared vs...           |
             +----------+------+--------+------+
             | Opponent | Wins | Losses | Mojo |
             +----------+------+--------+------+
-            +----------+------+--------+------+
+            +---------------------------------+
             ```
           SLACK
         end
@@ -202,11 +211,11 @@ describe 'Slack API', type: :request do
             post '/api/slack', params: { token: '123', text: 'kart inspect' }
           end
           specify do
-            expect(response).to be_success
+            expect(response).to be_successful
             json = JSON.parse(response.body)
             expect(json['text'].strip).to eq(<<~SLACK.strip)
                           ```
-              You gotta give me a player name, bro!
+              You need to give me a player name 🏄‍♀️
               ```
             SLACK
           end
@@ -217,11 +226,63 @@ describe 'Slack API', type: :request do
             post '/api/slack', params: { token: '123', text: 'kart inspect bilbo' }
           end
           specify do
-            expect(response).to be_success
+            expect(response).to be_successful
             json = JSON.parse(response.body)
             expect(json['text'].strip).to eq(<<~SLACK.strip)
                           ```
-              bilbo ain't a player, bro!
+              bilbo doesn't exist 😿
+              ```
+            SLACK
+          end
+        end
+      end
+    end
+
+    describe 'add' do
+      context 'successful' do
+        before do
+          post '/api/slack', params: { token: '123', text: 'kart add roy' }
+        end
+
+        specify do
+          expect(response).to be_successful
+          json = JSON.parse(response.body)
+          expect(json['text'].strip).to eq(<<~SLACK.strip)
+                          ```
+              roy is ready to roll
+              ```
+            SLACK
+        end
+      end
+
+      context 'with errors' do
+        context 'with missing player name' do
+          before do
+            post '/api/slack', params: { token: '123', text: 'kart add' }
+          end
+
+          specify do
+            expect(response).to be_successful
+            json = JSON.parse(response.body)
+            expect(json['text'].strip).to eq(<<~SLACK.strip)
+                          ```
+              Name can't be blank
+              ```
+            SLACK
+          end
+        end
+
+        context 'when player already exists' do
+          before do
+            post '/api/slack', params: { token: '123', text: 'kart add tom' }
+          end
+
+          specify do
+            expect(response).to be_successful
+            json = JSON.parse(response.body)
+            expect(json['text'].strip).to eq(<<~SLACK.strip)
+                          ```
+              Name has already been taken
               ```
             SLACK
           end
@@ -235,32 +296,86 @@ describe 'Slack API', type: :request do
       end
 
       specify do
-        expect(response).to be_success
+        expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['text'].strip).to eq(<<~SLACK.strip)
                   ```
-          +------+----------+-------+--------+-------+--------+--------+
-          |            Leaderboard since about 1 month ago             |
-          +------+----------+-------+--------+-------+--------+--------+
-          | Rank | Name     | Score | Change | Place | Streak | Played |
-          +------+----------+-------+--------+-------+--------+--------+
-          | 1    | chris 🔥 | 2473  |        |       | 4      | 4      |
-          | 2    | mike     | 1605  | +342   | 1     | 1      | 2      |
-          | 3    | tom      | 1343  | -25    | 2     |        | 5      |
-          | 4    | raj      | 896   |        |       |        | 3      |
-          | 5    | gt       | 799   |        |       |        | 4      |
-          +------+----------+-------+--------+-------+--------+--------+
+          #|    Name    |Score| ∆  |🎮
+           -------- A League --------
+          1|chris 🔥 (4)| 2473|    | 4
+          2|mike (1)    | 1605|+342| 2
+          3|tom         | 1343| -25| 5
+          4|raj         |  896|    | 3
+           -------- B League --------
+          5|gt          |  799|    | 4
           ```
         SLACK
       end
     end
+
+    describe 'extinguishing a fire' do
+      before do
+        post '/api/slack', params: { token: '123', text: 'kart result mike chris tom' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq(<<~SLACK.strip)
+                  ```
+          #|   Name    |Score| ∆  |🎮
+          -------- A League --------
+          1|chris      | 2358|-116| 5
+          2|mike 🧯 (1)| 2108|+846| 2
+          3|tom        | 1365|  -4| 5
+          4|raj        |  896|    | 3
+          -------- B League --------
+          5|gt         |  799|    | 4
+          ```
+        SLACK
+      end
+    end
+
+    describe 'extinguishing a fire with a streak' do
+      before do
+        FactoryBot.create(:match, league_id: '123', players_in_order: 'chris,mike,tom,raj')
+        FactoryBot.create(:match, league_id: '123', players_in_order: 'chris,mike,tom,raj')
+        FactoryBot.create(:match, league_id: '123', players_in_order: 'chris,mike,tom,raj')
+        FactoryBot.create(:match, league_id: '123', players_in_order: 'chris,mike,tom,raj')
+
+        FactoryBot.create(:match, league_id: '123', players_in_order: 'mike,gt,tom,raj')
+        FactoryBot.create(:match, league_id: '123', players_in_order: 'mike,gt,tom,raj')
+        FactoryBot.create(:match, league_id: '123', players_in_order: 'mike,gt,tom,raj')
+        FactoryBot.create(:match, league_id: '123', players_in_order: 'mike,gt,tom,raj')
+
+        post '/api/slack', params: { token: '123', text: 'kart result mike chris tom gt' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq(<<~SLACK.strip)
+                  ```
+          #|    Name     |Score| ∆  |🎮
+           -------- A League --------
+          1|chris        | 2947|-148| 9
+          2|mike 🔥🧯 (5)| 2759|+211|10
+          3|tom          | 1670| +78|13
+          4|gt           | 1628| -61| 9
+           -------- B League --------
+          5|raj          |  688|    |11
+          ```
+        SLACK
+      end
+    end
+
     describe 'result with invalid player' do
       before do
         post '/api/slack', params: { token: '123', text: 'kart result mike trev' }
       end
 
       specify do
-        expect(response).to be_success
+        expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['text'].strip).to eq(<<~SLACK.strip)
                   ```
@@ -268,14 +383,19 @@ describe 'Slack API', type: :request do
 
           Known players
           -------------
+          andrew
+          carson
           chris
+          christian
           gt
           jared
           josh
           langers
           mike
           raj
+          samii
           tom
+          wernah
           ```
         SLACK
       end
@@ -287,11 +407,11 @@ describe 'Slack API', type: :request do
       end
 
       specify do
-        expect(response).to be_success
+        expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['text'].strip).to eq(<<~SLACK.strip)
                   ```
-          No duplicates please, bro D:
+          No duplicates please 🤦‍♀️
           ```
         SLACK
       end
@@ -313,7 +433,7 @@ describe 'Slack API', type: :request do
         end
 
         specify do
-          expect(response).to be_success
+          expect(response).to be_successful
           json = JSON.parse(response.body)
           expect(json['attachments'].count).to eq(1)
           attachment = json['attachments'].first
@@ -329,7 +449,7 @@ describe 'Slack API', type: :request do
         end
 
         specify do
-          expect(response).to be_success
+          expect(response).to be_successful
           json = JSON.parse(response.body)
           expect(json['attachments'].count).to eq(1)
           attachment = json['attachments'].first
@@ -349,7 +469,7 @@ describe 'Slack API', type: :request do
           end
 
           specify do
-            expect(response).to be_success
+            expect(response).to be_successful
             json = JSON.parse(response.body)
             expect(json['attachments'].count).to eq(1)
             attachment = json['attachments'].first
@@ -366,7 +486,7 @@ describe 'Slack API', type: :request do
           end
 
           specify do
-            expect(response).to be_success
+            expect(response).to be_successful
             json = JSON.parse(response.body)
             expect(json['attachments'].count).to eq(1)
             attachment = json['attachments'].first
@@ -386,13 +506,317 @@ describe 'Slack API', type: :request do
         end
 
         specify do
-          expect(response).to be_success
+          expect(response).to be_successful
           json = JSON.parse(response.body)
           expect(json['attachments'].count).to eq(1)
           attachment = json['attachments'].first
           expect(attachment['title'].strip).to eq(title)
           expect(attachment['image_url'].strip).to eq(image_url)
         end
+      end
+    end
+
+    describe 'mojo chart' do
+      let(:image_url) do
+        'https://chart.apis.google.com/chart?chxt=x,y&chco=ff0000&chf=bg,s,FFFFFF&chd=s:5678987678787899999878765432123210zzyxyxwvutstsrqpponmlklmlkjkjijihgffedcbaZaZYXWVUUTUTSRQRSRQPONONMLMLKKKKJKKLMLKKKKKLMNMLKKJIJKJIHIHGFEDCBAA&cht=lc&chs=750x400&chxr=0,0,142,10%7C1,-63,10'
+      end
+
+      context 'with a valid scope' do
+        before do
+          expect(Gchart).to receive(:line) { image_url }
+          post '/api/slack', params: { token: '123', text: 'kart mojo scoped to tom chris since 1 week ago' }
+        end
+
+        specify do
+          expect(response).to be_successful
+          json = JSON.parse(response.body)
+          expect(json['attachments'].count).to eq(1)
+          attachment = json['attachments'].first
+          expect(attachment['title'].strip).to include('Mojo: 4 matches')
+          expect(attachment['image_url'].strip).to eq(image_url)
+        end
+      end
+
+      context 'with no players' do
+        before do
+          post '/api/slack', params: { token: '123', text: 'kart mojo' }
+        end
+
+        specify do
+          expect(response).to be_successful
+          json = JSON.parse(response.body)
+          expect(json['text'].strip).to eq <<~SLACK.strip
+            ```
+            You need to give me exactly two player names 🏄‍♀️
+            ```
+          SLACK
+        end
+      end
+
+      context 'with one player' do
+        before do
+          post '/api/slack', params: { token: '123', text: 'kart mojo scoped to tom' }
+        end
+
+        specify do
+          expect(response).to be_successful
+          json = JSON.parse(response.body)
+          expect(json['text'].strip).to eq <<~SLACK.strip
+            ```
+            You need to give me exactly two player names 🏄‍♀️
+            ```
+          SLACK
+        end
+      end
+
+      context 'with invalid player' do
+        before do
+          post '/api/slack', params: { token: '123', text: 'kart mojo scoped to tom trev' }
+        end
+
+        specify do
+          expect(response).to be_successful
+          json = JSON.parse(response.body)
+          expect(json['text'].strip).to eq <<~SLACK.strip
+            ```
+            trev doesn't exist 😿
+            ```
+          SLACK
+        end
+      end
+    end
+
+    describe 'large league league formats correctly' do
+      before do
+        post '/api/slack', params: { token: 'LargeLeague', text: 'kart leaderboard' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq <<~SLACK.strip
+          ```
+          # |      Name      |Score| ∆  |🎮
+             -------- A League --------
+           1|christian 🔥 (5)| 2876|+142| 6
+           2|gt              | 2581| +57| 6
+           3|chris (1)       | 2312|    | 1
+           4|langers         | 2106| +26| 6
+             -------- B League --------
+           5|raj             | 1518|    | 1
+           6|tom             | 1369| -22| 6
+           7|mike            | 1341|    | 1
+           8|jared           | 1164|    | 1
+             -------- C League --------
+           9|josh            |  982|    | 1
+          10|wernah          |  579|    | 1
+          11|andrew          |  334|    | 1
+          12|carson          |   12|    | 1
+             -------- D League --------
+          13|samii           | -558|    | 1
+          ```
+        SLACK
+      end
+    end
+
+    describe 'sort command' do
+      context 'ascending (default)' do
+        before do
+          post '/api/slack', params: { token: '123', text: 'kart leaderboard sort delta' }
+        end
+
+        specify do
+          expect(response).to be_successful
+          json = JSON.parse(response.body)
+          expect(json['text'].strip).to eq(<<~SLACK.strip)
+            ```
+            #|    Name    |Score|  ∆  |🎮
+            4|raj         |  896|     | 3
+            5|gt          |  799|  -55| 4
+            2|tom         | 1369| +107| 4
+            1|chris 🔥 (4)| 2473| +287| 4
+            3|mike        | 1263|+1263| 1
+            ```
+          SLACK
+        end
+      end
+
+      context 'descending' do
+        before do
+          post '/api/slack', params: { token: '123', text: 'kart leaderboard sort by games desc' }
+        end
+
+        specify do
+          expect(response).to be_successful
+          json = JSON.parse(response.body)
+          expect(json['text'].strip).to eq(<<~SLACK.strip)
+            ```
+            #|    Name    |Score|  ∆  |🎮
+            5|gt          |  799|  -55| 4
+            2|tom         | 1369| +107| 4
+            1|chris 🔥 (4)| 2473| +287| 4
+            4|raj         |  896|     | 3
+            3|mike        | 1263|+1263| 1
+            ```
+          SLACK
+        end
+      end
+    end
+
+    describe 'streaks command' do
+      before do
+        post '/api/slack', params: { token: '123', text: 'kart streaks' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq(<<~SLACK.strip)
+          ```
+          +--------------------+
+          |    Top Streaks     |
+          +-----------+--------+
+          | Player    | Streak |
+          +-----------+--------+
+          | chris     | 5      |
+          | christian | 5      |
+          +-----------+--------+
+          ```
+        SLACK
+      end
+    end
+
+    describe 'perfect_matches command' do
+      before do
+        FactoryBot.create(:entered_match, player: Player.find_by(name: 'samii'), final_score: 90)
+
+        post '/api/slack', params: { token: '123', text: 'kart perfect_matches' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq(<<~SLACK.strip)
+          ```
+          +------------------+
+          | Perfect Matches  |
+          +--------+---------+
+          | Player | Matches |
+          +--------+---------+
+          | samii  | 1       |
+          +--------+---------+
+          ```
+        SLACK
+      end
+    end
+
+    describe 'scoped perfect_matches command' do
+      before do
+        players = ['gt', 'samii', 'tom', 'raj'].map { |name| Player.find_by(name: name) }
+
+        match = FactoryBot.create(
+          :kartalytics_match,
+          player_one: players[0],
+          player_two: players[1],
+          player_three: players[2],
+          player_four: players[3],
+          player_one_score: 20,
+          player_two_score: 30,
+          player_three_score: 90,
+          player_four_score: 40,
+        )
+
+        match.update_player_order!
+
+        FactoryBot.create(:entered_match, kartalytics_match: match, player: players[2], final_score: 90)
+
+        post '/api/slack', params: { token: '123', text: 'kart perfect_matches scoped to tom' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq(<<~SLACK.strip)
+          ```
+          +-----------------------------------------+
+          |         1 Perfect Match for tom         |
+          +-----------------------------------------+
+          | Tom (90), Raj (40), Samii (30), Gt (20) |
+          +-----------------------------------------+
+          ```
+        SLACK
+      end
+    end
+
+    describe 'defaulting to result command' do
+      before do
+        post '/api/slack', params: { token: '123', text: 'kart mike tom' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq(<<~SLACK.strip)
+                  ```
+          #|    Name    |Score| ∆  |🎮
+           -------- A League --------
+          1|chris 🔥 (4)| 2473|    | 4
+          2|mike (1)    | 1605|+342| 2
+          3|tom         | 1343| -25| 5
+          4|raj         |  896|    | 3
+           -------- B League --------
+          5|gt          |  799|    | 4
+          ```
+        SLACK
+      end
+    end
+    describe 'defaulting to result command with invalid player' do
+      before do
+        post '/api/slack', params: { token: '123', text: 'kart mike trev' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq(<<~SLACK.strip)
+                  ```
+          Unknown command mike
+          ```
+        SLACK
+      end
+    end
+
+    describe 'gen_courses' do
+      let!(:command) { double }
+      before do
+        expect(GenCoursesCommand).to receive(:new).and_return(command)
+        expect(command).to receive(:execute).and_return(text: 'Command called', type: :raw)
+
+        post '/api/slack', params: { token: '123', text: 'kart gen_courses' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq(<<~SLACK.strip)
+          Command called
+        SLACK
+      end
+    end
+
+    describe 'unknown command' do
+      before do
+        post '/api/slack', params: { token: '123', text: 'kart foo' }
+      end
+
+      specify do
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['text'].strip).to eq(<<~SLACK.strip)
+                  ```
+          Unknown command foo
+          ```
+        SLACK
       end
     end
   end

@@ -1,0 +1,7 @@
+postgres 12.11
+yarn 1.22.17
+
+# if you're changing either of these, please update
+# `.node-version` or `.ruby-version` to match
+ruby 3.1.2
+nodejs 16.15.1

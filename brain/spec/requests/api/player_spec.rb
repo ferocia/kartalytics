@@ -11,7 +11,7 @@ describe 'Player API', type: :request do
       end
 
       specify do
-        expect(response).to be_success
+        expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['result']).to eq('ok')
         player = json['player']
@@ -27,7 +27,7 @@ describe 'Player API', type: :request do
         end
 
         specify do
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           json = JSON.parse(response.body)
           expect(json['error']).to eq('Name has already been taken')
         end
@@ -39,7 +39,7 @@ describe 'Player API', type: :request do
         end
 
         specify do
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           json = JSON.parse(response.body)
           expect(json['error']).to eq('league_id is missing, name is missing')
         end
@@ -54,14 +54,14 @@ describe 'Player API', type: :request do
       end
 
       specify do
-        expect(response).to be_success
+        expect(response).to be_successful
         json = JSON.parse(response.body)
 
-        expect(json).to eq(
-          'gt'    => { 'wins' => 3, 'losses' => 1, 'mojo' => 2 },
-          'raj'   => { 'wins' => 2, 'losses' => 1, 'mojo' => 1 },
-          'mike'  => { 'wins' => 0, 'losses' => 1, 'mojo' => -1 },
-          'chris' => { 'wins' => 0, 'losses' => 4, 'mojo' => -4 }
+        expect(json).to include(
+          'gt'    => { 'wins' => 3, 'losses' => 1, 'mojo' => 2, 'results' => [-1, 1, 1, 1], 'last_match_played_at' => be_a(String) },
+          'raj'   => { 'wins' => 2, 'losses' => 1, 'mojo' => 1, 'results' => [1, 1, -1], 'last_match_played_at' => be_a(String) },
+          'mike'  => { 'wins' => 0, 'losses' => 1, 'mojo' => -1, 'results' => [-1], 'last_match_played_at' => be_a(String) },
+          'chris' => { 'wins' => 0, 'losses' => 4, 'mojo' => -4, 'results' => [-1, -1, -1, -1], 'last_match_played_at' => be_a(String) }
         )
       end
     end
@@ -73,7 +73,7 @@ describe 'Player API', type: :request do
         end
 
         specify do
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           json = JSON.parse(response.body)
           expect(json['error']).to eq("Player: 'bilbo' doesn't exist")
         end
@@ -85,7 +85,7 @@ describe 'Player API', type: :request do
         end
 
         specify do
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           json = JSON.parse(response.body)
           expect(json['error']).to eq('league_id is missing, name is missing')
         end

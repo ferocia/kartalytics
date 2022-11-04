@@ -13,7 +13,8 @@ module Resources
       begin
         match_result = params[:match_result].to_s.downcase.split
         SubmitMatchCommand.new(params[:league_id], match_result).execute
-        ::Slack.notify(TrueskillLeaderboardCommand.new(params[:league_id]).execute)
+        leaderboard_body = TrueskillLeaderboardCommand.new(params[:league_id], since: 1.month.ago).execute
+        ::Slack.notify("\n```\n#{leaderboard_body}\n```")
         present TrueskillLeaderboard.new(params[:league_id], 1.month.ago).latest,
                 with: Entities::TrueskillPlayer
       rescue Match::UnknownPlayerError => e
@@ -36,8 +37,8 @@ module Resources
       last_match = Match.where(league_id: params[:league_id]).last
       if last_match
         if last_match.destroy
-          leaderboard_body = TrueskillLeaderboardCommand.new(params[:league_id]).execute
-          body = "Last match (result: #{last_match.players_in_order}) has been removed!\n#{leaderboard_body}"
+          leaderboard_body = TrueskillLeaderboardCommand.new(params[:league_id], since: 1.month.ago).execute
+          body = "\n```\nLast match (result: #{last_match.players_in_order}) has been removed!\n#{leaderboard_body}\n```"
           ::Slack.notify(body)
 
           status 200

@@ -7,7 +7,7 @@ describe 'Players API', type: :request do
       get '/api/players', params: { league_id: 'ABC' }
     end
     specify do
-      expect(response).to be_success
+      expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['players'].length).to eq(2)
     end
@@ -18,7 +18,7 @@ describe 'Players API', type: :request do
       get '/api/players', params: { league_id: '123' }
     end
     specify do
-      expect(response).to be_success
+      expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['players'].length).to eq(5)
       expect(json['players'][0]['name']).to eq('chris')
@@ -61,7 +61,7 @@ describe 'Players API', type: :request do
 
     specify do
       get '/api/players', params: { league_id: '123' }
-      expect(response).to be_success
+      expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['players'][0]['streak']).to eq(4)
       expect(json['players'][1]['streak']).to eq(2)
@@ -72,7 +72,7 @@ describe 'Players API', type: :request do
       get '/api/players', params: { league_id: 'XYZ' }
     end
     it 'returns no players' do
-      expect(response).to be_success
+      expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['players'].length).to eq(0)
     end

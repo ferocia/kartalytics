@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # API routes
-class LeaguebotAPI < Grape::API
+class LeaguebotApi < Grape::API
   default_format :json
   format :json
   content_type :json, 'application/json'

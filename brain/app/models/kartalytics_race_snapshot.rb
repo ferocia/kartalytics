@@ -3,6 +3,10 @@
 class KartalyticsRaceSnapshot < ApplicationRecord
   belongs_to :race, class_name: 'KartalyticsRace', foreign_key: 'kartalytics_race_id'
 
+  scope :in_order, -> { order timestamp: :asc }
+
+  validates :kartalytics_race_id, :timestamp, presence: true
+
   def self.series_for(player)
     wanted_attributes = [
       "#{player}_position",
@@ -12,7 +16,7 @@ class KartalyticsRaceSnapshot < ApplicationRecord
 
     # Grab the elements out this way as a standard race has >600 snapshots.
     # ActiveRecord object instantiation time vs pluck is 4x slower.
-    series = all.order("timestamp ASC").limit(2000).pluck(*wanted_attributes).map{|position, item, timestamp|
+    series = all.in_order.limit(2000).pluck(*wanted_attributes).map{|position, item, timestamp|
       {
         position: position,
         item: item,

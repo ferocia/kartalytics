@@ -14,7 +14,7 @@ describe 'Result API', type: :request do
         end
 
         specify do
-          expect(response).to be_success
+          expect(response).to be_successful
           json = JSON.parse(response.body)
           players = json['players']
           expect(players.count).to eq(5)
@@ -63,7 +63,7 @@ describe 'Result API', type: :request do
         end
 
         specify do
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           json = JSON.parse(response.body)
           expect(json['error']).to eq("Unknown player: 'trev'")
         end
@@ -76,7 +76,7 @@ describe 'Result API', type: :request do
         end
 
         specify do
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           json = JSON.parse(response.body)
           expect(json['error']).to eq('No duplicates')
         end
@@ -89,7 +89,7 @@ describe 'Result API', type: :request do
         end
 
         specify do
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           json = JSON.parse(response.body)
           expect(json['error']).to eq('league_id is missing, match_result is missing')
         end
@@ -109,7 +109,7 @@ describe 'Result API', type: :request do
       end
 
       specify do
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(Match.count).to eq(@original_count - 1)
 
         json = JSON.parse(response.body)
@@ -127,7 +127,7 @@ describe 'Result API', type: :request do
         end
 
         specify do
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           json = JSON.parse(response.body)
           expect(json['error']).to eq('No matches to undo')
         end
@@ -140,7 +140,7 @@ describe 'Result API', type: :request do
         end
 
         specify do
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
 
           json = JSON.parse(response.body)
           expect(json['error']).to eq('league_id is missing')

@@ -8,7 +8,7 @@ class SubmitMatchCommand < Command
 
   def execute
     Match.create_for!(@league_id, @player_names)
-    TrueskillLeaderboardCommand.new(@league_id, 1.month.ago).execute
+    TrueskillLeaderboardCommand.new(@league_id, since: 1.month.ago, scoped_players: @player_names).execute
   end
 
   private

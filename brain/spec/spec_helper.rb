@@ -26,6 +26,9 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
 
+  # Fail CI if focus specs are comitted
+  config.before(:example, :focus) { raise 'Should not commit focused specs' } if ENV['CI']
+
   # Many RSpec users commonly either run the entire suite or an individual
   # file, and it's useful to allow more verbose output when running an
   # individual spec file.

@@ -14,7 +14,7 @@ class InspectPlayer
   def execute
     raise(MissingPlayerNameError) unless @player_name
 
-    player = Player.find_by(name: @player_name)
+    player = Player.find_by_mention(@player_name)
     raise(MissingPlayerError, @player_name) unless player
 
     player.compare(@league_id)

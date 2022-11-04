@@ -1,0 +1,6 @@
+.tool-versions
+
+app/assets/stylesheets/reset.scss
+
+app/javascript/components/chart.ts
+app/javascript/components/score-chart.ts

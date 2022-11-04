@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class Match < ApplicationRecord
+  has_one :kartalytics_match
+  belongs_to :league
+  validates :players_in_order, :league_id, presence: true
+  before_destroy :unassociate_kartalytics_match
+
   class DuplicatePlayerError < StandardError
   end
   class UnknownPlayerError < StandardError
@@ -12,10 +17,18 @@ class Match < ApplicationRecord
     @player_names ||= players_in_order.split(',')
   end
 
+  def player_count
+    player_names.length
+  end
+
   def players
     player_names.map do |name|
       Player.find_by(name: name)
     end
+  end
+
+  def unassociate_kartalytics_match
+    kartalytics_match.unassociate_match! if kartalytics_match
   end
 
   def self.create_for!(league_id, player_names_in_order)

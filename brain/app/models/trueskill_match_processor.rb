@@ -32,6 +32,10 @@ class TrueskillMatchProcessor
       new_score      = players[player_pos].calculated_score
       score_change   = new_score - dummy_player.calculated_score
 
+      player.extinguisher = player_pos == 0 && players.any? do |other_player|
+        player.name != other_player.name && other_player.on_fire?
+      end
+
       last_match_position = player_pos + 1
       player.score                   = new_score
       player.score_change_last_match = score_change

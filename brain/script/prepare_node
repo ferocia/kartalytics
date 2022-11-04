@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -e
+
+EXPECTED_NODE_VERSION=$(cat ./.node-version)
+if [[ ! `node --version | grep "$EXPECTED_NODE_VERSION"` ]]; then
+
+  echo "Expected node $EXPECTED_NODE_VERSION but found $(node --version)"
+
+  if ! [ -x "$(command -v nodenv)" ]; then
+    echo 'nodenv not found, you can install it using:'
+    echo ''
+    echo '  brew install nodenv'
+    echo '  nodenv init'
+    echo "  nodenv install $EXPECTED_NODE_VERSION && nodenv rehash"
+    read -n 1 -r -p "Press any key to continue"
+    exit
+  fi
+
+  echo "--- Upgrading node-build to ensure we are able to build Node $EXPECTED_NODE_VERSION"
+  brew upgrade node-build
+
+  echo "--- Installing Node $EXPECTED_NODE_VERSION using nodenv"
+
+  nodenv install $EXPECTED_NODE_VERSION
+  nodenv rehash
+fi
+
+EXPECTED_YARN_VERSION=$(cat ./.yarn-version)
+if [[ ! `yarn --version | grep "$EXPECTED_YARN_VERSION"` ]]; then
+  echo "Expected yarn $EXPECTED_YARN_VERSION but found $(yarn --version)"
+
+  curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $EXPECTED_YARN_VERSION
+
+  if [ -x "$(command -v nodenv)" ]; then
+    nodenv rehash
+  fi
+fi

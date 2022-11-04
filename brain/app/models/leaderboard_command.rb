@@ -3,7 +3,7 @@
 class LeaderboardCommand < Command
   include ActionView::Helpers::DateHelper
 
-  def initialize(league_id, since = nil)
+  def initialize(league_id, since: nil)
     @since = if since
       since
     else
@@ -34,7 +34,7 @@ class LeaderboardCommand < Command
       end
 
       streak = player.streak > 0 ? player.streak.to_s : ''
-      rows << [rank + 1, Player.name_with_decorations(name: player.name, streak: player.streak), player.score, score_change, player.matches_played, streak, player.rating.to_i, rating_change]
+      rows << [rank + 1, player.name_with_decorations, player.score, score_change, player.matches_played, streak, player.rating.to_i, rating_change]
     end
 
     Terminal::Table.new(

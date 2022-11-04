@@ -7,6 +7,7 @@ class LeaderboardChartCommand < Command
 
   def initialize(league_id, since = nil, options = {})
     @options = {
+      algorithm: 'trueskills',
       include_title:  true,
       scope_to_names: nil
     }.merge(options)
@@ -33,8 +34,11 @@ class LeaderboardChartCommand < Command
               .where('created_at > ?', @since)
 
     matches.find_each do |match|
-      # match_players = TrueskillMatchProcessor.process(match, all_players) #trueskills
-      match_players = MatchProcessor.process(match, all_players) # elo
+      match_players = if @options[:algorithm] == 'trueskills'
+        TrueskillMatchProcessor.process(match, all_players)
+      else
+        MatchProcessor.process(match, all_players) # elo
+      end
 
       played_names = match_players.map(&:name)
       missing_players = all_players.reject do |_player_name, player|
@@ -84,7 +88,8 @@ class LeaderboardChartCommand < Command
       size:   '750x400',
       title:  @options[:include_title] ? title : nil,
       legend: names,
-      data:   data
+      data:   data,
+      encoding: :extended,
     )
   end
 end

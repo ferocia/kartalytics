@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kartalytics</title>
+  <meta name="viewport" content="width=device-width">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    table {
+      width: 100%;
+      text-align: left;
+      border-spacing: 0;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: #eee;
+    }
+
+    td, th {
+      padding: 0.5rem;
+    }
+
+    input, select, button {
+      font-family: inherit;
+    }
+
+    .alert {
+      margin-bottom: 1rem;
+      color: red;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <% if flash.alert %>
+    <div class="alert"><%= flash.alert %></div>
+  <% end %>
+  <table>
+    <thead>
+      <tr>
+        <th>match</th>
+        <th>race id</th>
+        <th>detected image</th>
+        <th>assigned course</th>
+        <th>reassign course</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @races.each do |race| %>
+        <tr>
+          <td><%= link_to race.match.name, kartalytics_match_path(race.match), target: '_blank' %></td>
+          <td><%= race.id %></td>
+          <td><img src="data:image/jpg;base64,<%= race.detected_image_base64 %>" /></td>
+          <td><%= race.course.name %></td>
+          <td>
+            <%= form_with url: update_kartalytics_race_path(race.id), method: :patch, local: true, html: {
+                  onsubmit: "return confirm('Are you sure you want to reassign the course for this race?');"
+                } do |form| %>
+              <%= form.select :course, @courses.map(&:name), selected: race.course.name %>
+              <%= form.button 'submit' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</body>
+</html>
