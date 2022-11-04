@@ -36,6 +36,17 @@ class TrueskillLeaderboard
     end
   end
 
+  # 1-indexed position for player
+  def position_for(player)
+    begin
+      latest.index { |p| player.id == p.id }&.succ
+    rescue RuntimeError => e
+      # stop trueskills blowing up errthang if it can't generate a leaderboard 🤷‍♀️
+      Rails.logger.error e.message
+      nil
+    end
+  end
+
   private
 
   def last_match_result

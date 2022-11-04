@@ -7,7 +7,7 @@ describe 'Players API', type: :request do
       get '/api/matches', params: { league_id: 'ABC' }
     end
     specify do
-      expect(response).to be_success
+      expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['matches'].length).to eq(3)
     end

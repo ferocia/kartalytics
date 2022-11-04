@@ -7,7 +7,7 @@ describe 'Leaderboard API', type: :request do
       get '/api/leaderboard', params: { league_id: 'ABC' }
     end
     specify do
-      expect(response).to be_success
+      expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['players'].length).to eq(2)
     end
@@ -22,7 +22,7 @@ describe 'Leaderboard API', type: :request do
       # Match: chris,tom,gt,raj
       # Match: chris,raj,tom,gt
       # Match: chris,mike,tom,gt
-      expect(response).to be_success
+      expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['players'].length).to eq(5)
       expect(json['players'][0]['name']).to eq('chris')
@@ -60,18 +60,59 @@ describe 'Leaderboard API', type: :request do
 
     specify do
       get '/api/leaderboard', params: { league_id: '123' }
-      expect(response).to be_success
+      expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['players'][0]['streak']).to eq(4)
       expect(json['players'][1]['streak']).to eq(2)
     end
   end
+
+  context 'extinguishing a fire' do
+    before do
+      Match.create_for!('123', %w[mike chris tom])
+    end
+
+    specify do
+      get '/api/leaderboard', params: { league_id: '123' }
+      expect(response).to be_successful
+      json = JSON.parse(response.body)
+
+      expect(json['players'][0]['streak']).to eq(0)
+      expect(json['players'][0]['extinguisher']).to be_falsey
+
+      expect(json['players'][1]['streak']).to eq(1)
+      expect(json['players'][1]['extinguisher']).to be_truthy
+    end
+  end
+
+  context 'extinguishing an extinguisher' do
+    before do
+      Match.create_for!('123', %w[mike chris tom])
+      Match.create_for!('123', %w[tom mike chris])
+    end
+
+    specify do
+      get '/api/leaderboard', params: { league_id: '123' }
+      expect(response).to be_successful
+      json = JSON.parse(response.body)
+
+      expect(json['players'][0]['streak']).to eq(0)
+      expect(json['players'][0]['extinguisher']).to be_falsey
+
+      expect(json['players'][1]['streak']).to eq(0)
+      expect(json['players'][1]['extinguisher']).to be_falsey
+
+      expect(json['players'][2]['streak']).to eq(1)
+      expect(json['players'][2]['extinguisher']).to be_falsey
+    end
+  end
+
   context 'when there are no matches in the league' do
     before do
       get '/api/leaderboard', params: { league_id: 'XYZ' }
     end
     it 'returns no players' do
-      expect(response).to be_success
+      expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['players'].length).to eq(0)
     end

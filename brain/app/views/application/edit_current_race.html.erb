@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kartalytics</title>
+  <meta name="viewport" content="width=device-width">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+    }
+
+    form {
+      margin: 0 auto;
+      max-width: 375px;
+    }
+
+    input, select, button {
+      display: block;
+      font-size: 16px;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      width: 100%;
+    }
+
+    button {
+      height: 8rem;
+    }
+  </style>
+</head>
+<body>
+  <%= form_with url: update_current_race_path, method: :post, local: true do |form| %>
+    <input id="search" placeholder="search" autofocus />
+    <%= form.select :course, @courses.map(&:name) %>
+    <%= form.button "submit" %>
+  <% end %>
+
+  <script>
+    document.querySelector('#search').addEventListener('input', (event) => {
+      const option = Array.from(document.querySelectorAll('#course option')).find(option => {
+        return new RegExp(event.target.value, 'i').test(option.label);
+      });
+
+      if (option) document.querySelector('#course').value = option.value;
+    });
+  </script>
+</body>
+</html>

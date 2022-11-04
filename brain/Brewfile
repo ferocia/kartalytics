@@ -1,0 +1,4 @@
+brew "overmind"
+brew "tmux"
+
+cask "chromedriver"

@@ -1,0 +1,159 @@
+name: brain
+
+on:
+  push:
+    paths:
+      - brain/**
+      - .github/workflows/brain.yml
+    branches:
+      - main
+  pull_request:
+    paths:
+      - brain/**
+      - .github/workflows/brain.yml
+    branches:
+      - main
+
+jobs:
+  test_ruby:
+    name: ruby tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        # tmpfs makes DB faster by using RAM
+        options: >-
+          --mount type=tmpfs,destination=/var/lib/postgresql/data
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_ENV: test
+      LEAGUEBOT_DB_HOST: localhost
+      LEAGUEBOT_DB_USER: postgres
+      LEAGUEBOT_DB_PASS: postgres
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set up ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: brain
+
+      - name: set up db
+        run: bin/rails db:prepare
+        working-directory: brain
+
+      - name: run unit tests
+        run: bin/rspec --exclude-pattern "spec/features/**/*"
+        working-directory: brain
+
+      # not worth overhead of splitting feature specs out into separate job;
+      # unit tests take seconds. instead, defer feature spec setup which ensures
+      # speedy unit tests & avoids running feature tests if unit fails.
+
+      - name: set up chrome
+        uses: browser-actions/setup-chrome@latest
+
+      - name: set up chromedriver
+        uses: nanasess/setup-chromedriver@v1
+
+      - name: use node.js 16.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 16.x
+
+      - name: cache packages
+        id: cache-packages
+        uses: actions/cache@v3
+        with:
+          path: brain/node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: install packages
+        if: ${{ steps.cache-packages.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile --silent
+        working-directory: brain
+
+      - name: build assets
+        run: bin/rails assets:precompile
+        working-directory: brain
+
+      - name: run feature tests
+        run: bin/rspec spec/features
+        working-directory: brain
+
+  build_js:
+    name: build js
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: use node.js 16.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 16.x
+
+      - name: cache packages
+        id: cache-packages
+        uses: actions/cache@v3
+        with:
+          path: brain/node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: install packages
+        if: ${{ steps.cache-packages.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile --silent
+        working-directory: brain
+
+  test_js:
+    runs-on: ubuntu-latest
+    needs: build_js
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        step: [
+          {name: 'typecheck', command: 'typecheck'},
+          {name: 'lint', command: 'lint --quiet'},
+          {name: 'prettier', command: 'fmt:check'}
+        ]
+
+    name: ${{ matrix.step.name }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: use node.js 16.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 16.x
+
+      - name: cache packages
+        uses: actions/cache@v3
+        with:
+          path: brain/node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: ${{ matrix.step.name}}
+        run: yarn ${{ matrix.step.command }}
+        working-directory: brain
+

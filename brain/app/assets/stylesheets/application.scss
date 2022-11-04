@@ -1,0 +1,49 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require reset
+ *= require_tree .
+ *= require_self
+ */
+
+@font-face {
+  font-family: SuperMario;
+  src: font-url('SuperMario.ttf');
+}
+
+@font-face {
+  font-family: Circular;
+  src: font-url('CircularStd-Medium.otf');
+}
+
+@font-face {
+  font-family: Circular;
+  font-weight: bold;
+  src: font-url('CircularStd-Bold.otf');
+}
+
+html, body {
+  background: #191922;
+  color: #fff;
+  font-family: Circular, sans-serif;
+  font-size: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+* {
+  &:focus-visible {
+    outline-color: rgb(25, 191, 241);
+  }
+}

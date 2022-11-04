@@ -9,19 +9,22 @@ class Slack
   # Send notification to slack directly
   # Requires incoming webhook to be created
 
-  def self.notify(leaderboard_body)
-    slack_notification_hook_url   = ENV.fetch('SLACK_HOOK_URL')
+  def self.notify(body, blocks: [])
+    slack_notification_hook_url   = ENV.fetch('SLACK_HOOK_URL', nil)
     slack_notification_channel    = '#kartistics'
-    slack_notification_user       = 'kartbot-result-notification'
+    slack_notification_user       = 'kartbot'
     slack_notification_user_emoji = ':leaderseeker:'
 
     params = {
       channel:    slack_notification_channel,
       username:   slack_notification_user,
       icon_emoji: slack_notification_user_emoji,
-      text:       "\n```\n#{leaderboard_body}\n```"
+      text:       body,
+      blocks:     blocks,
     }
     Rails.logger.info "Notifying: #{slack_notification_hook_url} with:\n #{params}"
+
+    return unless Rails.env.production?
 
     uri = URI.parse(slack_notification_hook_url)
     request = Net::HTTP::Post.new(uri.path)

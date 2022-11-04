@@ -7,6 +7,6 @@ class UndoLastMatchCommand < Command
 
   def execute
     Match.where(league_id: @league_id).last.destroy
-    TrueskillLeaderboardCommand.new(@league_id).execute
+    TrueskillLeaderboardCommand.new(@league_id, since: 1.month.ago).execute
   end
 end

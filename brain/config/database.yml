@@ -1,10 +1,10 @@
-# PostgreSQL. Versions 8.2 and up are supported.
+# PostgreSQL. Versions 9.3 and up are supported.
 #
 # Install the pg driver:
 #   gem install pg
-# On OS X with Homebrew:
+# On macOS with Homebrew:
 #   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
-# On OS X with MacPorts:
+# On macOS with MacPorts:
 #   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
 # On Windows:
 #   gem install pg
@@ -16,10 +16,14 @@
 #
 default: &default
   adapter: postgresql
+  host: <%= ENV['LEAGUEBOT_DB_HOST'] || '127.0.0.1' %>
+  port: <%= ENV['LEAGUEBOT_DB_PORT'] || 5432 %>
+  username: <%= ENV['LEAGUEBOT_DB_USER'] %>
+  password: <%= ENV['LEAGUEBOT_DB_PASS'] %>
   encoding: unicode
-  # For details on connection pooling, see rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: 5
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
@@ -59,12 +63,12 @@ test:
   <<: *default
   database: leaguebot_test
 
-# As with config/secrets.yml, you never want to store sensitive information,
+# As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
 #
 # Instead, provide the password as a unix environment variable when you boot
-# the app. Read http://guides.rubyonrails.org/configuring.html#configuring-a-database
+# the app. Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full rundown on how to provide these environment variables in a
 # production deployment.
 #
@@ -80,5 +84,4 @@ test:
 #
 production:
   <<: *default
-  database: leaguebot_production
-  password: <%= ENV['LEAGUEBOT_DATABASE_PASSWORD'] %>
+  database: <%= ENV['LEAGUEBOT_DB_NAME'] || 'leaguebot_production' %>

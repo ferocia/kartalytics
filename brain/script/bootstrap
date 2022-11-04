@@ -2,5 +2,18 @@
 echo "--- [script:bootstrap]"
 
 . ./script/prepare_ruby
+. ./script/prepare_node
 
-bin/rake db:reset
+echo "--- Brewing"
+brew bundle
+
+echo "--- Bundling"
+bundle install
+
+echo "--- Yarning"
+yarn install
+
+export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+
+# don't reset db; most people run a prod db locally
+bin/rails db:create db:migrate

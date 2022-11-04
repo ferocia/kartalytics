@@ -1,38 +1,43 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.4.5'
+ruby '3.1.2'
 
 gem 'grape'
 gem 'grape-entity'
-gem 'jbuilder'
+gem 'listen'
 gem 'newrelic_rpm'
 gem 'pg'
 
-gem 'rails', '5.1.6.2'
-gem 'unicorn'
+gem 'rails'
+gem 'puma'
+gem 'net-http'
 
 gem 'googlecharts'
 
+gem 'sass-rails'
 gem 'sdoc', group: :doc
+gem 'sprockets-rails'
 gem 'terminal-table'
-gem 'therubyracer'
 gem 'trueskill'
-gem 'uglifier'
-gem 'sass'
+gem 'will_paginate'
 
-gem 'webpacker'
-gem 'dotenv-rails'
+gem 'webpacker', '~> 6.0.0.rc.6'
+gem 'bootsnap', require: false
 
-gem 'web-console', group: :development
+group :development do
+  gem 'active_record_doctor'
+  gem 'web-console'
+end
 
 group :development, :test do
-  gem 'awesome_print'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
-  gem 'spring'
   gem 'timecop'
 end
