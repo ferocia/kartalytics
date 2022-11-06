@@ -60,7 +60,7 @@ class GenCoursesCommand < Command
     create_track('Triforce', "Wario's Gold Mine (Wii)", "https://static.wikia.nocookie.net/mariokart/images/e/e5/MK8-DLC-Course-icon-Wii_Wario%27sGoldMine.png"),
     create_track('Triforce', "Rainbow Road (SNES)", "https://static.wikia.nocookie.net/mariokart/images/6/6d/MK8-DLC-Course-icon-SNES_RainbowRoad.png"),
     create_track('Triforce', "Ice Ice Outpost", "https://static.wikia.nocookie.net/mariokart/images/f/f6/MK8-DLC-Course-icon-IceIceOutpost.png"),
-    create_track('Triforce', "Hyrule Circuit", "https://static.wikia.nocookie.net/mariokart/images/e/e6/MK8-DLC-Course-icon-HyruleCircuit.png", "Hyrule Circult"),
+    create_track('Triforce', "Hyrule Circuit", "https://static.wikia.nocookie.net/mariokart/images/e/e6/MK8-DLC-Course-icon-HyruleCircuit.png", "Hyrule Circuit"),
 
     create_track('Bell', "Koopa City (3DS)", "https://static.wikia.nocookie.net/mariokart/images/b/b4/MK8-DLC-Course-icon-3DS_NeoBowserCity.png"),
     create_track('Bell', "Ribbon Road (GBA)", "https://static.wikia.nocookie.net/mariokart/images/7/78/MK8-DLC-Course-icon-GBA_RibbonRoad.png"),

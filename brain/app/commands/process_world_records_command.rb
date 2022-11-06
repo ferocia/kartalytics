@@ -34,7 +34,7 @@ class ProcessWorldRecordsCommand
     "GCN Dry Dry Desert"      => "Dry Dry Desert (GameCube)",
     "GCN Sherbet Land"        => "Sherbet Land (GameCube)",
     "GCN Yoshi Circuit"       => "Yoshi Circuit (GameCube)",
-    "Hyrule Circuit"          => "Hyrule Circult",
+    "Hyrule Circuit"          => "Hyrule Circuit",
     "Ice Ice Outpost"         => "Ice Ice Outpost",
     "Mario Circuit"           => "Mario Circuit",
     "Mario Kart Stadium"      => "Mario Kart Stadium",

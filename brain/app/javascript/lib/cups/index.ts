@@ -62,7 +62,7 @@ export const CUPS = [
     subheading: 'Egg Cup',
   },
   {
-    tracks: ['Wario’s Gold Mine (Wii)', 'Rainbow Road (SNES)', 'Ice Ice Outpost', 'Hyrule Circult'],
+    tracks: ['Wario’s Gold Mine (Wii)', 'Rainbow Road (SNES)', 'Ice Ice Outpost', 'Hyrule Circuit'],
     image: triforce,
     subheading: 'Triforce Cup',
   },

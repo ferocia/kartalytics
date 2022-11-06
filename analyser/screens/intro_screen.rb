@@ -50,7 +50,7 @@ class IntroScreen < Screen
     {file: 'warios_gold_mine', name: 'Wario’s Gold Mine (Wii)', glob: ""},
     {file: 'rainbow_road_snes', name: 'Rainbow Road (SNES)', glob: ""},
     {file: 'ice_ice_outpost', name: 'Ice Ice Outpost', glob: ""},
-    {file: 'hyrule_circuit', name: 'Hyrule Circult', glob: ""},
+    {file: 'hyrule_circuit', name: 'Hyrule Circuit', glob: ""},
 
     {file: 'baby_park', name: 'Baby Park (GameCube)', glob: ""},
     {file: 'cheese_land', name: 'Cheese Land (GBA)', glob: ""},
