@@ -71,7 +71,7 @@ describe PerfectMatchesCommand do
         :kartalytics_match,
         player_one: players[0],
         player_two: players[1],
-        player_three: players[2], 
+        player_three: players[2],
         player_four: players[3],
         player_one_score: 20,
         player_two_score: 30,
@@ -87,7 +87,7 @@ describe PerfectMatchesCommand do
         :kartalytics_match,
         player_one: players[0],
         player_two: players[1],
-        player_three: players[2], 
+        player_three: players[2],
         player_four: players[3],
         player_one_score: 88,
         player_two_score: 87,
@@ -104,8 +104,8 @@ describe PerfectMatchesCommand do
       +-----------------------------------------+
       |        2 Perfect Matches for tom        |
       +-----------------------------------------+
-      | Tom (90), Gt (88), Samii (87), Raj (20) |
-      | Tom (90), Raj (40), Samii (30), Gt (20) |
+      | tom (90), gt (88), samii (87), raj (20) |
+      | tom (90), raj (40), samii (30), gt (20) |
       +-----------------------------------------+
     SLACK
   end

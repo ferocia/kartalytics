@@ -87,26 +87,26 @@ class KartalyticsMatch < ApplicationRecord
     if status == 'abandoned'
       'Abandoned'
     elsif players_assigned?
-      player_names_in_order.map(&:humanize).join(', ')
+      player_names_in_order.join(', ')
     else
       'Unassigned match'
     end
   end
 
   def player_one_name
-    (player_one.try(:name) || 'Player One').humanize
+    (player_one.try(:name) || 'Player one')
   end
 
   def player_two_name
-    (player_two.try(:name) || 'Player Two').humanize
+    (player_two.try(:name) || 'Player two')
   end
 
   def player_three_name
-    (player_three.try(:name) || 'Player Three').humanize
+    (player_three.try(:name) || 'Player three')
   end
 
   def player_four_name
-    (player_four.try(:name) || 'Player Four').humanize
+    (player_four.try(:name) || 'Player four')
   end
 
   def present_players

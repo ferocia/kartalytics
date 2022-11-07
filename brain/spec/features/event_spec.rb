@@ -16,7 +16,7 @@ RSpec.describe 'Event', type: :feature do
     %w[chris tom samii mike].each_with_index do |player, index|
       click_button("Player #{index + 1}")
       click_link(player)
-      expect(page).to have_content(player.humanize)
+      expect(page).to have_content(player)
     end
 
     4.times do |index|
@@ -67,10 +67,10 @@ RSpec.describe 'Event', type: :feature do
     Match.create_for!(League.id_for('kart'), KartalyticsMatch.last.player_names_in_order)
 
     expect(page).to have_content('Congratulations!')
-    expect(page).to have_content("1\n👑\nSamii\n48 pts")
-    expect(page).to have_content("2\nTom\n28 pts")
-    expect(page).to have_content("5\nMike\n20 pts")
-    expect(page).to have_content("8\nChris\n4 pts")
+    expect(page).to have_content("1\n👑\nsamii\n48 pts")
+    expect(page).to have_content("2\ntom\n28 pts")
+    expect(page).to have_content("5\nmike\n20 pts")
+    expect(page).to have_content("8\nchris\n4 pts")
   end
 
   it 'can reassign players mid-match' do
@@ -97,7 +97,7 @@ RSpec.describe 'Event', type: :feature do
       click_link(player)
 
       expect(page).to have_content('Live Graph')
-      expect(page).to have_content(player.humanize)
+      expect(page).to have_content(player)
     end
   end
 

@@ -78,7 +78,6 @@ const styles = {
     color: white;
     font-size: 1.6rem;
     margin-top: 1.2rem;
-    text-transform: capitalize;
   `,
 
   ninety: css`

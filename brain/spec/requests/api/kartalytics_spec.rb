@@ -97,9 +97,9 @@ describe 'Kartalytics API', type: :request do
       player_two = json['match']['leaderboard'][1]
       player_three = json['match']['leaderboard'][2]
 
-      expect(player_one['name']).to eq('Assigned 1')
-      expect(player_two['name']).to eq('Assigned 2')
-      expect(player_three['name']).to eq('Assigned 3')
+      expect(player_one['name']).to eq('assigned_1')
+      expect(player_two['name']).to eq('assigned_2')
+      expect(player_three['name']).to eq('assigned_3')
     end
   end
 
