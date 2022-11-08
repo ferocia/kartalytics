@@ -14,6 +14,9 @@ module Resources
       params[:events].each do |event|
         EVENT_LOG.info event.to_json
         KartalyticsState.ingest(event)
+      rescue StandardError => e
+        # if anything goes wrong, continue processing events
+        EVENT_LOG.error e.message
       end
       status :ok
     end
