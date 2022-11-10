@@ -105,7 +105,7 @@ Notice that the `match_result_screen` gets possibly incomplete data - animations
 > POST_URL=http://your-brain-location/new_events ruby daemon.rb
 ```
 
-For debugging purposes you can also set `KEEP_FILES=true` - this will instuct the daemon not to remove processed files.
+For debugging purposes you can also set `KEEP_FILES=true` in `.env` - this will instuct the daemon not to remove processed files.
 
 Due to limitations of the phasion API, analysis requires a lot of
 writing/reading temporary files to disk. Using a ramdisk as a temporary
@@ -143,7 +143,7 @@ LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/libjpeg/lib:/opt/homebrew/opt/libpn
 
 Nintendo is releasing 48 new tracks across 6 drops. Every time new tracks are released, new intro references must be generated.
 
-The first step is to get the intro screen for each new course. The easiest way to do this is to set `KEEP_FILES=true`, restart the daemon, then play the new cups. Once you're done, pull the nicest intro image from `dump/*` for each course (where the text is present), `parameterize.underscore` the filename, and commit to `brain/app/assets/images/courses/*`.
+The first step is to get the intro screen for each new course. The easiest way to do this is to set `KEEP_FILES=true` in `.env`, restart the daemon, then play the new cups. Once you're done, pull the nicest intro image from `dump/*` for each course (where the text is present), `parameterize.underscore` the filename, and commit to `brain/app/assets/images/courses/*`.
 
 Next, copy the new intro images into `analyser/intro/*`, then run `ruby intro_extractor.rb` from the `analyser` dir. This will generate the reference images for course detection and put them in `analyser/reference_images/intro/*`. Finally, add the new courses to `analyser/screens/intro_screen.rb`. The brain will automatically create new courses in the DB based on this data.
 
