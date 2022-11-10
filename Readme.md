@@ -26,7 +26,6 @@ Kartalytics is designed to handle only 3 and 4 player VS matches at 200cc (what 
 Set up your env, bootstrap, and start. This will boot all necessary services. For more information about each service, keep reading.
 
 ```sh
-cp .env.example .env
 ./script/bootstrap
 ./script/start
 ```
