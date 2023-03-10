@@ -94,8 +94,8 @@ class IntroScreen < Screen
 
     {file: 'amsterdam_drift_tour', name: 'Amsterdam Drift (Tour)', glob: ""},
     {file: 'riverside_park_gba', name: 'Riverside Park (GBA)', glob: ""},
-    {file: 'dks_snowboard_cross_wii', name: "DK's Snowboard Cross (Wii)", glob: ""},
-    {file: 'yoshis_island', name: "Yoshi's Island", glob: ""},
+    {file: 'dks_snowboard_cross_wii', name: 'DK’s Snowboard Cross (Wii)', glob: ""},
+    {file: 'yoshis_island', name: 'Yoshi’s Island', glob: ""},
 
     {file: 'bangkok_rush_tour', name: 'Bangkok Rush (Tour)', glob: ""},
     {file: 'mario_circuit_ds', name: 'Mario Circuit (DS)', glob: ""},
