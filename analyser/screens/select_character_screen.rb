@@ -4,7 +4,7 @@ class SelectCharacterScreen < Screen
   REFERENCE = Phashion::Image.new('reference_images/select_character.jpg')
 
   def self.matches_image?(screenshot)
-    image = screenshot.original.dup.crop!(793, 448, 44, 44)
+    image = screenshot.original.dup.crop!(735, 435, 40, 35)
     phash = convert_to_phash(image)
     phash.distance_from(REFERENCE) < 10
   end
