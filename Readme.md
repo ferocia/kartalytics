@@ -147,6 +147,12 @@ The first step is to get the intro screen for each new course. The easiest way t
 
 Next, copy the new intro images into `analyser/intro/*`, then run `ruby intro_extractor.rb` from the `analyser` dir. This will generate the reference images for course detection and put them in `analyser/reference_images/intro/*`. Finally, add the new courses to `analyser/screens/intro_screen.rb`. The brain will automatically create new courses in the DB based on this data.
 
+When that doesn't work cos good luck getting phasion to run, you can manually do it with this instead
+
+```
+magick "$name.jpg" -crop 350x36+258+620 -color-threshold 'sRGB(200,200,200)-sRGB(255,255,255)' "$name.jpg"
+```
+
 ## Brain
 
 The brain is responsible for consuming the event stream and reconstituting those into a concept of Games/Players/Results etc.  As an example, the brain sees a series of race underway events then a "Main Menu" event, it should assume the game has been abandoned.  Likewise if it sees a series of Race Underway events then a Race Finish then a View Results it should assume a game has been completed.

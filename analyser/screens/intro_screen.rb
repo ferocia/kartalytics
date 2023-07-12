@@ -110,7 +110,7 @@ class IntroScreen < Screen
     {file: 'los_angeles_laps_tour', name: "Los Angeles Laps (Tour)", glob: ""},
     {file: 'sunset_wilds_gba', name: "Sunset Wilds (GBA)", glob: ""},
     {file: 'koopa_cape_wii', name: "Koopa Cape (Wii)", glob: ""},
-    {file: 'vancouver_velocity_tour', name: "Vancourver Velocity (Tour)", glob: ""},
+    {file: 'vancouver_velocity_tour', name: "Vancouver Velocity (Tour)", glob: ""},
 
   ].each do |course|
     course[:images] = Dir.glob("reference_images/intro/#{course[:file]}#{course[:glob]}.jpg").map{|f|
