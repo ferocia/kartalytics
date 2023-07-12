@@ -101,6 +101,17 @@ class IntroScreen < Screen
     {file: 'mario_circuit_ds', name: 'Mario Circuit (DS)', glob: ""},
     {file: 'waluigi_stadium_gcn', name: 'Waluigi Stadium (GCN)', glob: ""},
     {file: 'singapore_speedway_tour', name: "Singapore Speedway (Tour)", glob: ""},
+
+    {file: 'athens_dash_tour', name: "Athens Dash (Tour)", glob: ""},
+    {file: 'daisy_cruiser_gcn', name: "Daisy Cruiser (GCN)", glob: ""},
+    {file: 'moonview_highway_wii', name: "Moonview Highway (Wii)", glob: ""},
+    {file: 'squeaky_clean_sprint', name: "Squeaky Clean Sprint", glob: ""},
+
+    {file: 'los_angeles_laps_tour', name: "Los Angeles Laps (Tour)", glob: ""},
+    {file: 'sunset_wilds_gba', name: "Sunset Wilds (GBA)", glob: ""},
+    {file: 'koopa_cape_wii', name: "Koopa Cape (Wii)", glob: ""},
+    {file: 'vancouver_velocity_tour', name: "Vancourver Velocity (Tour)", glob: ""},
+
   ].each do |course|
     course[:images] = Dir.glob("reference_images/intro/#{course[:file]}#{course[:glob]}.jpg").map{|f|
       Phashion::Image.new(f)
