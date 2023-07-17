@@ -49,6 +49,7 @@
     "webpack-dev-server": "^4.9.3"
   },
   "resolutions": {
-    "glob-parent": "^5.1.2"
+    "glob-parent": "^5.1.2",
+    "word-wrap": "npm:@aashutoshrathi/word-wrap@1.2.6"
   }
 }
