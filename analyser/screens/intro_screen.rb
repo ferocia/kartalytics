@@ -99,7 +99,7 @@ class IntroScreen < Screen
 
     {file: 'bangkok_rush_tour', name: 'Bangkok Rush (Tour)', glob: ""},
     {file: 'mario_circuit_ds', name: 'Mario Circuit (DS)', glob: ""},
-    {file: 'waluigi_stadium_gcn', name: 'Waluigi Stadium (GCN)', glob: ""},
+    {file: 'waluigi_stadium_gcn', name: 'Waluigi Stadium (GameCube)', glob: ""},
     {file: 'singapore_speedway_tour', name: "Singapore Speedway (Tour)", glob: ""},
 
     {file: 'athens_dash_tour', name: "Athens Dash (Tour)", glob: ""},
