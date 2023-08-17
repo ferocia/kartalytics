@@ -94,7 +94,7 @@ class IntroScreen < Screen
 
     {file: 'amsterdam_drift_tour', name: 'Amsterdam Drift (Tour)', glob: ""},
     {file: 'riverside_park_gba', name: 'Riverside Park (GBA)', glob: ""},
-    {file: 'dks_snowboard_cross_wii', name: 'DK’s Snowboard Cross (Wii)', glob: ""},
+    {file: 'dks_snowboard_cross_wii', name: "DK's Snowboard Cross (Wii)", glob: ""},
     {file: 'yoshis_island', name: 'Yoshi’s Island', glob: ""},
 
     {file: 'bangkok_rush_tour', name: 'Bangkok Rush (Tour)', glob: ""},
@@ -103,7 +103,7 @@ class IntroScreen < Screen
     {file: 'singapore_speedway_tour', name: "Singapore Speedway (Tour)", glob: ""},
 
     {file: 'athens_dash_tour', name: "Athens Dash (Tour)", glob: ""},
-    {file: 'daisy_cruiser_gcn', name: "Daisy Cruiser (GCN)", glob: ""},
+    {file: 'daisy_cruiser_gcn', name: "Daisy Cruiser (GameCube)", glob: ""},
     {file: 'moonview_highway_wii', name: "Moonview Highway (Wii)", glob: ""},
     {file: 'squeaky_clean_sprint', name: "Squeaky Clean Sprint", glob: ""},
 
