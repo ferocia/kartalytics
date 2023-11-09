@@ -112,6 +112,16 @@ class IntroScreen < Screen
     {file: 'koopa_cape_wii', name: "Koopa Cape (Wii)", glob: ""},
     {file: 'vancouver_velocity_tour', name: "Vancouver Velocity (Tour)", glob: ""},
 
+    {file: 'rome_avanti_tour', name: "Rome Avanti (Tour)", glob: ""},
+    {file: 'dk_mountain_gamecube', name: "DK Mountain (GameCube)", glob: ""},
+    {file: 'daisy_circuit_wii', name: "Daisy Circuit (Wii)", glob: ""},
+    {file: 'piranha_plant_cove', name: "Piranha Plant Cove", glob: ""},
+
+    {file: 'madrid_drive_tour', name: "Madrid Drive (Tour)", glob: ""},
+    {file: 'rosalina_s_ice_world_3ds', name: "Rosalina’s Ice World (3DS)", glob: ""},
+    {file: 'bowser_castle_3_snes', name: "Bowser Castle 3 (SNES)", glob: ""},
+    {file: 'rainbow_road_wii', name: "Rainbow Road (SNES)", glob: ""},
+
   ].each do |course|
     course[:images] = Dir.glob("reference_images/intro/#{course[:file]}#{course[:glob]}.jpg").map{|f|
       Phashion::Image.new(f)
