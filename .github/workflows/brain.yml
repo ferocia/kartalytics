@@ -69,7 +69,7 @@ jobs:
         uses: browser-actions/setup-chrome@latest
 
       - name: set up chromedriver
-        uses: nanasess/setup-chromedriver@v1
+        uses: nanasess/setup-chromedriver@v2
 
       - name: use node.js 16.x
         uses: actions/setup-node@master
