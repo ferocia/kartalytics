@@ -3,5 +3,5 @@ yarn 1.22.17
 
 # if you're changing either of these, please update
 # `.node-version` or `.ruby-version` to match
-ruby 3.1.2
+ruby 3.2.4
 nodejs 16.15.1
