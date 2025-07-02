@@ -71,10 +71,10 @@ jobs:
       - name: set up chromedriver
         uses: nanasess/setup-chromedriver@v2
 
-      - name: use node.js 16.x
+      - name: use node.js 22.x
         uses: actions/setup-node@master
         with:
-          node-version: 16.x
+          node-version: 22.x
 
       - name: cache packages
         id: cache-packages
@@ -105,10 +105,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: use node.js 16.x
+      - name: use node.js 22.x
         uses: actions/setup-node@master
         with:
-          node-version: 16.x
+          node-version: 22.x
 
       - name: cache packages
         id: cache-packages
@@ -142,10 +142,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: use node.js 16.x
+      - name: use node.js 22.x
         uses: actions/setup-node@master
         with:
-          node-version: 16.x
+          node-version: 22.x
 
       - name: cache packages
         uses: actions/cache@v3
