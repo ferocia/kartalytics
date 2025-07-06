@@ -18,14 +18,14 @@ gem 'concurrent-ruby', '1.3.4'
 
 gem 'googlecharts'
 
-gem 'sass-rails'
+gem 'cssbundling-rails'
 gem 'sdoc', group: :doc
-gem 'sprockets-rails'
+gem 'propshaft'
 gem 'terminal-table'
 gem 'trueskill'
 gem 'will_paginate'
 
-gem 'webpacker', '~> 6.0.0.rc.6'
+gem 'jsbundling-rails'
 gem 'bootsnap', require: false
 
 group :development do
