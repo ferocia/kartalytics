@@ -1,5 +1,5 @@
-postgres 12.11
-yarn 1.22.17
+postgres 13.20
+yarn 1.22.22
 
 # if you're changing either of these, please update
 # `.node-version` or `.ruby-version` to match

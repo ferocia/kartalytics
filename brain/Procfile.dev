@@ -1,2 +1,3 @@
+postgres: pg_ctl status | grep -q "no server running" && postgres -F -p ${LEAGUEBOT_DB_PORT:-5432} || (echo "Postgres already running, using existing server" && tail -f /dev/null)
 webpack: bin/webpack-dev-server
 rails: bin/rails s -p 3000
