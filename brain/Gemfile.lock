@@ -150,7 +150,7 @@ GEM
     matrix (0.4.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.8)
+    mini_portile2 (2.8.9)
     minitest (5.25.4)
     msgpack (1.7.5)
     multi_json (1.15.0)
@@ -171,7 +171,7 @@ GEM
       net-protocol
     newrelic_rpm (9.17.0)
     nio4r (2.7.4)
-    nokogiri (1.18.8)
+    nokogiri (1.18.9)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     pg (1.5.9)
