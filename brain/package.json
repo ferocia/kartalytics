@@ -45,7 +45,7 @@
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
     "@webpack-cli/serve": "^1.7.0",
-    "eslint": "^8.26.0",
+    "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.31.10",
     "prettier": "^2.7.1"
   },

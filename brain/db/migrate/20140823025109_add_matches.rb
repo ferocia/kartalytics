@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddMatches < ActiveRecord::Migration
+class AddMatches < ActiveRecord::Migration[5.1]
   def change
     create_table :matches do |t|
       t.text :players_in_order, null: false

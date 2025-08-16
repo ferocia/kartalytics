@@ -7,8 +7,6 @@ class KartalyticsState < ApplicationRecord
   belongs_to :current_match, class_name: 'KartalyticsMatch'
   belongs_to :current_race, class_name: 'KartalyticsRace'
 
-  serialize :last_event, HashWithIndifferentAccess
-
   attr_accessor :league_id
 
   def self.ingest(event)

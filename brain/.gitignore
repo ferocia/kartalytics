@@ -41,6 +41,9 @@ dump.psql.gz
 .DS_Store
 .vscode
 Brewfile.lock*
+logfile
+
+.env
 
 /app/assets/builds/*
 !/app/assets/builds/.keep

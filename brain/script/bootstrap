@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 echo "--- [script:bootstrap]"
 
-. ./script/prepare_ruby
-. ./script/prepare_node
-
 echo "--- Brewing"
 brew bundle
 
+echo "--- Mising"
+mise trust --yes --quiet
+mise install
+eval "$(mise hook-env)"
+
 echo "--- Bundling"
+bundler_version=$(cat ./.bundler-version)
+gem install --no-document "bundler:$bundler_version"
+bundle config set --local build.pg "--with-pg-config='$(mise where postgres)/bin/pg_config'"
 bundle install
 
 echo "--- Yarning"

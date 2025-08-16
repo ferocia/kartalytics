@@ -18,7 +18,7 @@ default: &default
   adapter: postgresql
   host: <%= ENV['LEAGUEBOT_DB_HOST'] || '127.0.0.1' %>
   port: <%= ENV['LEAGUEBOT_DB_PORT'] || 5432 %>
-  username: <%= ENV['LEAGUEBOT_DB_USER'] %>
+  username: <%= ENV['LEAGUEBOT_DB_USER'] || 'postgres' %>
   password: <%= ENV['LEAGUEBOT_DB_PASS'] %>
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
