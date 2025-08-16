@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '3.2.4'
+ruby '3.3.9'
 
 gem 'grape'
 gem 'grape-entity'
@@ -9,12 +9,9 @@ gem 'listen'
 gem 'newrelic_rpm'
 gem 'pg'
 
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.2'
 gem 'puma'
 gem 'net-http'
-
-# remove when upgrading to rails >= 7.1
-gem 'concurrent-ruby', '1.3.4'
 
 gem 'googlecharts'
 
@@ -38,6 +35,7 @@ group :development, :test do
   gem 'selenium-webdriver'
 
   gem 'factory_bot_rails'
+  gem 'observer'
   gem 'faker'
   gem 'pry'
   gem 'rspec-rails'

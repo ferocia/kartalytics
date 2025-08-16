@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_29_043520) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_07_052014) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -122,19 +122,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_29_043520) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "matches", id: :serial, force: :cascade do |t|
+  create_table "matches", force: :cascade do |t|
     t.text "players_in_order", null: false
     t.string "league_id", null: false
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["league_id"], name: "index_matches_on_league_id"
   end
 
-  create_table "players", id: :serial, force: :cascade do |t|
+  create_table "players", force: :cascade do |t|
     t.string "slack_id"
     t.string "name", null: false
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "retired"
     t.index ["slack_id"], name: "index_players_on_slack_id"
   end

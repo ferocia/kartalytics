@@ -1,4 +1,4 @@
-postgres: pg_ctl status | grep -q "no server running" && postgres -F -p ${LEAGUEBOT_DB_PORT:-5432} || (echo "Postgres already running, using existing server" && tail -f /dev/null)
+postgres: ! pg_isready -q -p ${LEAGUEBOT_DB_PORT:-5432} && postgres -F -p ${LEAGUEBOT_DB_PORT:-5432} || (echo "Postgres already running, using existing server" && tail -f /dev/null)
 js: NODE_ENV=${NODE_ENV:-development} yarn build --watch
 css: yarn build:css --watch
 rails: bin/rails s -p 3000
