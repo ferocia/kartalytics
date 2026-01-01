@@ -294,7 +294,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
-    uri (0.12.4)
+    uri (0.12.5)
     useragent (0.16.11)
     web-console (4.2.1)
       actionview (>= 6.0.0)
