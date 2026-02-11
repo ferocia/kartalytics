@@ -33,7 +33,7 @@
     "react-router-dom": "^6.30.3",
     "sass": "^1.89.2",
     "typescript": "^4.8.4",
-    "webpack": "^5.99.9",
+    "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1"
   },
   "devDependencies": {
